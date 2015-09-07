@@ -1,0 +1,81 @@
+0,<null>
+1,Obsidian Skin
+2,Regeneration
+3,Swiftness
+4,Gills
+5,Ironskin
+6,Mana Regeneration
+7,Magic Power
+8,Featherfall
+9,Spelunker
+10,Invisibility
+11,Shine
+12,Night Owl
+13,Battle
+14,Thorns
+15,Water Walking
+16,Archery
+17,Hunter
+18,Gravitation
+19,Shadow Orb
+20,Poisoned
+21,Potion Sickness
+22,Darkness
+23,Cursed
+24,On Fire!
+25,Tipsy
+26,Well Fed
+27,Fairy
+28,Werewolf
+29,Clairvoyance
+30,Bleeding
+31,Confused
+32,Slow
+33,Weak
+34,Merfolk
+35,Silenced
+36,Broken Armor
+37,Horrified
+38,The Tongue
+39,Cursed Inferno
+40,Pet Bunny
+41,Baby Penguin
+42,Pet Turtle
+43,Paladin's Shield
+44,Frostburn
+45,Baby Eater
+46,Chilled
+47,Frozen
+48,Honey
+49,Pygmies
+50,Baby Skeletron Head
+51,Baby Hornet
+52,Tiki Spirit
+53,Pet Lizard
+54,Pet Parrot
+55,Baby Truffle
+56,Pet Sapling
+57,Wisp
+58,Rapid Healing
+59,Shadow Dodge
+60,Leaf Crystal
+61,Baby Dinosaur
+62,Ice Barrier
+63,Panic!
+64,Baby Slime
+65,Eyeball Spring
+66,Baby Snowman
+67,Burning
+68,Suffocation
+69,Ichor
+70,Venom
+71,Weapon Imbue: Venom
+72,Midas
+73,Weapon Imbue: Cursed Flames
+74,Weapon Imbue: Fire
+75,Weapon Imbue: Gold
+76,Weapon Imbue: Ichor
+77,Weapon Imbue: Nanites
+78,Weapon Imbue: Confetti
+79,Weapon Imbue: Poison
+80,Blackout
