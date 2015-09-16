@@ -14,6 +14,7 @@ public class Main {
 		
 		Items.loadItems();
 		Buffs.loadBuffs();
+		Bosses.loadBosses();
 		
 		inputUserSettings();
 		
@@ -37,6 +38,8 @@ public class Main {
 		proxy.close();
 		client.close();
 		server.close();
+		
+		System.out.println("Connection closed");
 		
 		
 	}

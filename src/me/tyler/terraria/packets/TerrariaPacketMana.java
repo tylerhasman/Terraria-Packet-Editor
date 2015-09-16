@@ -9,7 +9,7 @@ import me.tyler.terraria.Proxy;
 
 public class TerrariaPacketMana extends TerrariaPacket {
 
-	public byte getPlayerID(){
+	public byte getPlayerId(){
 		return getPayloadBuffer().get();
 	}
 	
@@ -24,10 +24,11 @@ public class TerrariaPacketMana extends TerrariaPacket {
 	@Override
 	public boolean onSending(Proxy proxy, Socket client) {
 		
-		if(getPlayerID() == proxy.getThePlayer().getId()){
-			proxy.sendPacketToClient(client, getManaPacket(getPlayerID(), getMaxMana(), getMaxMana()));
+		if(getPlayerId() == proxy.getThePlayer().getId()){
 			
-			return false;
+			proxy.sendPacketToServer(TerrariaPacketManaEffect.getManaEffectPacket(getPlayerId(), (short) (getMaxMana()-getMana())));
+			
+			return true;
 		}
 		
 		

@@ -50,7 +50,6 @@ public class TerrariaPacket {
 	}
 	
 	public boolean onSending(Proxy proxy, Socket client){
-		
 		return true;
 	}
 	
@@ -92,8 +91,6 @@ public class TerrariaPacket {
 	public static TerrariaPacket getPacketFromData(byte[] bytes){
 		
 		ByteBuffer buf = ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN);
-		
-		
 		
 		short length = buf.getShort();
 		byte type = buf.get();

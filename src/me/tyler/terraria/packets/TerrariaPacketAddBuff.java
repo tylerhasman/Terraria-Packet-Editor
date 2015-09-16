@@ -11,8 +11,8 @@ public class TerrariaPacketAddBuff extends TerrariaPacket {
 		return getPayloadBuffer().get();
 	}
 	
-	public byte getBuff(){
-		return getPayloadBuffer(1).get();
+	public int getBuff(){
+		return getPayloadBuffer(1).get() & 0xFF;
 	}
 	
 	public short getTime(){
@@ -24,7 +24,27 @@ public class TerrariaPacketAddBuff extends TerrariaPacket {
 		
 		if(getPlayerId() == proxy.getThePlayer().getId()){
 			
-			String buff = Buffs.getBuffName(getBuff());
+			String buff = Buffs.getBuffName((short) getBuff());
+			
+			if(getBuff() == 0){
+				return true;
+			}
+		
+			
+			return true;
+			
+			
+		}
+		
+		return super.onReceive(proxy, client);
+	}
+	
+	@Override
+	public boolean onSending(Proxy proxy, Socket client) {
+		
+		if(getPlayerId() == proxy.getThePlayer().getId()){
+			
+			String buff = Buffs.getBuffName((short) getBuff());
 			
 			if(getBuff() == 0){
 				return true;
@@ -34,10 +54,13 @@ public class TerrariaPacketAddBuff extends TerrariaPacket {
 				System.out.println("Buff: "+buff);
 			}
 			
+			return false;
+			
 			
 		}
 		
-		return super.onReceive(proxy, client);
+		
+		return super.onSending(proxy, client);
 	}
 	
 }

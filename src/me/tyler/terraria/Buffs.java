@@ -26,8 +26,8 @@ public class Buffs {
 			while ((line = reader.readLine()) != null) {
 
 				String[] splits = line.split(",");
-				short id = Short.parseShort(splits[0]);
-				String name = splits[1];
+				short id = Short.parseShort(splits[1]);
+				String name = splits[0];
 
 				buffNames.put(id, name);
 				lineNum++;

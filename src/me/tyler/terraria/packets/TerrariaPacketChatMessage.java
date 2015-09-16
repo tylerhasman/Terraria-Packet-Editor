@@ -6,6 +6,7 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.Random;
 
+import me.tyler.terraria.Bosses;
 import me.tyler.terraria.Cheats;
 import me.tyler.terraria.Items;
 import me.tyler.terraria.Npc;
@@ -87,30 +88,53 @@ public class TerrariaPacketChatMessage extends TerrariaPacket {
 					
 				}else if(splits[0].endsWith("boss")){
 					
-					int amount = 1;
-					
-					if(splits.length == 3){
-						amount = Integer.parseInt(splits[2]);
+					if(splits.length == 2){
+						String name = splits[1];
+						
+						short boss = Bosses.getBossByName(name);
+						
+						if(boss == -1){
+							proxy.sendPacketToClient(client, TerrariaPacketChatMessage.getMessagePacket((byte) 0xff, TerrariaColor.getColor(200, 50, 50), "No boss with name "+name));
+						}else{
+
+							TerrariaPacketSpawnBoss packet = TerrariaPacketSpawnBoss.getSpawnBossPacket(proxy.getThePlayer().getId(), boss);
+							
+							proxy.sendPacketToServer(packet);
+							
+							proxy.sendPacketToClient(client, TerrariaPacketChatMessage.getMessagePacket((byte) 0xff, TerrariaColor.getColor(200, 50, 200), "Attempted to spawn "+Bosses.getBossName(boss)));
+						}
+						
+					}else{
+						StringBuffer buf = new StringBuffer();
+						
+						for(String boss : Bosses.getBossNames()){
+							buf.append(boss+", ");
+						}
+						buf.setLength(buf.length()-1);
+						
+						proxy.sendPacketToClient(client, TerrariaPacketChatMessage.getMessagePacket((byte) 0xff, TerrariaColor.getColor(200, 50, 200), "Boss List: "+buf.toString()));
+						
 					}
 					
-					TerrariaPacketSpawnBoss packet = TerrariaPacketSpawnBoss.getSpawnBossPacket(proxy.getThePlayer().getId(), (short) Integer.parseInt(splits[1]));
 					
-					for(int i = 0; i < amount;i++){
-						proxy.sendPacketToServer(packet);
-					}
-					
-					proxy.sendPacketToClient(client, TerrariaPacketChatMessage.getMessagePacket((byte) 0xff, TerrariaColor.getColor(200, 50, 200), "Boss spawned!"));
 				}else if(splits[0].endsWith("teleport")){
 					
-					String player = splits[1];
 					
-					TerrariaPlayer pl = proxy.getPlayer(player);
 					
-					if(pl == null){
-						proxy.sendPacketToClient(client, TerrariaPacketChatMessage.getMessagePacket((byte) 0xff, TerrariaColor.getColor(200, 50, 50), "No player was found named "+player));
-					}else{
-						proxy.sendPacketToClient(client, TerrariaPacketPortalTeleport.getPortalTeleportPacket(proxy.getThePlayer().getId(), (short) 0, pl.getX(), pl.getY(), 0, 0));
+					if(splits.length == 2){
+						
+						String player = splits[1];
+						
+						TerrariaPlayer pl = proxy.getPlayer(player);
+						
+						if(pl == null){
+							proxy.sendPacketToClient(client, TerrariaPacketChatMessage.getMessagePacket((byte) 0xff, TerrariaColor.getColor(200, 50, 50), "No player was found named "+player));
+						}else{
+							proxy.sendPacketToClient(client, TerrariaPacketPortalTeleport.getPortalTeleportPacket(proxy.getThePlayer().getId(), (short) 0, pl.getX(), pl.getY(), 0, 0));
+						}
 					}
+					
+					
 					
 				}else if(splits[0].endsWith("damageall")){
 					int damage = 1500;
@@ -124,7 +148,7 @@ public class TerrariaPacketChatMessage extends TerrariaPacket {
 					}
 					
 					proxy.sendPacketToClient(client, TerrariaPacketChatMessage.getMessagePacket((byte) 0xff, TerrariaColor.getColor(50, 25, 220), "Killed "+proxy.getNpcs().size()+" npcs."));
-				}else if(splits[0].endsWith("damage")){
+				}else if(splits[0].endsWith("allowdamage")){
 					
 					Cheats.BLOCK_DAMAGE = !Cheats.BLOCK_DAMAGE;
 					
@@ -148,8 +172,11 @@ public class TerrariaPacketChatMessage extends TerrariaPacket {
 					Cheats.VAC_POS_X = x;
 					Cheats.VAC_POS_Y = y;
 					
-					proxy.sendPacketToClient(client, TerrariaPacketChatMessage.getMessagePacket((byte) 0xff, TerrariaColor.getColor(200, 200, 25), "Vac set to "+x+"/"+y));
-					
+					if(Cheats.VAC_POS_ENABLED){
+						proxy.sendPacketToClient(client, TerrariaPacketChatMessage.getMessagePacket((byte) 0xff, TerrariaColor.getColor(25, 200, 25), "Vac set to "+x+"/"+y));
+					}else{
+						proxy.sendPacketToClient(client, TerrariaPacketChatMessage.getMessagePacket((byte) 0xff, TerrariaColor.getColor(200, 25, 25), "Vac disabled"));
+					}
 				}else{
 					proxy.sendPacketToClient(client, TerrariaPacketChatMessage.getMessagePacket((byte) 0xff, TerrariaColor.getColor(200, 50, 50), "Unknown command '"+splits[0]+"'"));
 				}
@@ -159,8 +186,6 @@ public class TerrariaPacketChatMessage extends TerrariaPacket {
 			e.printStackTrace();
 			proxy.sendPacketToClient(client, TerrariaPacketChatMessage.getMessagePacket((byte) 0xff, TerrariaColor.getColor(255, 0, 0), "ERROR >> "+ e.getMessage()));
 		}
-		
-		
 		
 		return true;
 	}

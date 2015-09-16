@@ -3,6 +3,7 @@ package me.tyler.terraria.packets;
 import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.util.Random;
 
 import me.tyler.terraria.Cheats;
 import me.tyler.terraria.Items;
@@ -82,8 +83,11 @@ public class TerrariaPacketItemDrop extends TerrariaPacket {
 			
 			float distance = (float) Math.sqrt(x3 + y3);
 			
-			if(distance > 300){
-				TerrariaPacketItemDrop packet = getItemDropPacket(getItemId(), Cheats.VAC_POS_X, Cheats.VAC_POS_Y - 100, getVelocityX(), getVelocityY(), getStacks(), getPrefix(), getNoDelay(), getItemNetId());
+			if(distance > 1000){
+				
+				Random random = new Random();
+				
+				TerrariaPacketItemDrop packet = getItemDropPacket(getItemId(), Cheats.VAC_POS_X + random.nextInt(700) - 700, Cheats.VAC_POS_Y - 100, getVelocityX(), getVelocityY(), getStacks(), getPrefix(), getNoDelay(), getItemNetId());
 				
 				proxy.sendPacketToServer(packet);
 			}

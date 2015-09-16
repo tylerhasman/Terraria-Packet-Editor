@@ -12,6 +12,7 @@ public class PacketType {
 	public static final byte PROJECTILE_UPDATE = 27;
 	public static final byte STRIKE_PACKET = 28;
 	public static final byte MANA = 42;
+	public static final byte MANA_EFFECT = 43;
 	public static final byte ADD_BUFF = 55;
 	public static final byte SPAWN_BOSS = 61;
 	public static final byte TELEPORT = 65;
