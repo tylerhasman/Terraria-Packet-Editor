@@ -33,10 +33,10 @@ public class TerrariaPacketUpdatePlayer extends TerrariaPacket {
 	@Override
 	public boolean onSending(Proxy proxy, Socket client) {
 		
-		//System.out.println(getPositionX()+" "+getPositionY());
-		
 		proxy.getThePlayer().setX(getPositionX());
 		proxy.getThePlayer().setY(getPositionY());
+		
+		proxy.setConnectionIniatializationDone(true);
 		
 		return super.onSending(proxy, client);
 	}

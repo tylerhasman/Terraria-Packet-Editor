@@ -24,6 +24,7 @@ public class Proxy {
 	private TerrariaPlayer thePlayer;
 	private Map<Byte, TerrariaPlayer> players;
 	private List<Npc> npcs;
+	private boolean isConnectionIniatializationDone;
 	
 	public Proxy(String ip, int port) {
 		targetIp = ip;
@@ -31,6 +32,7 @@ public class Proxy {
 		players = new HashMap<>();
 		npcs = new ArrayList<>();
 		isConnected = false;
+		isConnectionIniatializationDone = false;
 	}
 	
 	public void connect() throws IOException {
@@ -104,6 +106,14 @@ public class Proxy {
 		
 		return packet;
 
+	}
+	
+	public boolean isConnectionIniatializationDone() {
+		return isConnectionIniatializationDone;
+	}
+	
+	public void setConnectionIniatializationDone(boolean flag) {
+		this.isConnectionIniatializationDone = flag;
 	}
 	
 	/*private void logToFile(String str){

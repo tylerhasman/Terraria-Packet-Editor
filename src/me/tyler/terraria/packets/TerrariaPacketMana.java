@@ -24,7 +24,7 @@ public class TerrariaPacketMana extends TerrariaPacket {
 	@Override
 	public boolean onSending(Proxy proxy, Socket client) {
 		
-		if(getPlayerId() == proxy.getThePlayer().getId()){
+		if(getPlayerId() == proxy.getThePlayer().getId() && proxy.isConnectionIniatializationDone()){
 			
 			proxy.sendPacketToServer(TerrariaPacketManaEffect.getManaEffectPacket(getPlayerId(), (short) (getMaxMana()-getMana())));
 			
