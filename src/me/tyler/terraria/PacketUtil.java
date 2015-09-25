@@ -8,7 +8,7 @@ public class PacketUtil {
 		
 		byte length = buffer[offset];
 		
-		if(length == 0){
+		if(length <= 0){
 			return "";
 		}
 		
