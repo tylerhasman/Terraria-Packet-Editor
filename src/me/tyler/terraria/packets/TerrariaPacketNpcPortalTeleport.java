@@ -7,6 +7,10 @@ import me.tyler.terraria.PacketType;
 
 public class TerrariaPacketNpcPortalTeleport extends TerrariaPacket {
 
+	public TerrariaPacketNpcPortalTeleport(byte t, byte[] p) {
+		super(t, p);
+	}
+
 	public static TerrariaPacket getPortalTeleportPacket(byte index, short portalIndex, float x, float y, float velx, float vely)
 	{
 		ByteBuffer buf = ByteBuffer.allocate(19).order(ByteOrder.LITTLE_ENDIAN);
@@ -18,7 +22,7 @@ public class TerrariaPacketNpcPortalTeleport extends TerrariaPacket {
 		buf.putFloat(velx);
 		buf.putFloat(vely);
 		
-		return new TerrariaPacket(PacketType.NPC_PORTAL_TELEPORT, buf.array());
+		return new TerrariaPacket(PacketType.NPC_PORTAL_TELEPORT.getId(), buf.array());
 		
 	}
 	

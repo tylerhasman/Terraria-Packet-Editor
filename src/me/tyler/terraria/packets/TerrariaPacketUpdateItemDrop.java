@@ -6,17 +6,12 @@ import java.nio.ByteOrder;
 import java.util.Random;
 
 import me.tyler.terraria.Cheats;
-import me.tyler.terraria.Items;
 import me.tyler.terraria.PacketType;
 import me.tyler.terraria.Proxy;
 
-public class TerrariaPacketItemDrop extends TerrariaPacket {
-
-	public TerrariaPacketItemDrop() {
-		
-	}
+public class TerrariaPacketUpdateItemDrop extends TerrariaPacket {
 	
-	public TerrariaPacketItemDrop(byte type, byte[] buffer) {
+	public TerrariaPacketUpdateItemDrop(byte type, byte[] buffer) {
 		super(type, buffer);
 	}
 	
@@ -72,9 +67,10 @@ public class TerrariaPacketItemDrop extends TerrariaPacket {
 			float distance = (float) Math.sqrt(x3 + y3);
 			
 			if(distance > 200){
-				TerrariaPacketItemDrop packet = getItemDropPacket(getItemId(), proxy.getThePlayer().getX(), proxy.getThePlayer().getY() - 100, getVelocityX(), getVelocityY(), getStacks(), getPrefix(), getNoDelay(), getItemNetId());
+				TerrariaPacket packet = getItemDropPacket(getItemId(), proxy.getThePlayer().getX(), proxy.getThePlayer().getY() - 100, getVelocityX(), getVelocityY(), getStacks(), getPrefix(), getNoDelay(), getItemNetId());
 				
 				proxy.sendPacketToServer(packet);
+				
 			}
 		}else if(Cheats.VAC_POS_ENABLED){
 			
@@ -87,9 +83,10 @@ public class TerrariaPacketItemDrop extends TerrariaPacket {
 				
 				Random random = new Random();
 				
-				TerrariaPacketItemDrop packet = getItemDropPacket(getItemId(), Cheats.VAC_POS_X + random.nextInt(700) - 700, Cheats.VAC_POS_Y - 100, getVelocityX(), getVelocityY(), getStacks(), getPrefix(), getNoDelay(), getItemNetId());
+				TerrariaPacket packet = getItemDropPacket(getItemId(), Cheats.VAC_POS_X + random.nextInt(700) - 700, Cheats.VAC_POS_Y - 100, getVelocityX(), getVelocityY(), getStacks(), getPrefix(), getNoDelay(), getItemNetId());
 				
 				proxy.sendPacketToServer(packet);
+				
 			}
 			
 		}
@@ -98,7 +95,7 @@ public class TerrariaPacketItemDrop extends TerrariaPacket {
 		return true;
 	}
 	
-	public static TerrariaPacketItemDrop getItemDropPacket(int itemId, float x, float y, float velX, float velY, int stacks, int prefix, int nodelay, int netid){
+	public static TerrariaPacket getItemDropPacket(int itemId, float x, float y, float velX, float velY, int stacks, int prefix, int nodelay, int netid){
 		
 		ByteBuffer buf = ByteBuffer.allocate(24).order(ByteOrder.LITTLE_ENDIAN);
 		
@@ -112,7 +109,7 @@ public class TerrariaPacketItemDrop extends TerrariaPacket {
 		buf.put((byte) nodelay);
 		buf.putShort((short) netid);
 		
-		TerrariaPacketItemDrop packet = new TerrariaPacketItemDrop(PacketType.UPDATE_ITEM_DROP, buf.array());
+		TerrariaPacket packet = new TerrariaPacket(PacketType.UPDATE_ITEM_DROP.getId(), buf.array());
 		
 		return packet;
 		

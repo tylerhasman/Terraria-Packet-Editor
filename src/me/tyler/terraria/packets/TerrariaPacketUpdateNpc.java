@@ -7,6 +7,10 @@ import me.tyler.terraria.Proxy;
 
 public class TerrariaPacketUpdateNpc extends TerrariaPacket {
 
+	public TerrariaPacketUpdateNpc(byte type, byte[] payload) {
+		super(type, payload);
+	}
+
 	public short getId(){
 		return getPayloadBuffer().getShort();
 	}
@@ -39,14 +43,6 @@ public class TerrariaPacketUpdateNpc extends TerrariaPacket {
 	
 	@Override
 	public boolean onReceive(Proxy proxy, Socket client) {
-
-	/*	System.out.print("UPDATE >> ");
-		for(byte b : getPayload()){
-			System.out.print(b+" ");
-		}
-		
-		System.out.println();
-		*/
 		
 		if(proxy.getNpc(getId()) == null){
 			Npc npc = new Npc(getId());
@@ -59,7 +55,7 @@ public class TerrariaPacketUpdateNpc extends TerrariaPacket {
 			proxy.getNpc(getId()).setY(getPositionY());
 		}
 		
-		return super.onReceive(proxy, client);
+		return true;
 	}
 	
 	

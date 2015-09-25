@@ -8,6 +8,10 @@ import me.tyler.terraria.TerrariaPlayer;
 
 public class TerrariaPacketPlayerInfo extends TerrariaPacket {
 
+	public TerrariaPacketPlayerInfo(byte type, byte[] payload) {
+		super(type, payload);
+	}
+
 	public byte getPlayerId(){
 		return getPayloadBuffer().get();
 	}
@@ -38,7 +42,7 @@ public class TerrariaPacketPlayerInfo extends TerrariaPacket {
 		proxy.setThePlayer(new TerrariaPlayer(getPlayerId()));
 		proxy.getThePlayer().setName(getName());
 		
-		return super.onSending(proxy, client);
+		return true;
 	}
 	
 }

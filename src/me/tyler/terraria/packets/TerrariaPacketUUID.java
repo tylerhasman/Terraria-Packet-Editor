@@ -13,6 +13,10 @@ import me.tyler.terraria.Proxy;
 public class TerrariaPacketUUID extends TerrariaPacket {
 
 	private static UUID fakeId = null;
+
+	public TerrariaPacketUUID(byte type, byte[] payload) {
+		super(type, payload);
+	}
 	
 	@Override
 	public boolean onSending(Proxy proxy, Socket client) {
@@ -49,7 +53,7 @@ public class TerrariaPacketUUID extends TerrariaPacket {
 		
 		System.out.println("Fake UUID: "+fakeId.toString());
 		
-		return new TerrariaPacket(PacketType.CLIENT_UUID, buf.array());
+		return new TerrariaPacket(PacketType.CLIENT_UUID.getId(), buf.array());
 		
 	}
 	

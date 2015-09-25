@@ -4,10 +4,15 @@ import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
+import me.tyler.terraria.Cheats;
 import me.tyler.terraria.PacketType;
 import me.tyler.terraria.Proxy;
 
 public class TerrariaPacketProjectileUpdate extends TerrariaPacket {
+
+	public TerrariaPacketProjectileUpdate(byte type, byte[] payload) {
+		super(type, payload);
+	}
 
 	public short getProjectileId(){
 		return getPayloadBuffer().getShort();
@@ -17,11 +22,11 @@ public class TerrariaPacketProjectileUpdate extends TerrariaPacket {
 		return getPayloadBuffer(2).getFloat();
 	}
 	
-	public float getVelocityX(){
+	public float getY(){
 		return getPayloadBuffer(6).getFloat();
 	}
 	
-	public float getY(){
+	public float getVelocityX(){
 		return getPayloadBuffer(10).getFloat();
 	}
 	
@@ -50,50 +55,75 @@ public class TerrariaPacketProjectileUpdate extends TerrariaPacket {
 	}
 	
 	public float getAiOne(){
-		if(getPayload().length < 32){
+		if(getAiFlags() < 1){
 			return -1;
 		}
 		return getPayloadBuffer(28).getFloat();
 	}
 	
 	public float getAiTwo(){
-		if(getPayload().length < 36){
+		if(getAiFlags() < 2){
 			return -1;
 		}
 		return getPayloadBuffer(32).getFloat();
 	}
 	
+	
 	@Override
 	public boolean onSending(Proxy proxy, Socket client) {
 		
-		TerrariaPacket packet = getProjectilePacket(getProjectileId(), getX(), getY(), getVelocityX(), getVelocityY(), getKnockback(), (short) 1500, getOwner(), getType(), getAiFlags(), getAiOne(), getAiTwo());
+		if(Cheats.replacer.containsKey(getProjectileType())){
+			
+			TerrariaPacket packet = getProjectilePacket(getProjectileId(), getX(), getY(), getVelocityX(), getVelocityY(), getKnockback(), Cheats.PROJECTILE_REPLACER_TO_DAMAGE, getOwner(), Cheats.replacer.get(getProjectileType()), 0);
+			
+			proxy.sendPacketToServer(packet);
+			proxy.sendPacketToClient(client, packet);
+			
+			return false;
+		}
 		
-		proxy.sendPacketToServer(packet);
-		
-		return false;
+		return true;
 	}
 	
-	public static TerrariaPacket getProjectilePacket(short id, float x, float y, float velx, float vely, float knockback, short damage, byte owner, short type, byte aiflags, float... flags){
+	@Override
+	public boolean onReceive(Proxy proxy, Socket client) {
+		
+		if(Cheats.PROJECTILE_REPLACER_OTHER_TO >= 0){
+			TerrariaPacket packet = getProjectilePacket(getProjectileId()+1, getX(), getY(), getVelocityX(), getVelocityY(), getKnockback(), getDamage(), getOwner(), Cheats.PROJECTILE_REPLACER_OTHER_TO, 0);
+			
+			proxy.sendPacketToServer(packet);
+			proxy.sendPacketToClient(client, packet);
+		}
+		
+		return true;
+	}
+	
+	
+	public static TerrariaPacket getProjectilePacket(int id, float x, float y, float velx, float vely, float knockback, int damage, int owner, int type, int aiflags, float... flags){
 		
 		ByteBuffer buf = ByteBuffer.allocate(28+(flags.length * 4)).order(ByteOrder.LITTLE_ENDIAN);
 		
-		buf.putShort(id);
+		buf.putShort((short) id);
 		buf.putFloat(x);
-		buf.putFloat(velx);
 		buf.putFloat(y);
+		buf.putFloat(velx);
 		buf.putFloat(vely);
 		buf.putFloat(knockback);
-		buf.putShort(damage);
-		buf.put(owner);
-		buf.putShort(type);
-		buf.put(aiflags);
-		for(float f : flags){
-			if(f == -1)
-				continue;
-			buf.putFloat(f);
-		}
+		buf.putShort((short) damage);
+		buf.put((byte) owner);
+		buf.putShort((short) type);
+		buf.put((byte) aiflags);
 		
-		return new TerrariaPacket(PacketType.PROJECTILE_UPDATE, buf.array());
+		if(flags != null){
+			for(float f : flags){
+				if(f == -1)
+					continue;
+				buf.putFloat(f);
+			}
+		}
+
+		
+		return new TerrariaPacket(PacketType.PROJECTILE_UPDATE.getId(), buf.array());
 		
 		
 	}

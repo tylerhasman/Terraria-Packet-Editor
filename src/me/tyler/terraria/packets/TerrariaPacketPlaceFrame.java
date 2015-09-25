@@ -7,6 +7,10 @@ import me.tyler.terraria.PacketType;
 
 public class TerrariaPacketPlaceFrame extends TerrariaPacket {
 	
+	public TerrariaPacketPlaceFrame(byte type, byte[] payload) {
+		super(type, payload);
+	}
+
 	public static TerrariaPacket getPlaceItemFramePacket(short x, short y, short itemId, byte prefix, short amount){
 		
 		ByteBuffer buf = ByteBuffer.allocate(9).order(ByteOrder.LITTLE_ENDIAN);
@@ -17,7 +21,7 @@ public class TerrariaPacketPlaceFrame extends TerrariaPacket {
 		buf.put(prefix);
 		buf.putShort(amount);
 		
-		return new TerrariaPacket(PacketType.SPAWN_ITEM, buf.array());
+		return new TerrariaPacket(PacketType.PLACE_FRAME.getId(), buf.array());
 		
 	}
 	

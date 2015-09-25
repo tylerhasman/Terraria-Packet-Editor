@@ -7,6 +7,10 @@ import me.tyler.terraria.PacketType;
 
 public class TerrariaPacketManaEffect extends TerrariaPacket {
 
+	public TerrariaPacketManaEffect(byte t, byte[] p) {
+		super(t, p);
+	}
+
 	public byte getPlayerId(){
 		return getPayloadBuffer().get();
 	}
@@ -22,7 +26,7 @@ public class TerrariaPacketManaEffect extends TerrariaPacket {
 		buf.put(playerId);
 		buf.putShort(amount);
 		
-		return new TerrariaPacket(PacketType.MANA_EFFECT, buf.array());
+		return new TerrariaPacket(PacketType.MANA_EFFECT.getId(), buf.array());
 		
 	}
 	

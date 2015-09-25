@@ -6,6 +6,10 @@ import me.tyler.terraria.Proxy;
 
 public class TerrariaPacketUpdatePlayer extends TerrariaPacket {
 
+	public TerrariaPacketUpdatePlayer(byte type, byte[] payload) {
+		super(type, payload);
+	}
+
 	public byte getPlayerId(){
 		return getPayloadBuffer().get();
 	}
@@ -38,7 +42,7 @@ public class TerrariaPacketUpdatePlayer extends TerrariaPacket {
 		
 		proxy.setConnectionIniatializationDone(true);
 		
-		return super.onSending(proxy, client);
+		return true;
 	}
 	
 	@Override
@@ -47,7 +51,7 @@ public class TerrariaPacketUpdatePlayer extends TerrariaPacket {
 		proxy.getPlayer(getPlayerId()).setX(getPositionX());
 		proxy.getPlayer(getPlayerId()).setY(getPositionY());
 		
-		return super.onReceive(proxy, client);
+		return true;
 	}
 	
 }

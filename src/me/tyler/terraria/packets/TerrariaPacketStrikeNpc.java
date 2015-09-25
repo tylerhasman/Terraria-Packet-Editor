@@ -7,6 +7,10 @@ import me.tyler.terraria.PacketType;
 
 public class TerrariaPacketStrikeNpc extends TerrariaPacket {
 
+	public TerrariaPacketStrikeNpc(byte type, byte[] payload) {
+		super(type, payload);
+	}
+
 	public static TerrariaPacket getStrikePacket(int npcid, int damage, float knockback, byte direction, boolean crit){
 		
 		ByteBuffer buf = ByteBuffer.allocate(10).order(ByteOrder.LITTLE_ENDIAN);
@@ -17,7 +21,7 @@ public class TerrariaPacketStrikeNpc extends TerrariaPacket {
 		buf.put(direction);
 		buf.put((byte) (crit ? 1 : 0));
 		
-		return new TerrariaPacket(PacketType.STRIKE_PACKET, buf.array());
+		return new TerrariaPacket(PacketType.STRIKE_NPC.getId(), buf.array());
 		
 	}
 	

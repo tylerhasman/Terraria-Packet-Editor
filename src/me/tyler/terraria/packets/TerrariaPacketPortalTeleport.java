@@ -1,23 +1,16 @@
 package me.tyler.terraria.packets;
 
-import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
 import me.tyler.terraria.PacketType;
-import me.tyler.terraria.Proxy;
 
 public class TerrariaPacketPortalTeleport extends TerrariaPacket {
 
-	public TerrariaPacketPortalTeleport(byte type, byte[] buffer) {
-		super(type, buffer);
+	public TerrariaPacketPortalTeleport(byte type, byte[] payload) {
+		super(type, payload);
 	}
-	
-	public TerrariaPacketPortalTeleport() {
-		
-	}
-	
-	
+
 	public byte getPlayerId(){
 		return getPayloadBuffer().get();
 	}
@@ -42,11 +35,6 @@ public class TerrariaPacketPortalTeleport extends TerrariaPacket {
 		return getPayloadBuffer(15).getFloat();
 	}
 	
-	@Override
-	public boolean onReceive(Proxy proxy, Socket client) {
-		return super.onReceive(proxy, client);
-	}
-	
 	public static TerrariaPacketPortalTeleport getPortalTeleportPacket(int playerId, int portalIndex, float x, float y, float velx, float vely)
 	{
 		ByteBuffer buf = ByteBuffer.allocate(20).order(ByteOrder.LITTLE_ENDIAN);
@@ -58,7 +46,7 @@ public class TerrariaPacketPortalTeleport extends TerrariaPacket {
 		buf.putFloat(velx);
 		buf.putFloat(vely);
 		
-		return new TerrariaPacketPortalTeleport(PacketType.PORTAL_TELEPORT, buf.array());
+		return new TerrariaPacketPortalTeleport(PacketType.PORTAL_TELEPORT.getId(), buf.array());
 		
 	}
 }

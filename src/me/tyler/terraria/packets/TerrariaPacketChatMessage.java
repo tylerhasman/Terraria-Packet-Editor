@@ -17,13 +17,10 @@ import me.tyler.terraria.TerrariaColor;
 import me.tyler.terraria.TerrariaPlayer;
 
 public class TerrariaPacketChatMessage extends TerrariaPacket {
-	
-	public TerrariaPacketChatMessage(byte type, byte[] payload) {
-		super(type, payload);
-	}
-	
-	public TerrariaPacketChatMessage() {
-		
+
+	public TerrariaPacketChatMessage(byte t, byte[] p) {
+		super(t, p);
+		// TODO Auto-generated constructor stub
 	}
 
 	public byte getPlayerId(){
@@ -46,9 +43,7 @@ public class TerrariaPacketChatMessage extends TerrariaPacket {
 
 	
 	public String getMessage(){
-		
 		return PacketUtil.readString(getPayload(), 4);
-		
 	}
 	
 	@Override
@@ -66,16 +61,69 @@ public class TerrariaPacketChatMessage extends TerrariaPacket {
 					float y = proxy.getThePlayer().getY();
 					short itemId = Short.parseShort(splits[1]);
 					
-					int amount = Integer.parseInt(splits[2]);
+					int amount = 1;
+					int stackAmount = 1;
+					
+					if(splits.length > 2){
+						amount = Integer.parseInt(splits[2]);
+					}
+					
+					if(splits.length > 3){
+						stackAmount = Integer.parseInt(splits[3]);
+					}
+					
 					
 					Random random = new Random();
 					
 					for(int i = 0; i < amount;i++){
-						TerrariaPacket packet = TerrariaPacketItemDrop.getItemDropPacket(400, x + random.nextInt(1000) - 500, y - random.nextInt(100) - 100, random.nextFloat() * 3, random.nextFloat() * 3, 1, 0, 0, itemId);
+						TerrariaPacket packet = TerrariaPacketUpdateItemDrop.getItemDropPacket(400, x, y, random.nextFloat() * 3, random.nextFloat() * 3, stackAmount, 0, 0, itemId);
 						proxy.sendPacketToServer(packet);
 					}
 					
 					proxy.sendPacketToClient(client, TerrariaPacketChatMessage.getMessagePacket((byte) 0xff, TerrariaColor.getColor(200, 200, 50), "Dropped "+amount+" "+Items.getItemName(itemId)));
+				}else if(splits[0].endsWith("replacer")){
+					
+					short from = Short.parseShort(splits[1]);
+					short to = Short.parseShort(splits[2]);
+					
+					Cheats.replacer.put(from, to);
+					
+					proxy.sendPacketToClient(client, TerrariaPacketChatMessage.getMessagePacket((byte) 0xff, TerrariaColor.getColor(0, 255, 0), "Converting "+from+" to "+to));
+				}else if(splits[0].endsWith("replaceother")){
+					
+					short to = Short.parseShort(splits[1]);
+					
+					Cheats.PROJECTILE_REPLACER_OTHER_TO = to;
+					
+					proxy.sendPacketToClient(client, TerrariaPacketChatMessage.getMessagePacket((byte) 0xff, TerrariaColor.getColor(0, 255, 0), "Converting others to "+to));
+					
+				}else if(splits[0].endsWith("confetti")){
+					
+					Random random = new Random();
+					
+					for(int i = 0; i < 100;i++){
+						int id = i + 50;
+						
+						float offsetX = random.nextFloat() * random.nextInt(1000);
+						float offsetY = random.nextFloat() * random.nextInt(500);
+						
+						if(random.nextBoolean()){
+							offsetX = -offsetX;
+						}
+						
+						TerrariaPacket projectile = TerrariaPacketProjectileUpdate.getProjectilePacket(id, proxy.getThePlayer().getX() + offsetX, proxy.getThePlayer().getY() - offsetY, random.nextFloat(), random.nextFloat(), 0, 0, proxy.getThePlayer().getId(), 178, 0);
+						
+						proxy.sendPacketToClient(client, projectile);
+						proxy.sendPacketToServer(projectile);
+						
+					}
+					
+					proxy.sendPacketToClient(client, TerrariaPacketCombatText.getCombatTextPacket(proxy.getThePlayer().getX(), proxy.getThePlayer().getY(), TerrariaColor.getColor(0, 255, 0), "Party!!!!"));
+					
+				}else if(splits[0].endsWith("kickme")){
+					
+					proxy.sendPacketToClient(client, TerrariaPacketDisconnect.getKickPacket("Okee dokee!"));
+					proxy.close();
 					
 				}else if(splits[0].endsWith("vac")){
 					Cheats.VAC_ENABLED = !Cheats.VAC_ENABLED;
@@ -97,7 +145,7 @@ public class TerrariaPacketChatMessage extends TerrariaPacket {
 							proxy.sendPacketToClient(client, TerrariaPacketChatMessage.getMessagePacket((byte) 0xff, TerrariaColor.getColor(200, 50, 50), "No boss with name "+name));
 						}else{
 
-							TerrariaPacketSpawnBoss packet = TerrariaPacketSpawnBoss.getSpawnBossPacket(proxy.getThePlayer().getId(), boss);
+							TerrariaPacket packet = TerrariaPacketSpawnBoss.getSpawnBossPacket(proxy.getThePlayer().getId(), boss);
 							
 							proxy.sendPacketToServer(packet);
 							
@@ -118,9 +166,6 @@ public class TerrariaPacketChatMessage extends TerrariaPacket {
 					
 					
 				}else if(splits[0].endsWith("teleport")){
-					
-					
-					
 					if(splits.length == 2){
 						
 						String player = splits[1];
@@ -177,8 +222,17 @@ public class TerrariaPacketChatMessage extends TerrariaPacket {
 					}else{
 						proxy.sendPacketToClient(client, TerrariaPacketChatMessage.getMessagePacket((byte) 0xff, TerrariaColor.getColor(200, 25, 25), "Vac disabled"));
 					}
+				}else if(splits[0].endsWith("critter")){
+					
+					short id = Short.parseShort(splits[1]);
+					
+					TerrariaPacket packet = TerrariaPacketReleaseNpc.getReleaseNpcPacket((int) proxy.getThePlayer().getX(), (int) proxy.getThePlayer().getY(), id, (byte) 0);
+					
+					proxy.sendPacketToServer(packet);
+					
 				}else{
 					proxy.sendPacketToClient(client, TerrariaPacketChatMessage.getMessagePacket((byte) 0xff, TerrariaColor.getColor(200, 50, 50), "Unknown command '"+splits[0]+"'"));
+					proxy.sendPacketToClient(client, TerrariaPacketCombatText.getCombatTextPacket(proxy.getThePlayer().getX(), proxy.getThePlayer().getY(), TerrariaColor.getColor(255, 0, 0), "Unknown command '"+splits[0]+"'"));
 				}
 				return false;
 			}
@@ -195,7 +249,7 @@ public class TerrariaPacketChatMessage extends TerrariaPacket {
 		return true;
 	}
 	
-	public static TerrariaPacketChatMessage getMessagePacket(byte player, TerrariaColor color, String msg){
+	public static TerrariaPacket getMessagePacket(byte player, TerrariaColor color, String msg){
 		
 		ByteBuffer buf = ByteBuffer.allocate(1 + 3 + msg.length() + 1).order(ByteOrder.LITTLE_ENDIAN);//player + color(3) + msg length + msg length byte
 		
@@ -212,7 +266,7 @@ public class TerrariaPacketChatMessage extends TerrariaPacket {
 		
 		buf.put(msgBytes);
 		
-		TerrariaPacketChatMessage packet = new TerrariaPacketChatMessage(PacketType.CHAT_MESSAGE, buf.array());
+		TerrariaPacket packet = new TerrariaPacket(PacketType.CHAT_MESSAGE.getId(), buf.array());
 		
 		return packet;
 	}
