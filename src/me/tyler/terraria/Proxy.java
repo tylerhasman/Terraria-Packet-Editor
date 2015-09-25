@@ -116,32 +116,6 @@ public class Proxy {
 		this.isConnectionIniatializationDone = flag;
 	}
 	
-	/*private void logToFile(String str){
-		File f = new File("Log.txt");
-		
-		if(!f.exists()){
-			try {
-				f.createNewFile();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		try {
-			System.out.println(str);
-			BufferedWriter writer = new BufferedWriter(new FileWriter(f, true));
-			
-			writer.write(str);
-			writer.newLine();
-			
-			writer.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		
-	}*/
-	
 	public boolean isConnected() {
 		return isConnected;
 	}
@@ -159,7 +133,12 @@ public class Proxy {
 		buf.put(packet.getType());
 		buf.put(packet.getPayload());
 		
-		os.write(buf.array());
+		try{
+			os.write(buf.array());
+		}catch(Exception e){
+			System.out.println(e.getMessage());
+			close();
+		}
 	}
 	
 	public void sendPacketToClient(Socket client, TerrariaPacket packet){
