@@ -205,9 +205,9 @@ public class TerrariaPacketWorldInfo extends TerrariaPacket {
 	@Override
 	public boolean onReceive(Proxy proxy, Socket client) {
 		
-		/*if(!isServerSideCharacters()){
+		if(!isServerSideCharacters()){
 			getPayload()[getWorldNameOffset() + 75] += 64;
-		}*/
+		}
 		
 		return super.onReceive(proxy, client);
 	}

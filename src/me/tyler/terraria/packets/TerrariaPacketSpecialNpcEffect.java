@@ -1,10 +1,5 @@
 package me.tyler.terraria.packets;
 
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-
-import me.tyler.terraria.PacketType;
-
 public class TerrariaPacketSpecialNpcEffect extends TerrariaPacket {
 
 	public TerrariaPacketSpecialNpcEffect(byte type, byte[] payload) {
