@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.net.SocketTimeoutException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ public class Proxy {
 	private boolean isConnected;
 	private TerrariaPlayer thePlayer;
 	private Map<Byte, TerrariaPlayer> players;
+	private Map<Short, TerrariaItemDrop> itemsOnGround;
 	private List<Npc> npcs;
 	private boolean isConnectionIniatializationDone;
 	
@@ -31,6 +33,7 @@ public class Proxy {
 		targetPort = port;
 		players = new HashMap<>();
 		npcs = new ArrayList<>();
+		itemsOnGround = new HashMap<>();
 		isConnected = false;
 		isConnectionIniatializationDone = false;
 	}
@@ -43,7 +46,8 @@ public class Proxy {
 	public void cycle(Socket client){
 		
 		try{
-			TerrariaPacket sending = readDataFromSource(client);
+			
+			
 			TerrariaPacket recv = readDataFromSource(socket);
 			
 			if(recv != null){
@@ -51,6 +55,8 @@ public class Proxy {
 					sendPacketToClient(client, recv);
 				}
 			}
+			
+			TerrariaPacket sending = readDataFromSource(client);
 			
 			if(sending != null){
 				if(sending.onSending(this, client)){
@@ -66,45 +72,51 @@ public class Proxy {
 	}
 	
 	private TerrariaPacket readDataFromSource(Socket source) throws IOException{
-		InputStream is = source.getInputStream();
-		
-		if(is.available() <= 2){
-			return null;
-		}
-		
-		ByteBuffer buffer = ByteBuffer.allocate(3).order(ByteOrder.LITTLE_ENDIAN);
-		
-		is.read(buffer.array());
-		
-		short length = buffer.getShort();
-		
-		if(length <= 0){
-			return null;
-		}
-		
-		byte type = buffer.get();
-		
-		while(is.available() < length - 3){
-			if(!isConnected){
+		try{
+			InputStream is = source.getInputStream();
+			
+			if(is.available() <= 2){
 				return null;
 			}
+			
+			ByteBuffer buffer = ByteBuffer.allocate(3).order(ByteOrder.LITTLE_ENDIAN);
+			
+			is.read(buffer.array());
+			
+			short length = buffer.getShort();
+			
+			if(length <= 0){
+				return null;
+			}
+			
+			byte type = buffer.get();
+			
+			while(is.available() < length - 3){
+				if(!isConnected){
+					return null;
+				}
+			}
+			
+			buffer = ByteBuffer.allocate(length).order(ByteOrder.LITTLE_ENDIAN);
+			
+			if(length < 3){
+				System.out.println("length is "+length+"! Type "+ type);
+				return null;
+			}
+			
+			buffer.putShort(length);
+			buffer.put(type);
+			
+			is.read(buffer.array(), buffer.position(), length - 3);
+			
+			TerrariaPacket packet = TerrariaPacket.getPacketFromData(buffer.array());
+			
+			return packet;	
+		}catch(SocketTimeoutException e){
+			System.out.println(e.getMessage());
 		}
 		
-		buffer = ByteBuffer.allocate(length).order(ByteOrder.LITTLE_ENDIAN);
-		
-		if(length < 3){
-			System.out.println("length is "+length+"! Type "+ type);
-			return null;
-		}
-		
-		buffer.putShort(length);
-		buffer.put(type);
-		
-		is.read(buffer.array(), buffer.position(), length - 3);
-		
-		TerrariaPacket packet = TerrariaPacket.getPacketFromData(buffer.array());
-		
-		return packet;
+		return null;
 
 	}
 	
@@ -142,7 +154,6 @@ public class Proxy {
 	}
 	
 	public void sendPacketToClient(Socket client, TerrariaPacket packet){
-
 		try {
 			OutputStream os = client.getOutputStream();
 			sendPacketToOutputStream(os, packet);
@@ -153,12 +164,21 @@ public class Proxy {
 	}
 	
 	public void sendPacketToServer(TerrariaPacket packet) {
+		
 		try {
 			sendPacketToOutputStream(socket.getOutputStream(), packet);
 		} catch (IOException e) {
 			e.printStackTrace();
 			isConnected = false;
 		}
+	}
+	
+	public TerrariaItemDrop getDroppedItem(int id){
+		return itemsOnGround.get(id);
+	}
+
+	public void setDroppedItem(TerrariaItemDrop item){
+		itemsOnGround.put(item.getItemId(), item);
 	}
 	
 	public TerrariaPlayer getThePlayer() {
@@ -201,7 +221,7 @@ public class Proxy {
 
 	public TerrariaPlayer getPlayer(String player) {
 		for(TerrariaPlayer pl : players.values()){
-			if(pl.getName().equals(player)){
+			if(pl.getName().equalsIgnoreCase(player)){
 				return pl;
 			}
 		}

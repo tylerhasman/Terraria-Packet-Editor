@@ -24,6 +24,9 @@ public class Main {
 		
 		Socket client = server.accept();
 		
+		client.setSoTimeout(1000);
+		server.setSoTimeout(1000);
+		
 		System.out.println("Client accepted!");
 		
 		Proxy proxy = new Proxy(forwardIp, port);

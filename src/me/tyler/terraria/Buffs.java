@@ -43,7 +43,7 @@ public class Buffs {
 
 	}
 
-	public static String getBuffName(short id) {
-		return buffNames.get(id);
+	public static String getBuffName(int id) {
+		return buffNames.get((short) id);
 	}
 }

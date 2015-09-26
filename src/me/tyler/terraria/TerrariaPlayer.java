@@ -5,6 +5,8 @@ public class TerrariaPlayer {
 	private byte id;
 	private String name;
 	private float x, y;
+	private float velocityX, velocityY;
+	private boolean pvpEnabled;
 	
 	public TerrariaPlayer(byte id) {
 		this.id = id;
@@ -27,8 +29,24 @@ public class TerrariaPlayer {
 		this.y = y;
 	}
 	
+	public boolean isPvpEnabled() {
+		return pvpEnabled;
+	}
+	
+	public void setPvpEnabled(boolean pvpEnabled) {
+		this.pvpEnabled = pvpEnabled;
+	}
+	
 	public String getName() {
 		return name;
+	}
+	
+	public float getVelocityX() {
+		return velocityX;
+	}
+	
+	public float getVelocityY() {
+		return velocityY;
 	}
 	
 	public void setName(String name) {
@@ -37,6 +55,14 @@ public class TerrariaPlayer {
 	
 	public byte getId() {
 		return id;
+	}
+
+	public void setVelocityX(float velocityX) {
+		this.velocityX = velocityX;
+	}
+	
+	public void setVelocityY(float velocityY) {
+		this.velocityY = velocityY;
 	}
 	
 }

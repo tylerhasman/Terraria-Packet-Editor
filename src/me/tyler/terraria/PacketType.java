@@ -7,17 +7,25 @@ public enum PacketType {
 	CONNECTION_REQUEST(1, TerrariaPacketConnectionRequest.class),
 	DISCONNECT(2, TerrariaPacketDisconnect.class),
 	PLAYER_INFO(4, TerrariaPacketPlayerInfo.class),
+	WORLD_INFO(7, TerrariaPacketWorldInfo.class),
 	STATUS(9, TerrariaPacketStatus.class),
+	CONTINUE(6, TerrariaPacketContinue.class),
 	UPDATE_PLAYER(13, TerrariaPacketUpdatePlayer.class),
 	PLAYER_HP(16, TerrariaPacketPlayerHp.class),
+	MODIFY_TILE(17, TerrariaPacketModifyTile.class),
 	UPDATE_ITEM_DROP(21, TerrariaPacketUpdateItemDrop.class),
+	UPDATE_ITEM_OWNER(22, TerrariaPacketUpdateItemOwner.class),
 	NPC_UPDATE(23, TerrariaPacketUpdateNpc.class),
 	CHAT_MESSAGE(25, TerrariaPacketChatMessage.class),
 	PROJECTILE_UPDATE(27, TerrariaPacketProjectileUpdate.class),
 	STRIKE_NPC(28, TerrariaPacketStrikeNpc.class),
+	TOGGLE_PVP(30, TerrariaPacketTogglePvp.class),
 	MANA(42, TerrariaPacketMana.class),
 	MANA_EFFECT(43, TerrariaPacketManaEffect.class),
+	KILL_ME(44, TerrariaPacketKillMe.class),
 	PLAYER_TEAM(45, TerrariaPacketPlayerTeam.class),
+	UPDATE_BUFF(50, TerrariaPacketUpdatePlayerBuff.class),
+	/*SPECIAL_NPC_EFFECT(51, TerrariaPacketSpecialNpcEffect.class),*/
 	ADD_BUFF(55, TerrariaPacketAddBuff.class),
 	SPAWN_BOSS(61, TerrariaPacketSpawnBoss.class),
 	TELEPORT(65, TerrariaPacketTeleport.class),
@@ -41,6 +49,10 @@ public enum PacketType {
 	
 	public byte getId() {
 		return id;
+	}
+	
+	public <T> T getPacket(byte[] payload){
+		return getPacket(id, payload);
 	}
 	
 	@SuppressWarnings("unchecked")

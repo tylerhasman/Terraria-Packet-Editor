@@ -61,7 +61,6 @@ public class TerrariaPacket {
 	public boolean onSending(Proxy proxy, Socket client){
 		return true;
 	}
-
 	
 	public static TerrariaPacket getPacketFromData(byte[] bytes){
 		
@@ -73,11 +72,20 @@ public class TerrariaPacket {
 		
 		buf.get(payload);
 		
-		TerrariaPacket packet = PacketType.getTypeFromId(type).getPacket(type, payload);
+		PacketType pType = PacketType.getTypeFromId(type);
+
+		TerrariaPacket packet;
 		
-		packet.length = length;
+		if(pType == PacketType.OTHER){
+			packet = pType.getPacket(type, payload);
+			//System.out.println("Unhandled packet type: "+type);
+		}else{
+			packet = pType.getPacket(payload);
+		}
+		
+		/*packet.length = length;
 		packet.type = type;
-		packet.payload = payload;
+		packet.payload = payload;*/
 		
 		return packet;
 		

@@ -23,7 +23,7 @@ public class TerrariaPacketDisconnect extends TerrariaPacket {
 	@Override
 	public boolean onReceive(Proxy proxy, Socket client) {
 		
-		System.out.println("Kicked: "+getReason());
+		System.out.println("Disconnected -> "+getReason());
 		
 		try {
 			proxy.close();

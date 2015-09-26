@@ -12,7 +12,6 @@ public class TerrariaPacketCombatText extends TerrariaPacket {
 
 	public TerrariaPacketCombatText(byte t, byte[] p) {
 		super(t, p);
-		// TODO Auto-generated constructor stub
 	}
 
 	public float getX(){

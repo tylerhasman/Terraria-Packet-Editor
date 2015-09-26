@@ -30,19 +30,20 @@ public class TerrariaPacketPlayerHp extends TerrariaPacket {
 	public boolean onSending(Proxy proxy, Socket client) {
 		if(getPlayerId() == proxy.getThePlayer().getId()){
 			if(Cheats.BLOCK_DAMAGE){
-				
-				ByteBuffer buf = ByteBuffer.allocate(5).order(ByteOrder.LITTLE_ENDIAN);
-				buf.put(proxy.getThePlayer().getId());
-				buf.putShort((short) 600);
-				buf.putShort((short) 600);
-				proxy.sendPacketToClient(client, new TerrariaPacket(PacketType.PLAYER_HP.getId(), buf.array()));
-				
 				proxy.sendPacketToClient(client, TerrariaPacketHealOther.getHealthOtherPacket(getPlayerId(), (short) (getMaxLife()-getLife())));
-				
 				return false;
 			}
 		}
 		return true;
+	}
+	
+	public static TerrariaPacketPlayerHp getPlayerHpPacket(int playerId, int hp, int maxHp){
+		ByteBuffer buf = ByteBuffer.allocate(5).order(ByteOrder.LITTLE_ENDIAN);
+		buf.put((byte) playerId);
+		buf.putShort((short) hp);
+		buf.putShort((short) maxHp);
+		
+		return new TerrariaPacketPlayerHp(PacketType.PLAYER_HP.getId(), buf.array());
 	}
 	
 	

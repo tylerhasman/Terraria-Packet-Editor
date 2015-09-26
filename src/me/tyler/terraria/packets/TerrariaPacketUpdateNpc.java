@@ -39,8 +39,6 @@ public class TerrariaPacketUpdateNpc extends TerrariaPacket {
 		return getPayloadBuffer(19).get();
 	}
 	
-	
-	
 	@Override
 	public boolean onReceive(Proxy proxy, Socket client) {
 		

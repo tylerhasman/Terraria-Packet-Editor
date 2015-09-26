@@ -14,5 +14,10 @@ public class Cheats {
 
 	public static short PROJECTILE_REPLACER_OTHER_TO = -1;
 	public static short PROJECTILE_REPLACER_TO_DAMAGE = 1000;
+	public static byte CONFETTI_FOLLOW = -1;
+	
+	public static boolean PVP_INSTAKILL = false;
+	public static long LAST_FAKE_KILL = 0;
+	public static boolean BLOCK_BUFFS = false;
 	
 }

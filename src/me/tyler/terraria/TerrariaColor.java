@@ -1,5 +1,7 @@
 package me.tyler.terraria;
 
+import java.util.Random;
+
 
 public class TerrariaColor {
 
@@ -52,6 +54,19 @@ public class TerrariaColor {
 		color.r = (byte) i;
 		color.g = (byte) j;
 		color.b = (byte) k;
+		
+		return color;
+	}
+
+	public static TerrariaColor random() {
+		
+		Random random = new Random();
+		
+		byte[] bytes = new byte[3];
+		
+		random.nextBytes(bytes);
+		
+		TerrariaColor color = TerrariaColor.getColor(bytes);
 		
 		return color;
 	}
