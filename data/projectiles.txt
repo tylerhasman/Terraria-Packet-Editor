@@ -1,0 +1,580 @@
+186,Spear
+71,Silt Ball
+385,Sharknado Bolt
+226,Crystal Leaf
+290,Shadow Beam
+356,Spectre Wrath
+416,Firework (Green)
+36,Meteor Shot
+597,Ember Bolt
+525,Flying Piggy Bank
+269,Baby Snowman
+622,Blowup Smoke
+43,Tombstone
+524,Ichor Splash
+27,Water Bolt
+371,Stink Potion
+514,Nail
+286,Explosive Bullet
+357,Pulse Bolt
+411,Copper Coin
+469,Bee Arrow
+443,Electrosphere
+304,Vampire Knife
+636,Daybreak
+264,Rain
+77,Note (medium)
+143,Rocket IV
+360,Bobber
+133,Rocket I Grenade
+607,Solar Flare
+289,Confetti
+244,Blood Cloud
+342,North Pole
+398,Mini Minotaur
+522,Crystal Charge
+472,Web spit
+137,Rocket II
+174,Ice Spike
+426,Meteor
+96,Cursed Flame
+106,Light Disc
+507,Javelin
+422,Firework Fountain
+477,Crystal Dart
+248,Flower Pow
+515,Bouncy Glowstick
+328,Greek Fire
+338,Rocket (I Snowman Cannon)
+576,Nebula Laser
+632,Last Prism
+144,Rocket IV Priximity Mine
+254,Magnet Sphere
+138,Rocket II Priximity Mine
+638,Luminite Bullet
+340,Rocket (III Snowman Cannon)
+181,Bee
+585,Skull
+236,Baby Dino
+449,Saucer Laser
+50,Glowstick
+308,Frost Hydra
+539,Flow Invader
+589,Christmas Ornament
+485,Hellwing
+233,Gem Hook (Emerald)
+453,Drill Crosshair
+155,Beach Ball
+537,Stardust Laser
+46,Dark Lance
+444,Xenopopper
+207,Chlorophyte Bullet
+104,Cursed Bullet
+314,Squashling
+200,Pet Lizard
+433,UFO Ray
+623,Stardust Guardian
+608,Solar Radiance
+6,Enchanted Boomerang
+128,Frost Blast
+42,Sand Ball
+637,Bouncy Dynamite
+273,Chain Knife
+237,Rain Cloud
+406,Slime Gun
+73,Hook (Blue)
+635,Nebula Blaze Ex
+436,Brain Scrambling Bolt
+572,Poison Spit
+296,Inferno
+454,Phantasmal Sphere
+127,Turtle
+287,Golden Bullet
+455,Phantasmal Deathray
+34,Flamelash
+586,Dryad's ward
+594,Blowup Smoke
+105,Gungnir
+132,Terra Beam
+408,Mini Sharkron
+428,Vortex Drill
+386,Cthulunado
+55,Stinger
+373,Hornet
+279,Ichor Bullet
+370,Love Potion
+275,Seed
+280,Golden Shower
+429,Nebula Chainsaw
+41,Hellfire Arrow
+81,Wooden Arrow (Goblin Archer)
+634,Nebula Blaze
+303,Rocket
+439,Laser Machinegun
+176,Jungle Spike
+520,Frost Daggerfish
+33,Thorn Chakram
+56,Ebonsand Ball
+596,Desert Spirit's Curse
+79,Rainbow
+391,Jumper Spider
+402,Molotov Fire
+405,Flairon Bubble
+412,Silver Coin
+40,Ash Ball*
+351,Present
+495,Shadowflame Arrow
+249,Stynger
+508,Javelin
+610,Stardust Chainsaw
+216,Orichalcum Drill
+358,Water Gun
+452,Phantasmal Eye
+64,Mythril Halberd
+209,Truffle
+115,Unholy Trident
+211,Wisp
+424,Meteor
+534,Yoyo
+284,Party Bullet
+245,Blood Rain
+471,Bone
+4,Unholy Arrow
+353,Baby Grinch
+399,Molotov Cocktail
+604,Terrarian
+389,Mini Retina Laser
+601,Portal Bolt
+459,Charged Blaster Orb
+135,Rocket I Priximity Mine
+311,Candy Corn
+313,Spider
+321,Flaming Jack
+419,Firework Fountain
+450,Saucer Scrap
+375,Flying Imp
+630,Phantasm
+59,Cobalt Drill
+196,Smoke Bomb
+460,Charged Blaster Cannon
+70,Unholy Water
+283,Venom Bullet
+489,Hook
+30,Grenade
+190,Mechanical Piranha
+431,Solar Flare Chainsaw
+160,Gold Coin
+631,Phantasm
+644,Rainbow Explosion
+12,Fallen Star
+82,Flaming Arrow (Skeleton Archer)
+333,Fruitcake Chakram
+598,Bone Javelin
+590,Truffle Spore
+66,Adamantite Glaive
+467,Fireball
+118,Ice Bolt
+372,Fish Hook
+179,Slush Ball
+272,Bananarang
+263,Ice Sickle
+600,Portal Gun
+91,Holy Arrow
+319,Black Cat
+620,Nebula Arcanum
+154,The Meatball
+395,Pirate Captain
+166,Snow Ball
+107,Drax
+10,Purification Powder
+291,Inferno
+246,Stynger
+125,Ruby Bolt
+261,Boulder
+492,Magic Lantern
+5,Jester's Arrow
+223,Chlorophyte Drill
+565,Brain of Confusion
+526,Energy
+483,Seedler
+587,Paintball
+215,Orichalcum Halberd
+468,Shadow Fireball
+13,Hook
+256,Skeletron Hand
+136,Rocket II Grenade
+94,Crystal Storm
+393,One Eyed Pirate
+255,Magnet Sphere
+90,Crystal Shard (Fragment)
+231,Gem Hook (Topaz)
+219,Titanium Drill
+22,Water Stream
+25,Ball 'O Hurt
+116,Sword Beam
+349,Frost Shard
+536,Medusa Ray
+112,Penguin
+7,Vilethorn
+581,Alien Goop
+617,Nebula Arcanum
+141,Rocket III Priximity Mine
+157,Night Beam
+614,Stardust Cell
+183,Beenade
+320,Bloody Machete
+242,High Velocity Bullet
+417,Firework (Blue)
+478,Cursed Dart
+473,Spelunker Glowstick
+240,Cannonball
+354,Crimsand Ball
+475,Vine Rope Coil
+574,Nebula Eye
+315,Bat Hook
+193,Pygmy (Red)
+641,Lunar Portal
+3,Shuriken
+388,Spazmamini
+153,The Rotted Fork
+591,Minecart Laser
+645,Lunar Flare
+170,Rocket (Yellow)
+418,Firework (Yellow)
+72,Blue Fairy
+61,Adamantite Chainsaw
+101,Eye Fire
+149,Crimson Spray
+57,Cobalt Chainsaw
+95,Cursed Flames
+232,Gem Hook (Sapphire)
+318,Rotten Egg
+123,Sapphire Bolt
+523,Toxic Bubble
+262,Golem Fist
+578,Vortex
+456,Moon Leech
+413,Gold Coin
+167,Rocket (Red)
+445,Laser Drill
+282,Venom Arrow
+387,Retanimini
+159,Silver Coin
+178,Confetti
+31,Sand Ball
+330,Star Anise
+78,Note (large)
+378,Spider Egg
+451,Influx Waver
+573,Nebula Piercer
+639,Luminite Arrow
+210,Sapling (Pet)
+499,Baby Face Monster
+509,Butcher's Chainsaw
+640,Luminite Arrow
+491,Flying Knife
+500,Crimson Heart
+599,Bone Dagger
+76,Note (small)
+173,Enchanted Beam
+611,Solar Eruption
+329,Flaming Scythe
+48,Throwing Knife
+151,Nettle Burst (II)
+100,Death laser
+86,Pink Fairy
+75,Happy Bomb
+498,Nail
+217,Orichalcum Chainsaw
+511,Toxic Cloud
+461,Charged Blaster Laser
+47,Trident
+16,Magic Missile
+88,Purple Laser
+325,Flaming Wood
+390,Venom Spider
+531,Tombstone
+605,Slime Spike
+214,Palladium Chainsaw
+126,Diamond Bolt
+146,Hallow Spray
+332,Christmas Hook
+345,Pine Needle
+513,Toxic Cloud
+616,Vortex Rocket
+595,Arkhalis
+97,Cobalt Naginata
+497,Shadowflame Knife
+113,Ice Boomerang
+114,Unholy Trident
+584,Syringe
+2,Fire Arrow
+108,Explosives
+18,Shadow Orb
+89,Crystal Bullet
+341,Rocket (IV Snowman Cannon)
+182,Possessed Hatchet
+379,Baby Spider
+54,Poisoned Knife
+317,Raven
+629,Released Energy
+175,Baby Eater
+615,Vortex Beater
+609,Stardust Drill
+85,Flames
+355,Venom Fang
+37,Sticky Bomb
+247,Flower Pow
+294,Shadow Beam
+592,Laser Ray
+368,Swordfish
+158,Copper Coin
+301,Paladin's Hammer
+14,Bullet
+392,Dangerous Spider
+331,Candy Cane Hook
+131,Mushroom
+326,Greek Fire
+540,Starmark
+571,Spore
+156,Light Beam
+277,Thorn Ball
+409,Typhoon
+83,Eye Laser
+67,Pearlsand Ball
+276,Poison Seed
+603,Terrarian
+465,Lightning Orb
+624,Starburst
+285,Nano Bullet
+504,Spark
+519,Bomb Fish
+168,Rocket (Green)
+337,Blizzard
+139,Rocket III Grenade
+441,Scutlix Crosshair
+195,Pygmy (Spear)
+225,Chlorophyte Arrow
+359,Frost Bolt
+252,Chlorophyte Jackhammer
+180,Bullet
+448,Martian Rocket
+642,Lunar Portal Laser
+582,Mechanic's Wrench
+588,Confetti Grenade
+400,Molotov Fire
+564,Yoyo
+650,Suspicious Looking Tentacle
+312,Jack 'O Lantern
+476,Soul Drain
+224,Chlorophyte Chainsaw
+470,Sticky Dynamite
+9,Starfury Star
+80,Ice Block
+99,Boulder
+377,Spider Hiver
+11,Vile Powder
+120,Frost Arrow
+334,Puppy
+185,Spiky Ball
+121,Amethyst Bolt
+347,Ornament
+309,Frost Blast
+479,Ichor Dart
+87,Green Fairy
+430,Nebula Drill
+376,Imp Fireball
+51,Seed
+307,Tiny Eater
+517,Bouncy Grenade
+235,Gem Hook (Diamond)
+274,Death Sickle
+93,Magic Dagger
+229,Chlorophyte Orb
+111,Bunny
+271,Boxing Glove
+39,Mud Ball*
+147,Corrupt Spray
+259,Eye Beam
+602,Portal Gate
+580,Vortex Lightning
+119,Frost Bolt
+74,Hook (Red)
+150,Nettle Burst (I)
+65,Ebonsand Ball
+177,Icewater Spit
+142,Rocket IV Grenade
+194,Pygmy (Yellow)
+437,Gigazapper Spearhead
+502,Meowmere
+213,Palladium Drill
+435,Electric Bolt
+23,Harpoon
+253,Ball of Frost
+628,Stardust Dragon
+152,Nettle Burst (End)
+28,Bomb
+38,Harpy Feather
+281,Explosive Bunny
+463,Vicious Powder
+243,Blood Cloud
+374,Hornet Stinger
+162,Cannonball
+134,Rocket I
+643,Rainbow Crystal
+414,Platinum Coin
+68,Pearlsand Ball
+189,Wasp
+122,Topaz Bolt
+494,Crystal Vile Shard
+440,Laser
+583,Syringe
+518,Coin Portal
+21,Bone
+124,Emerald Bolt
+227,Crystal Leaf
+172,Frostburn Arrow
+35,Sunfury
+212,Palladium Pike
+407,Tempest
+52,Wooden Boomerang
+258,Fireball
+335,Ornament
+32,Ivy Whip
+593,Prophecy's End
+26,Blue Moon
+17,Dirt Ball
+633,Last Prism
+352,Spike
+278,Ichor Arrow
+490,Lightning Ritual
+366,Bobber
+535,Medusa Ray
+58,Mythril Chainsaw
+44,Demon Sickle
+369,Sawtooth Shark
+646,Lunar Hook
+145,Pure Spray
+165,Web
+344,North Pole
+24,Spiky Ball
+380,Zephyr Fish
+394,Soulscourge Pirate
+265,Poison Fang
+1,Wooden Arrow
+117,Bone Arrow
+8,Vilethorn (end)
+129,Rune Blast
+218,Titanium Trident
+234,Gem Hook (Ruby)
+404,Flairon
+300,Paladin's Hammer
+384,Sharknado
+336,Pine Needle
+251,Rainbow
+306,Eater's Bite
+305,Vampire Heal
+521,Crystal Charge
+297,Lost Soul
+447,Martian Deathray
+241,Crimsand Ball
+230,Gem Hook (Amethyst)
+84,Pink Laser
+206,Leaf
+102,Bomb (Skeletron Prime Cannon)
+148,Mushroom Spray
+302,Sniper Bullet
+612,Solar Eruption
+427,Vortex Chainsaw
+474,Bone Arrow
+496,Shadowflame
+98,Poison Dart
+238,Rain Cloud
+579,Vortex
+288,Golden Shower
+60,Mythril Drill
+348,Frost Wave
+403,Track Hook
+171,Rope Coil
+484,Seedler
+169,Rocket (Blue)
+69,Holy Water
+481,Chain Guillotine
+49,Spear
+187,Flamethrower
+567,Spore
+191,Pygmy (Blue)
+493,Crystal Vile Shard
+510,Toxic Flask
+538,Twinkle
+45,Demon Scythe
+533,Deadly Sphere
+577,Vortex Laser
+63,The Dao of Pow
+220,Titanium Chainsaw
+239,Rain
+516,Bouncy Bomb
+198,Baby Hornet
+462,Phantasmal Bolt
+323,Stake
+164,Landmine
+163,Flare
+446,Anti-Gravity Hook
+208,Parrot
+130,Mushroom Spear
+438,Laser Ray
+222,Chlorophyte Partisan
+434,Scutlix Laser
+140,Rocket III
+466,Lightning Orb Arc
+62,Adamantite Drill
+257,Frost Beam
+310,Blue Flare
+266,Baby Slime
+221,Flower Petal
+442,Electrosphere Missile
+556,Counterweight
+613,Stardust Cell
+15,Ball of Fire
+109,Snow Ball
+161,Platinum Coin
+267,Poison Dart
+606,Laser
+322,Spooky Hook
+503,Star Wrath
+566,Bee
+19,Flamarang
+482,Cursed Flames
+649,Lunar Hook
+532,XBone
+367,Obsidian Swordfish
+464,Ice Mist
+29,Dynamite
+228,Spore Cloud (Chlorophyte Weapons)
+260,Heat Ray
+480,Cursed Flame
+410,Bubble Gun
+575,Nebula Sphere
+103,Cursed Arrow
+432,Solar Flare Drill
+268,Eye Spring
+423,UFO
+501,Flask
+561,Counterweight
+197,Baby Skeletron Head
+324,Cursed Sapling
+92,Hallow Star
+188,Flames
+192,Pygmy (Purple)
+53,Sticky Glowstick
+339,Rocket (II Snowman Cannon)
+350,Missile
+383,Anchor
+20,Green Laser
+316,Bat
+396,Slime Hook
+270,Skull
+415,Firework (Red)
+625,Stardust Dragon
+199,Tiki Spirit
+397,Sticky Grenade

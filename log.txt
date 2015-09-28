@@ -1,0 +1,7 @@
+Loaded 181 buffs.
+Loaded 580 projectile types.
+Loaded 22 bosses.
+Loaded 1662 items.
+Listening on port 11000
+Client accepted!
+Proxy setup. 127.0.0.1:11000 <-> localhost:7777

@@ -4,11 +4,10 @@ import java.net.Socket;
 
 import me.tyler.terraria.Cheats;
 import me.tyler.terraria.Proxy;
+import me.tyler.terraria.TerrariaData;
 import me.tyler.terraria.TerrariaPlayer;
 
 public class TerrariaPacketUpdatePlayer extends TerrariaPacket {
-
-	private static int nextId = 50;
 	
 	public TerrariaPacketUpdatePlayer(byte type, byte[] payload) {
 		super(type, payload);
@@ -67,17 +66,13 @@ public class TerrariaPacketUpdatePlayer extends TerrariaPacket {
 		
 		proxy.setConnectionIniatializationDone(true);
 		
-		/*if(player.isPvpEnabled() && Cheats.PVP_INSTAKILL){
+		if(player.isPvpEnabled() && Cheats.PVP_INSTAKILL_ME){
 			for(int i = 0; i < 5;i++){
 				
-				TerrariaPacket packet = TerrariaPacketProjectileUpdate.getProjectilePacket(nextId, player.getX(), player.getY(), player.getVelocityX() * 2, player.getVelocityY() * 2, 5.0F, 1000, getPlayerId()-1, 132, 0);
+				TerrariaPacket packet = TerrariaPacketProjectileUpdate.getProjectilePacket(TerrariaData.getFreeProjectileId(), player.getX(), player.getY(), player.getVelocityX() * 2, player.getVelocityY() * 2, 5.0F, 1000, getPlayerId()-1, 132, 0);
 				
 				proxy.sendPacketToServer(packet);
 				proxy.sendPacketToClient(client, packet);
-				nextId ++;
-			}
-			if(nextId > 65){
-				nextId = 50;
 			}
 			
 			if(System.currentTimeMillis() - Cheats.LAST_FAKE_KILL >= 10000){
@@ -89,7 +84,7 @@ public class TerrariaPacketUpdatePlayer extends TerrariaPacket {
 			}
 
 			
-		}*/
+		}
 		
 		return true;
 	}
@@ -110,19 +105,16 @@ public class TerrariaPacketUpdatePlayer extends TerrariaPacket {
 		if(player.isPvpEnabled() && Cheats.PVP_INSTAKILL){
 			for(int i = 0; i < 5;i++){
 				
-				TerrariaPacket packet = TerrariaPacketProjectileUpdate.getProjectilePacket(nextId, player.getX(), player.getY(), player.getVelocityX() * 2, player.getVelocityY() * 2, 5.0F, 1000, proxy.getThePlayer().getId(), 409, 0);
+				TerrariaPacket packet = TerrariaPacketProjectileUpdate.getProjectilePacket(TerrariaData.getFreeProjectileId(), player.getX(), player.getY(), player.getVelocityX() * 2, player.getVelocityY() * 2, 5.0F, 1000, proxy.getThePlayer().getId(), 409, 0);
 				
 				proxy.sendPacketToServer(packet);
 				proxy.sendPacketToClient(client, packet);
-				nextId ++;
-			}
-			if(nextId > 65){
-				nextId = 50;
+				
 			}
 		}
 		
-		if(Cheats.CONFETTI_FOLLOW == getPlayerId()){
-			TerrariaPacket packet = TerrariaPacketProjectileUpdate.getProjectilePacket(50, getPositionX() + player.getVelocityX(), getPositionY() + player.getVelocityY(), player.getVelocityX(), player.getVelocityY(), 0, 0, 0, 178, 0);
+		if(Cheats.particleEffect.containsKey(getPlayerId())){
+			TerrariaPacket packet = TerrariaPacketProjectileUpdate.getProjectilePacket(50, getPositionX() + player.getVelocityX(), getPositionY() + player.getVelocityY(), player.getVelocityX(), player.getVelocityY(), 0, 0, 0, Cheats.particleEffect.get(getPlayerId()), 0);
 			
 			for(int i = 0; i < 8;i++){
 				proxy.sendPacketToClient(client, packet);

@@ -19,6 +19,7 @@ public enum PacketType {
 	CHAT_MESSAGE(25, TerrariaPacketChatMessage.class),
 	PROJECTILE_UPDATE(27, TerrariaPacketProjectileUpdate.class),
 	STRIKE_NPC(28, TerrariaPacketStrikeNpc.class),
+	DESTROY_PROJECTILE(29, TerrariaPacketDestroyProjectile.class),
 	TOGGLE_PVP(30, TerrariaPacketTogglePvp.class),
 	MANA(42, TerrariaPacketMana.class),
 	MANA_EFFECT(43, TerrariaPacketManaEffect.class),

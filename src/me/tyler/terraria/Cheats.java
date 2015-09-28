@@ -14,10 +14,15 @@ public class Cheats {
 
 	public static short PROJECTILE_REPLACER_OTHER_TO = -1;
 	public static short PROJECTILE_REPLACER_TO_DAMAGE = 1000;
-	public static byte CONFETTI_FOLLOW = -1;
+	
+	public static Map<Byte, Short> particleEffect = new HashMap<>();
 	
 	public static boolean PVP_INSTAKILL = false;
+	public static boolean PVP_INSTAKILL_ME = false;
+	
 	public static long LAST_FAKE_KILL = 0;
 	public static boolean BLOCK_BUFFS = false;
+	
+	public static boolean TRACK_PROJECTILES = false;
 	
 }

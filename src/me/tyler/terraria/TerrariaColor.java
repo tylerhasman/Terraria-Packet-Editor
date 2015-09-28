@@ -5,6 +5,12 @@ import java.util.Random;
 
 public class TerrariaColor {
 
+	public static final TerrariaColor RED = TerrariaColor.getColor(190, 25, 25);
+	public static final TerrariaColor GREEN = TerrariaColor.getColor(25, 210, 25);
+	public static final TerrariaColor BLUE = TerrariaColor.getColor(100, 150, 190);
+	public static final TerrariaColor PURPLE = TerrariaColor.getColor(140, 40, 255);
+	public static final TerrariaColor YELLOW = TerrariaColor.getColor(255, 213, 28);
+	
 	private byte r, g, b;
 	
 	public byte getR() {

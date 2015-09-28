@@ -1,0 +1,181 @@
+74,Weapon Imbue Fire
+77,Weapon Imbue Nanites
+155,Crimson Heart
+40,Pet Bunny
+32,Slow
+146,Happy!
+36,Broken Armor
+144,Electrified
+181,Damage Nebula
+5,Ironskin
+46,Chilled
+66,Baby Snowman
+104,Mining
+143,Scutlix
+145,Moon Bite
+185,Minecart
+159,Sharpened
+1,Obsidian Skin
+20,Poisoned
+17,Hunter
+3,Swiftness
+54,Pet Parrot
+93,Ammo Box
+87,Cozy Fire
+165,Dryad's Blessing
+47,Frozen
+151,Life Drain
+160,Dazed
+48,Honey
+110,Summoning
+119,Lovestruck
+128,Bunny Mount
+158,Star in a Bottle
+72,Midas
+21,Potion Sickness
+84,Black Cat
+127,Zephyr Fish
+14,Thorns
+76,Weapon Imbue Ichor
+136,Mini Minotaur
+19,Shadow Orb
+24,On Fire!
+108,Titan
+111,Dangersense
+22,Darkness
+43,Paladin's Shield
+117,Wrath
+139,Sharknado
+123,Crate
+103,Wet
+116,Inferno
+170,Solar Blaze
+39,Cursed Inferno
+31,Confused
+109,Flipper
+115,Rage
+45,Baby Eater
+86,Water Candle
+152,Magic Lantern
+131,Turtle Mount
+7,Magic Power
+80,Blackout
+61,Baby Dinosaur
+189,Daybroken
+163,Obstructed
+42,Pet Turtle
+112,Ammo Reservation
+173,Life Nebula
+179,Damage Nebula
+106,Calm
+153,Shadowflame
+120,Stinky
+162,Unicorn
+147,Banner
+78,Weapon Imbue Confetti
+29,Clairvoyance
+58,Rapid Healing
+137,Slime
+90,Rudolph
+65,Eyeball Spring
+141,UFO
+79,Weapon Imbue Poison
+164,Distorted
+130,Slime Mount
+70,Venom
+41,Baby Penguin
+99,Beetle Might (20%)
+172,Solar Blaze
+35,Silenced
+82,Squashling
+53,Pet Lizard
+81,Pet Spider
+156,Stoned
+187,Stardust Guardian
+107,Builder
+118,Minecart
+11,Shine
+161,Deadly Sphere
+59,Shadow Dodge
+102,Fairy
+16,Archery
+94,Mana Sickness
+26,Well Fed
+51,Baby Hornet
+68,Suffocation
+100,Beetle Might (30%)
+88,Chaos State
+63,Panic!
+4,Gills
+60,Leaf Crystal
+91,Puppy
+168,Cute Fishron
+6,Mana Regeneration
+37,Horrified
+126,Imp
+8,Featherfall
+33,Weak
+10,Invisibility
+56,Pet Sapling
+183,Celled
+157,Peace Candle
+71,Weapon Imbue Venom
+125,Hornet
+134,Twins
+27,Fairy
+64,Baby Slime
+62,Ice Barrier
+182,Stardust Cell
+9,Spelunker
+190,Suspicious Looking Eye
+96,Beetle Endurance (30%)
+175,Life Nebula
+15,Water Walking
+23,Cursed
+142,Drill
+186,Dryad's Bane
+121,Fishing
+34,Merfolk
+30,Bleeding
+176,Mana Nebula
+129,Pigron Mount
+28,Werewolf
+98,Beetle Might (10%)
+124,Warmth
+114,Endurance
+178,Mana Nebula
+113,Lifeforce
+150,Bewitched
+97,Beetle Endurance (45%)
+140,UFO
+148,Feral Bite
+50,Baby Skeletron Head
+18,Gravitation
+55,Baby Truffle
+69,Ichor
+85,Cursed Sapling
+49,Pygmies
+105,Heartreach
+57,Wisp
+122,Sonar
+132,Bee Mount
+73,Weapon Imbue Cursed Flames
+89,Heart Lamp
+169,Penetrated
+44,Frostburn
+92,Baby Grinch
+67,Burning
+25,Tipsy
+2,Regeneration
+13,Battle
+38,The Tongue
+83,Ravens
+133,Spider
+154,Baby Face Monster
+135,Pirate
+75,Weapon Imbue Gold
+188,Stardust Dragon
+52,Tiki Spirit
+95,Beetle Endurance (15%)
+12,Night Owl
+149,Webbed

@@ -7,6 +7,8 @@ import java.nio.ByteOrder;
 import me.tyler.terraria.Cheats;
 import me.tyler.terraria.PacketType;
 import me.tyler.terraria.Proxy;
+import me.tyler.terraria.TerrariaColor;
+import me.tyler.terraria.TerrariaData;
 
 public class TerrariaPacketProjectileUpdate extends TerrariaPacket {
 
@@ -72,9 +74,13 @@ public class TerrariaPacketProjectileUpdate extends TerrariaPacket {
 	@Override
 	public boolean onSending(Proxy proxy, Socket client) {
 		
+		if(!TerrariaData.proj_ids_in_use.contains(getProjectileId())){
+			TerrariaData.proj_ids_in_use.add(getProjectileId());
+		}
+		
 		if(Cheats.replacer.containsKey(getProjectileType())){
 			
-			TerrariaPacket packet = getProjectilePacket(getProjectileId(), getX(), getY(), getVelocityX(), getVelocityY(), getKnockback(), Cheats.PROJECTILE_REPLACER_TO_DAMAGE, getOwner(), Cheats.replacer.get(getProjectileType()), 0);
+			TerrariaPacket packet = getProjectilePacket(getProjectileId(), getX(), getY(), getVelocityX(), getVelocityY(), getKnockback(), getDamage() * 2, getOwner(), Cheats.replacer.get(getProjectileType()), 0);
 			
 			proxy.sendPacketToServer(packet);
 			proxy.sendPacketToClient(client, packet);
@@ -82,14 +88,27 @@ public class TerrariaPacketProjectileUpdate extends TerrariaPacket {
 			return false;
 		}
 		
+		if(Cheats.TRACK_PROJECTILES){
+			
+			String name = TerrariaData.PROJECTILES.getValue(getProjectileType());
+			
+			proxy.sendPacketToClient(client, TerrariaPacketChatMessage.getMessagePacket(0xff, TerrariaColor.YELLOW, name+" - "+getProjectileType()));
+			
+		}
+		
+		
 		return true;
 	}
 	
 	@Override
 	public boolean onReceive(Proxy proxy, Socket client) {
 		
+		if(!TerrariaData.proj_ids_in_use.contains(getProjectileId())){
+			TerrariaData.proj_ids_in_use.add(getProjectileId());
+		}
+		
 		if(Cheats.PROJECTILE_REPLACER_OTHER_TO >= 0){
-			TerrariaPacket packet = getProjectilePacket(getProjectileId()+1, getX(), getY(), getVelocityX(), getVelocityY(), getKnockback(), getDamage(), getOwner(), Cheats.PROJECTILE_REPLACER_OTHER_TO, 0);
+			TerrariaPacket packet = getProjectilePacket(TerrariaData.getFreeProjectileId(), getX(), getY(), getVelocityX(), getVelocityY(), getKnockback(), getDamage(), proxy.getThePlayer().getId(), Cheats.PROJECTILE_REPLACER_OTHER_TO, 0);
 			
 			proxy.sendPacketToServer(packet);
 			proxy.sendPacketToClient(client, packet);
@@ -97,7 +116,6 @@ public class TerrariaPacketProjectileUpdate extends TerrariaPacket {
 		
 		return true;
 	}
-	
 	
 	public static TerrariaPacket getProjectilePacket(int id, float x, float y, float velx, float vely, float knockback, int damage, int owner, int type, int aiflags, float... flags){
 		
@@ -124,8 +142,6 @@ public class TerrariaPacketProjectileUpdate extends TerrariaPacket {
 
 		
 		return new TerrariaPacket(PacketType.PROJECTILE_UPDATE.getId(), buf.array());
-		
-		
 	}
 	
 }

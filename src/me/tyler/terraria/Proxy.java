@@ -47,7 +47,7 @@ public class Proxy {
 		
 		try{
 			
-			
+			TerrariaPacket sending = readDataFromSource(client);
 			TerrariaPacket recv = readDataFromSource(socket);
 			
 			if(recv != null){
@@ -55,8 +55,6 @@ public class Proxy {
 					sendPacketToClient(client, recv);
 				}
 			}
-			
-			TerrariaPacket sending = readDataFromSource(client);
 			
 			if(sending != null){
 				if(sending.onSending(this, client)){

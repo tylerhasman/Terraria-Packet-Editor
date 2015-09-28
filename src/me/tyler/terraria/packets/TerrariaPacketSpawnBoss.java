@@ -11,11 +11,11 @@ public class TerrariaPacketSpawnBoss extends TerrariaPacket {
 		super(type, payload);
 	}
 
-	public static TerrariaPacket getSpawnBossPacket(short playerId, short type){
+	public static TerrariaPacket getSpawnBossPacket(short playerId, int type){
 		ByteBuffer buf = ByteBuffer.allocate(4).order(ByteOrder.LITTLE_ENDIAN);
 		
 		buf.putShort(playerId);
-		buf.putShort(type);
+		buf.putShort((short) type);
 		
 		return new TerrariaPacket(PacketType.SPAWN_BOSS.getId(), buf.array());
 	}

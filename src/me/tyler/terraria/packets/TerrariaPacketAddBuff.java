@@ -4,13 +4,12 @@ import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
-import me.tyler.terraria.Buffs;
 import me.tyler.terraria.Cheats;
 import me.tyler.terraria.PacketType;
 import me.tyler.terraria.Proxy;
 
 public class TerrariaPacketAddBuff extends TerrariaPacket {
-
+	
 	public TerrariaPacketAddBuff(byte t, byte[] p) {
 		super(t, p);
 	}
