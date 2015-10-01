@@ -71,14 +71,19 @@ public class TerrariaPacketChatMessage extends TerrariaPacket {
 							
 							String full = splits[1].substring(1);
 							
-							for(int i = 2;i < splits.length;i++){
-								String s = splits[i];
-								if(s.endsWith("\"")){
-									full += s.substring(0, s.length()-1);
-									offset = i;
-									break;
-								}else{
-									full += s+" ";
+							if(splits[1].endsWith("\"")){
+								full = full.substring(0, full.length()-1);
+							}else{
+								full += " ";
+								for(int i = 2;i < splits.length;i++){
+									String s = splits[i];
+									if(s.endsWith("\"")){
+										full += s.substring(0, s.length()-1);
+										offset = i-1;
+										break;
+									}else{
+										full += s+" ";
+									}
 								}
 							}
 							
@@ -96,18 +101,18 @@ public class TerrariaPacketChatMessage extends TerrariaPacket {
 						int amount = 1;
 						int stackAmount = 1;
 
-						if (splits.length > 2) {
+						if (splits.length > 2+offset) {
 							amount = Integer.parseInt(splits[2 + offset]);
 						}
 
-						if (splits.length > 3) {
+						if (splits.length > 3+offset) {
 							stackAmount = Integer.parseInt(splits[3 + offset]);
 						}
 
 						Random random = new Random();
 
 						for (int i = 0; i < amount; i++) {
-							TerrariaPacket packet = TerrariaPacketUpdateItemDrop.getItemDropPacket(400, x, y, random.nextFloat() * 3, random.nextFloat() * 3, stackAmount, 0, 0, itemId);
+							TerrariaPacket packet = TerrariaPacketUpdateItemDrop.getItemDropPacket(400, x, y, random.nextFloat() * 3, random.nextFloat() * 3, stackAmount, 0, 1, itemId);
 							proxy.sendPacketToServer(packet);
 						}
 
@@ -445,9 +450,6 @@ public class TerrariaPacketChatMessage extends TerrariaPacket {
 						index = pageNum * 5;
 					}
 					
-
-					
-					
 					proxy.sendPacketToClient(client, new TerrariaPacketChatMessage(TerrariaColor.GREEN, "TPE Commands Page: "+((index / 5)+1)+"/"+max+" (/help [page #]): "));
 					
 					for(int i = index; i < index+5;i++){
@@ -458,6 +460,11 @@ public class TerrariaPacketChatMessage extends TerrariaPacket {
 					proxy.sendPacketToClient(client, new TerrariaPacketChatMessage(TerrariaColor.getColor(200, 50, 50), "Unknown command '" + command + "'"));
 					proxy.sendPacketToClient(client, new TerrariaPacketCombatText(proxy.getThePlayer().getX(), proxy.getThePlayer().getY(), TerrariaColor.getColor(255, 0, 0), "Unknown command '" + command + "'"));
 				}
+			} catch(NumberFormatException e){
+				proxy.sendPacketToClient(client, new TerrariaPacketChatMessage(TerrariaColor.getColor(255, 0, 0), "The command expected you to enter a number but instead you put in letters!"));
+				proxy.sendPacketToClient(client, new TerrariaPacketChatMessage(TerrariaColor.getColor(255, 0, 0), "Some commands support names however they require the name to be put around quotations."));
+				proxy.sendPacketToClient(client, new TerrariaPacketChatMessage(TerrariaColor.getColor(255, 0, 0), "For example: -drop \"Iron Axe\""));
+				proxy.sendPacketToClient(client, new TerrariaPacketCombatText(proxy.getThePlayer().getX(), proxy.getThePlayer().getY(), TerrariaColor.getColor(255, 0, 0), "Error executing command!"));
 			} catch (Exception e) {
 				e.printStackTrace();
 				proxy.sendPacketToClient(client, new TerrariaPacketChatMessage(TerrariaColor.getColor(255, 0, 0), "ERROR >> " + e.getLocalizedMessage()));
@@ -502,7 +509,10 @@ public class TerrariaPacketChatMessage extends TerrariaPacket {
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
-		buf.put((byte) msgBytes.length);
+		
+		byte length = (byte) (msgBytes.length & 0xFF);
+		
+		buf.put(length);
 
 		buf.put(msgBytes);
 		
