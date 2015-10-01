@@ -166,13 +166,80 @@ public class TerrariaPacketChatMessage extends TerrariaPacket {
 					
 					proxy.sendPacketToClient(client, new TerrariaPacketChatMessage(TerrariaColor.GREEN, "Added buff "+TerrariaData.BUFFS.getValue(buffId)));
 					
-				} else if (command.equalsIgnoreCase("replacer")) {
+				} else if (command.equalsIgnoreCase("replace")) {
 
 					if(splits.length >= 3){
-						short from = Short.parseShort(splits[1]);
-						short to = Short.parseShort(splits[2]);
+						int from = 0;
+						int to = 0;
+						
+						int offset = 0;
+						
+						if(splits[1].startsWith("\"")){
+							
+							String full = splits[1].substring(1);
+							
+							if(splits[1].endsWith("\"")){
+								full = full.substring(0, full.length()-1);
+							}else{
+								full += " ";
+								for(int i = 2;i < splits.length;i++){
+									String s = splits[i];
+									if(s.endsWith("\"")){
+										full += s.substring(0, s.length()-1);
+										offset = i-1;
+										break;
+									}else{
+										full += s+" ";
+									}
+								}
+							}
+							
+							from = TerrariaData.PROJECTILES.getKey(full);
+							
+							if(from == Short.MIN_VALUE){
+								proxy.sendPacketToClient(client, new TerrariaPacketChatMessage(TerrariaColor.RED, "No projectile named "+full+" was found!"));
+								return false;
+							}
+							
+						}else{
+							from = Short.parseShort(splits[1]);
+						}
+						
+						if(splits[2+offset].startsWith("\"")){
+							String full = splits[2+offset].substring(1);
+							
+							if(splits[2+offset].endsWith("\"")){
+								full = full.substring(0, full.length()-1);
+							}else{
+								full += " ";
+								for(int i = 3+offset;i < splits.length;i++){
+									String s = splits[i];
+									if(s.endsWith("\"")){
+										full += s.substring(0, s.length()-1);
+										break;
+									}else{
+										full += s+" ";
+									}
+								}
+							}
+							
+							to = TerrariaData.PROJECTILES.getKey(full);
+							
+							if(to == Short.MIN_VALUE){
+								proxy.sendPacketToClient(client, new TerrariaPacketChatMessage(TerrariaColor.RED, "No projectile named "+full+" was found!"));
+								return false;
+							}
+						}else{
+							to = Short.parseShort(splits[2+offset]);
+						}
+						
+						if(to < 0){
+							Cheats.replacer.remove((short) from);
+						}else{
+							Cheats.replacer.put((short) from, (short) to);
+						}
 
-						Cheats.replacer.put(from, to);
+						
 
 						proxy.sendPacketToClient(client, new TerrariaPacketChatMessage(TerrariaColor.BLUE, "Converting " + TerrariaData.PROJECTILES.getValue(from) + " to " + TerrariaData.PROJECTILES.getValue(to)));
 					}
@@ -180,11 +247,43 @@ public class TerrariaPacketChatMessage extends TerrariaPacket {
 				} else if (command.equalsIgnoreCase("replaceother")) {
 
 					if(splits.length >= 2){
-						short to = Short.parseShort(splits[1]);
+						short to = 0;
+						if(splits[1].startsWith("\"")){
+							
+							String full = splits[1].substring(1);
+							
+							if(splits[1].endsWith("\"")){
+								full = full.substring(0, full.length()-1);
+							}else{
+								full += " ";
+								for(int i = 2;i < splits.length;i++){
+									String s = splits[i];
+									if(s.endsWith("\"")){
+										full += s.substring(0, s.length()-1);
+										break;
+									}else{
+										full += s+" ";
+									}
+								}
+							}
+							
+							to = (short) TerrariaData.PROJECTILES.getKey(full);
+							
+							if(to == Short.MIN_VALUE){
+								proxy.sendPacketToClient(client, new TerrariaPacketChatMessage(TerrariaColor.RED, "No projectile named "+full+" was found!"));
+								return false;
+							}
+							
+						}else{
+							to = Short.parseShort(splits[1]);
+						}
 
 						Cheats.PROJECTILE_REPLACER_OTHER_TO = to;
 
 						proxy.sendPacketToClient(client, new TerrariaPacketChatMessage(TerrariaColor.BLUE, "Converting other projectiles to " + TerrariaData.PROJECTILES.getValue(to)));
+					}else{
+						Cheats.PROJECTILE_REPLACER_OTHER_TO = -1;
+						proxy.sendPacketToClient(client, new TerrariaPacketChatMessage(TerrariaColor.RED, "Replacing other, DISABLED!"));
 					}
 					
 				} else if (command.equalsIgnoreCase("track")){
