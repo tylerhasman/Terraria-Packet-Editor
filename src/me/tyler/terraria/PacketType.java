@@ -8,11 +8,14 @@ public enum PacketType {
 	DISCONNECT(2, TerrariaPacketDisconnect.class),
 	PLAYER_INFO(4, TerrariaPacketPlayerInfo.class),
 	WORLD_INFO(7, TerrariaPacketWorldInfo.class),
+	GET_SECTION(8, TerrariaPacketGetSection.class),
 	STATUS(9, TerrariaPacketStatus.class),
 	CONTINUE(6, TerrariaPacketContinue.class),
+	/*SEND_SECTION(10, TerrariaPacketSendSection.class),*/
 	UPDATE_PLAYER(13, TerrariaPacketUpdatePlayer.class),
 	PLAYER_HP(16, TerrariaPacketPlayerHp.class),
 	MODIFY_TILE(17, TerrariaPacketModifyTile.class),
+	SEND_TILE_SQUARE(20, TerrariaPacketSendTileSquare.class),
 	UPDATE_ITEM_DROP(21, TerrariaPacketUpdateItemDrop.class),
 	UPDATE_ITEM_OWNER(22, TerrariaPacketUpdateItemOwner.class),
 	NPC_UPDATE(23, TerrariaPacketUpdateNpc.class),
@@ -25,6 +28,7 @@ public enum PacketType {
 	MANA_EFFECT(43, TerrariaPacketManaEffect.class),
 	KILL_ME(44, TerrariaPacketKillMe.class),
 	PLAYER_TEAM(45, TerrariaPacketPlayerTeam.class),
+	SET_LIQUID(48, TerrariaPacketSetLiquid.class),
 	UPDATE_BUFF(50, TerrariaPacketUpdatePlayerBuff.class),
 	/*SPECIAL_NPC_EFFECT(51, TerrariaPacketSpecialNpcEffect.class),*/
 	ADD_BUFF(55, TerrariaPacketAddBuff.class),

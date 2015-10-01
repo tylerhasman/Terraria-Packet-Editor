@@ -14,6 +14,10 @@ public class TerrariaPacketCombatText extends TerrariaPacket {
 		super(t, p);
 	}
 
+	public TerrariaPacketCombatText(float x, float y, TerrariaColor color, String string) {
+		super(PacketType.COMBAT_TEXT.getId(), getCombatTextPacket(x, y, color, string));
+	}
+
 	public float getX(){
 		return getPayloadBuffer().getFloat();
 	}
@@ -30,7 +34,7 @@ public class TerrariaPacketCombatText extends TerrariaPacket {
 		return PacketUtil.readString(getPayload(), 13);
 	}
 	
-	public static TerrariaPacket getCombatTextPacket(float x, float y, TerrariaColor color, String text){
+	private static byte[] getCombatTextPacket(float x, float y, TerrariaColor color, String text){
 		
 		byte[] strBytes = null;
 		try {
@@ -47,7 +51,7 @@ public class TerrariaPacketCombatText extends TerrariaPacket {
 		buf.put((byte) strBytes.length);
 		buf.put(strBytes);
 		
-		return new TerrariaPacket(PacketType.COMBAT_TEXT.getId(), buf.array());
+		return buf.array();
 		
 	}
 	

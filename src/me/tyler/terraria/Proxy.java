@@ -27,6 +27,7 @@ public class Proxy {
 	private Map<Short, TerrariaItemDrop> itemsOnGround;
 	private List<Npc> npcs;
 	private boolean isConnectionIniatializationDone;
+	private TerrariaTile[][] tiles;
 	
 	public Proxy(String ip, int port) {
 		targetIp = ip;
@@ -228,6 +229,29 @@ public class Proxy {
 
 	public List<Npc> getNpcs() {
 		return npcs;
+	}
+	
+	public TerrariaTile getTile(int x, int y, boolean makeIfNotExist){
+		
+		if(tiles[x][y] == null && makeIfNotExist){
+			tiles[x][y] = new TerrariaTile();
+		}else if(!makeIfNotExist && tiles[x][y] == null){
+			return null;
+		}
+		
+		return tiles[x][y];
+	}
+
+	public TerrariaTile getTileOrMake(int x, int y) {
+		return getTile(x, y, true);
+	}
+	
+	public void setWorldDimensions(int width, int height){
+		tiles = new TerrariaTile[width][height];
+	}
+	
+	public boolean areDimensionsSet(){
+		return tiles != null;
 	}
 	
 }

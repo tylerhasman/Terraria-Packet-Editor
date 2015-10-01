@@ -9,14 +9,12 @@ import me.tyler.terraria.Proxy;
 
 public class TerrariaPacket {
 	
-	private short length;
 	private byte type;
 	private byte[] payload;
 	
 	public TerrariaPacket(byte type, byte[] payload) {
 		this.type = type;
 		this.payload = payload;
-		length = (short) (3 + payload.length);
 	}
 	
 	public byte getType() {
@@ -24,7 +22,7 @@ public class TerrariaPacket {
 	}
 	
 	public short getLength() {
-		return length;
+		return (short) (3 + payload.length);
 	}
 
 	public byte[] getPayload() {
@@ -36,7 +34,7 @@ public class TerrariaPacket {
 		
 		String packetInfo = "";
 		
-		packetInfo += "Length: "+length+" ";
+		packetInfo += "Length: "+getLength()+" ";
 		packetInfo += "Type: "+type+" Payload: ";
 		
 		for(byte b : payload){
@@ -47,7 +45,7 @@ public class TerrariaPacket {
 	}
 	
 	public ByteBuffer getPayloadBuffer(){
-		return ByteBuffer.wrap(payload).order(ByteOrder.LITTLE_ENDIAN);
+		return getPayloadBuffer(0);
 	}
 	
 	public ByteBuffer getPayloadBuffer(int offset){
@@ -60,6 +58,10 @@ public class TerrariaPacket {
 	
 	public boolean onSending(Proxy proxy, Socket client){
 		return true;
+	}
+	
+	protected void setPayload(byte[] b){
+		this.payload = b;
 	}
 	
 	public static TerrariaPacket getPacketFromData(byte[] bytes){
@@ -78,14 +80,10 @@ public class TerrariaPacket {
 		
 		if(pType == PacketType.OTHER){
 			packet = pType.getPacket(type, payload);
-			//System.out.println("Unhandled packet type: "+type);
+
 		}else{
 			packet = pType.getPacket(payload);
 		}
-		
-		/*packet.length = length;
-		packet.type = type;
-		packet.payload = payload;*/
 		
 		return packet;
 		

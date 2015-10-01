@@ -1,4 +1,4 @@
-package me.tyler.terraria;
+package me.tyler.terraria.tools;
 
 import java.io.BufferedReader;
 import java.io.File;

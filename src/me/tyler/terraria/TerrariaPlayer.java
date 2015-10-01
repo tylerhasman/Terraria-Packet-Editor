@@ -65,4 +65,13 @@ public class TerrariaPlayer {
 		this.velocityY = velocityY;
 	}
 	
+	public float distance(float x, float y){
+		float x3 = (float) Math.pow(getX() - x, 2);
+		float y3 = (float) Math.pow(getY() - y, 2);
+
+		float distance = (float) Math.sqrt(x3 + y3);
+		
+		return distance;
+	}
+	
 }

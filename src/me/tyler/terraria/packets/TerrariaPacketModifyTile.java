@@ -25,6 +25,5 @@ public class TerrariaPacketModifyTile extends TerrariaPacket {
 	public byte getVar2(){
 		return getPayloadBuffer(7).get();
 	}
-	
 
 }

@@ -13,6 +13,10 @@ public class TerrariaPacketAddBuff extends TerrariaPacket {
 	public TerrariaPacketAddBuff(byte t, byte[] p) {
 		super(t, p);
 	}
+	
+	public TerrariaPacketAddBuff(int playerId, int buffId, int time) {
+		super(PacketType.ADD_BUFF.getId(), getBuffPacket(playerId, buffId, time));
+	}
 
 	public byte getPlayerId(){
 		return getPayloadBuffer().get();
@@ -36,14 +40,14 @@ public class TerrariaPacketAddBuff extends TerrariaPacket {
 		return true;
 	}
 
-	public static TerrariaPacketAddBuff getBuffPacket(int playerId, int buff, int time){
+	private static byte[] getBuffPacket(int playerId, int buff, int time){
 		ByteBuffer buf = ByteBuffer.allocate(4).order(ByteOrder.LITTLE_ENDIAN);
 		
 		buf.put((byte) playerId);
 		buf.put((byte) buff);
 		buf.putShort((short) time);
 		
-		return new TerrariaPacketAddBuff(PacketType.ADD_BUFF.getId(), buf.array());
+		return buf.array();
 	}
 	
 }

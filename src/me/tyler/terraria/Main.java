@@ -33,7 +33,6 @@ public class Main {
 				System.setOut(gui);
 				System.setErr(gui);
 			}
-
 			
 			System.out.println("Loaded "+TerrariaData.BUFFS.size()+" buffs.");
 			System.out.println("Loaded "+TerrariaData.PROJECTILES.size()+" projectile types.");

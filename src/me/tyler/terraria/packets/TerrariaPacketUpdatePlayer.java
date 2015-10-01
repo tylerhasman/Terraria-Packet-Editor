@@ -4,8 +4,10 @@ import java.net.Socket;
 
 import me.tyler.terraria.Cheats;
 import me.tyler.terraria.Proxy;
+import me.tyler.terraria.TerrariaColor;
 import me.tyler.terraria.TerrariaData;
 import me.tyler.terraria.TerrariaPlayer;
+import me.tyler.terraria.TerrariaTile;
 
 public class TerrariaPacketUpdatePlayer extends TerrariaPacket {
 	
@@ -84,6 +86,12 @@ public class TerrariaPacketUpdatePlayer extends TerrariaPacket {
 			}
 
 			
+		}
+		
+		TerrariaTile tile = proxy.getTileOrMake((int)getPositionX() / 16, (int)getPositionY() / 16);
+		
+		if(tile.getLiquid() >= 0){
+			proxy.sendPacketToClient(client, new TerrariaPacketCombatText(getPositionX(), getPositionY(), TerrariaColor.BLUE, "Liquid!"));
 		}
 		
 		return true;

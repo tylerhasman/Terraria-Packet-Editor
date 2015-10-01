@@ -22,12 +22,12 @@ public class TerrariaPacketWorldInfo extends TerrariaPacket {
 		return getPayloadBuffer(5).get();
 	}
 	
-	public short getMaxTilesX(){
-		return getPayloadBuffer(6).getShort();
+	public int getMaxTilesX(){
+		return getPayloadBuffer(6).getShort() & 0xFFFF;
 	}
 	
-	public short getMaxTilesY(){
-		return getPayloadBuffer(8).getShort();
+	public int getMaxTilesY(){
+		return getPayloadBuffer(8).getShort() & 0xFFFF;
 	}
 	
 	public short getSpawnX(){
@@ -207,6 +207,11 @@ public class TerrariaPacketWorldInfo extends TerrariaPacket {
 		
 		if(!isServerSideCharacters()){
 			getPayload()[getWorldNameOffset() + 75] += 64;
+		}
+		
+		if(!proxy.areDimensionsSet()){
+			proxy.setWorldDimensions(getMaxTilesX(), getMaxTilesY());
+			System.out.println("World dimensions set to "+getMaxTilesX()+" "+getMaxTilesY());
 		}
 		
 		return super.onReceive(proxy, client);
