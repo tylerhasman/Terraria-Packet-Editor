@@ -1,0 +1,301 @@
+3301,Blue String
+3302,Purple String
+3303,Violet String
+3304,Pink String
+3305,Brown String
+3306,White String
+3307,Rainbow String
+3308,Black String
+3309,Black Counterweight
+3310,Blue Counterweight
+3311,Green Counterweight
+3312,Purple Counterweight
+3313,Red Counterweight
+3314,Yellow Counterweight
+3315,Format C
+3316,Gradient
+3317,Valor
+3318,Treasure Bag (King Slime)
+3319,Treasure Bag (Eye of Cthulhu)
+3320,Treasure Bag (Eater of Worlds)
+3321,Treasure Bag (Brain of Cthulhu)
+3322,Treasure Bag (Queen Bee)
+3323,Treasure Bag (Skeletron)
+3324,Treasure Bag (Wall of Flesh)
+3325,Treasure Bag (The Destroyer)
+3326,Treasure Bag (The Twins)
+3327,Treasure Bag (Skeletron Prime)
+3328,Treasure Bag (Plantera)
+3329,Treasure Bag (Golem)
+3330,Treasure Bag (Duke Fishron)
+3331,Treasure Bag (Lunatic Cultist)
+3332,Treasure Bag (Moon Lord)
+3333,Hive Pack
+3334,Yoyo Glove
+3335,Demon Heart
+3336,Spore Sac
+3337,Shiny Stone
+3338,Hardened Pearlsand Block
+3339,Pearlsandstone Block
+3340,Hardened Sand Wall
+3341,Hardened Ebonsand Wall
+3342,Hardened Crimsand Wall
+3343,Hardened Pearlsand Wall
+3344,Ebonsandstone Wall
+3345,Crimsandstone Wall
+3346,Pearlsandstone Wall
+3347,Desert Fossil
+3348,Desert Fossil Wall
+3349,Exotic Scimitar
+3350,Paintball Gun
+3351,Classy Cane
+3352,Stylish Scissors
+3353,Mechanical Cart
+3354,Mechanical Wheel Piece
+3355,Mechanical Wagon Piece
+3356,Mechanical Battery Piece
+3357,Ancient Cultist Trophy
+3358,Martian Saucer Trophy
+3359,Flying Dutchman Trophy
+3360,Living Mahogany Wand
+3361,Rich Mahogany Leaf Wand
+3362,Fallen Tuxedo Shirt
+3363,Fallen Tuxedo Pants
+3364,Fireplace
+3365,Chimney
+3366,Yoyo Bag
+3367,Shrimpy Truffle
+3368,Arkhalis
+3369,Confetti Cannon
+3370,Music Box (The Towers)
+3371,Music Box (Goblin Invasion)
+3372,Ancient Cultist Mask
+3373,Moon Lord Mask
+3374,Fossil Helmet
+3375,Fossil Plate
+3376,Fossil Greaves
+3377,Amber Staff
+3378,Bone Javelin
+3379,Bone Throwing Knife
+3380,Sturdy Fossil
+3381,Stardust Helmet
+3382,Stardust Plate
+3383,Stardust Leggings
+3384,Portal Gun
+3385,Strange Plant
+3388,Strange Plant (2)
+3387,Strange Plant (3)
+3388,Strange Plant (4)
+3389,Terrarian
+3390,Goblin Summoner Banner
+3391,Salamander Banner
+3392,Giant Shelly Banner
+3393,Crawdad Banner
+3394,Fritz Banner
+3395,Creature from the Deep Banner
+3396,Dr. Man Fly Banner
+3397,Mothron Banner
+3398,Severed Hand Banner
+3399,The Possessed Banner
+3400,Butcher Banner
+3401,Psycho Banner
+3402,Deadly Sphere Banner
+3403,Nailhead Banner
+3404,Poisonous Spore Banner
+3405,Medusa Banner
+3406,Hoplite Banner
+3407,Granite Elemental Banner
+3408,Grolem Banner
+3409,Blood Zombie Banner
+3410,Drippler Banner
+3411,Tomb Crawler Banner
+3412,Dune Splicer Banner
+3413,Antlion Swarmer Banner
+3414,Antlion Charger Banner
+3415,Ghoul Banner
+3416,Lamia Banner
+3417,Desert Spirit Banner
+3418,Basilisk Banner
+3419,Ravager Scorpion Banner
+3420,Stardust Soldier Banner
+3421,Milkyway Weaver Banner
+3422,Flow Invader Banner
+3423,Twinkle Popper Banner
+3424,Small Star Cell Banner
+3425,Star Cell Banner
+3426,Corite Banner
+3427,Sroller Banner
+3428,Crawltipede Banner
+3429,Drakomire Rider Banner
+3430,Drakomire Banner
+3431,Selenian Banner
+3432,Predictor Banner
+3433,Brain Suckler Banner
+3434,Nebula Floater Banner
+3435,Evolution Beast Banner
+3436,Alien Larva Banner
+3437,Alien Queen Banner
+3438,Alien Hornet Banner
+3439,Vortexian Banner
+3440,Storm Diver Banner
+3441,Pirate Captain Banner
+3442,Pirate Deadeye Banner
+3443,Pirate Corsair Banner
+3444,Pirate Crossbower Banner
+3445,Martian Walker Banner
+3446,Red Devil Banner
+3447,Pink Jellyfish Banner
+3448,Green Jellyfish Banner
+3449,Dark Mummy Banner
+3450,Light Mummy Banner
+3451,Angry Bones Banner
+3452,Ice Tortoise Banner
+3453,Damage Booster
+3454,Life Booster
+3455,Mana Booster
+3456,Vortex Fragment
+3457,Nebula Fragment
+3458,Solar Fragment
+3459,Stardust Fragment
+3460,Luminite
+3461,Luminite Brick
+3462,Stardust Axe
+3463,Stardust Chainsaw
+3464,Stardust Drill
+3465,Stardust Hammer
+3466,Stardust Pickaxe
+3467,Luminite Bar
+3468,Solar Wings
+3469,Vortex Booster
+3470,Nebula Mantle
+3471,Stardust Wings
+3472,Luminite Brick Wall
+3473,Solar Eruption
+3474,Stardust Cell Staff
+3475,Vortex Beater
+3476,Nebula Arcanum
+3477,Blood Water
+3478,Wedding Veil
+3479,Wedding Dress
+3480,Platinum Bow
+3481,Platinum Hammer
+3482,Platinum Axe
+3483,Platinum Shortsword
+3484,Platinum Broadsword
+3485,Platinum Pickaxe
+3486,Tungsten Bow
+3487,Tungsten Hammer
+3488,Tungsten Axe
+3489,Tungsten Shortsword
+3490,Tungsten Broadsword
+3491,Tungsten Pickaxe
+3492,Lead Bow
+3493,Lead Hammer
+3494,Lead Axe
+3495,Lead Shortsword
+3496,Lead Broadsword
+3497,Lead Pickaxe
+3498,Tin Bow
+3499,Tin Hammer
+3500,Tin Axe
+3501,Tin Shortsword
+3502,Tin Broadsword
+3503,Tin Pickaxe
+3504,Copper Bow
+3505,Copper Hammer
+3506,Copper Axe
+3507,Copper Shortsword
+3508,Copper Broadsword
+3509,Copper Pickaxe
+3510,Silver Bow
+3511,Silver Hammer
+3512,Silver Axe
+3513,Silver Shortsword
+3514,Silver Broadsword
+3515,Silver Pickaxe
+3516,Gold Bow
+3517,Gold Hammer
+3518,Gold Axe
+3519,Gold Shortsword
+3520,Gold Broadsword
+3521,Gold Pickaxe
+3522,Solar Flare Hamaxe
+3523,Vortex Hamaxe
+3524,Nebula Hamaxe
+3525,Stardust Hamaxe
+3526,Solar Dye
+3527,Nebula Dye
+3528,Vortex Dye
+3529,Stardust Dye
+3530,Void Dye
+3531,Stardust Dragon Staff
+3532,Bacon
+3533,Shifting Sands Dye
+3534,Mirage Dye
+3535,Shifting Pearlsands Dye
+3536,Vortex Monolith
+3537,Nebula Monolith
+3538,Stardust Monolith
+3539,Solar Monolith
+3540,Phantasm
+3541,Last Prism
+3542,Nebula Blaze
+3543,Daybreak
+3544,Super Healing Potion
+3545,Detonator
+3546,Celebration
+3547,Bouncy Dynamite
+3548,Happy Grenade
+3549,Ancient Manipulator
+3550,Flame and Silver Dye
+3551,Green Flame and Silver Dye
+3552,Blue Flame and Silver Dye
+3553,Reflective Copper Dye
+3554,Reflective Obsidian Dye
+3555,Reflective Metal Dye
+3556,Midnight Rainbow Dye
+3557,Black and White Dye
+3558,Bright Silver Dye
+3559,Silver and Black Dye
+3560,Red Acid Dye
+3561,Gel Dye
+3562,Pink Gel Dye
+3563,Red Squirrel
+3564,Gold Squirrel
+3565,Red Squirrel Cage
+3566,Gold Squirrel Cage
+3567,Luminite Bullet
+3568,Luminite Arrow
+3569,Lunar Portal Staff
+3570,Lunar Flare
+3571,Rainbow Crystal Staff
+3572,Lunar Hook
+3573,Solar Fragment Block
+3574,Vortex Fragment Block
+3575,Nebula Fragment Block
+3576,Stardust Fragment Block
+3577,Suspicious Looking Tentacle
+3578,Yoraiz0r's Uniform
+3579,Yoraiz0r's Skirt
+3580,Yoraiz0r's Spell
+3581,Yoraiz0r's Scowl
+3582,Jim's Wings
+3583,Yoraiz0r's Recolored Goggles
+3584,Living Leaf Wall
+3585,Skiphs's Mask
+3586,Skiphs's Skin
+3587,Skiphs's Bear Butt
+3588,Skiphs's Paws
+3589,Loki's Helmet
+3590,Loki's Breastplate
+3591,Loki's Greaves
+3592,Loki's Wings
+3593,Sand Slime Banner
+3594,Sea Snail Banner
+3595,Moon Lord Trophy
+3596,Not a Kid nor a Squid
+3597,Burning Hades Dye
+3598,Grim Dye
+3599,Loki's Dye
+3600,Shadowflame Hades Dye
+3601,Celestial Sigil

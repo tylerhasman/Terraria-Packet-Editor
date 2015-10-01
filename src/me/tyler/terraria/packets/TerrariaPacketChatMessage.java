@@ -65,17 +65,43 @@ public class TerrariaPacketChatMessage extends TerrariaPacket {
 					if(splits.length >= 2){	
 						float x = proxy.getThePlayer().getX();
 						float y = proxy.getThePlayer().getY();
-						short itemId = Short.parseShort(splits[1]);
+						int itemId = 0;
+						int offset = 0;
+						if(splits[1].startsWith("\"")){
+							
+							String full = splits[1].substring(1);
+							
+							for(int i = 2;i < splits.length;i++){
+								String s = splits[i];
+								if(s.endsWith("\"")){
+									full += s.substring(0, s.length()-1);
+									offset = i;
+									break;
+								}else{
+									full += s+" ";
+								}
+							}
+							
+							itemId = TerrariaData.ITEMS.getKey(full);
+							
+							if(itemId == Short.MIN_VALUE){
+								proxy.sendPacketToClient(client, new TerrariaPacketChatMessage(TerrariaColor.RED, "No item named "+full+" was found!"));
+								return false;
+							}
+							
+						}else{
+							itemId = Short.parseShort(splits[1]);
+						}
 
 						int amount = 1;
 						int stackAmount = 1;
 
 						if (splits.length > 2) {
-							amount = Integer.parseInt(splits[2]);
+							amount = Integer.parseInt(splits[2 + offset]);
 						}
 
 						if (splits.length > 3) {
-							stackAmount = Integer.parseInt(splits[3]);
+							stackAmount = Integer.parseInt(splits[3 + offset]);
 						}
 
 						Random random = new Random();

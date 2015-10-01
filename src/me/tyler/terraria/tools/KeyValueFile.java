@@ -1,12 +1,15 @@
 package me.tyler.terraria.tools;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class KeyValueFile {
 
@@ -42,9 +45,9 @@ public class KeyValueFile {
 		reader.close();
 	}
 	
-/*	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException {
 		
-		File file = new File("buffs.txt");
+		File file = new File("moreitems.txt");
 		
 		BufferedReader reader = new BufferedReader(new FileReader(file));
 		
@@ -53,6 +56,10 @@ public class KeyValueFile {
 		Map<String, Integer> map = new HashMap<>();
 		
 		while((line = reader.readLine()) != null){
+			
+			if(!line.contains(",")){
+				continue;
+			}
 			
 			String[] parts = line.split(",");
 
@@ -73,8 +80,16 @@ public class KeyValueFile {
 		
 		BufferedWriter writer = new BufferedWriter(new FileWriter(file, false));
 		
+		Map<Integer, String> properMap = new HashMap<>();
+		
 		for(String str : map.keySet()){
 			int id = map.get(str);
+			
+			properMap.put(id, str);
+		}
+		
+		for(int id : properMap.keySet().stream().sorted().collect(Collectors.toList())){
+			String str = properMap.get(id);
 			
 			writer.write(id+","+str);
 			writer.newLine();
@@ -84,7 +99,7 @@ public class KeyValueFile {
 		
 		writer.close();
 		
-	}*/
+	}
 	
 	public String getValue(int key){
 		return map.get(key);
