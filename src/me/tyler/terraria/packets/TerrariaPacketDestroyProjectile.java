@@ -28,8 +28,6 @@ public class TerrariaPacketDestroyProjectile extends TerrariaPacket {
 			TerrariaData.proj_ids_in_use.remove(index);
 		}
 		
-		
-		
 		return super.onReceive(proxy, client);
 	}
 	

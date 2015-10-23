@@ -54,7 +54,7 @@ public class TerrariaPacketWorldInfo extends TerrariaPacket {
 		return PacketUtil.readString(getPayload(), 22);
 	}
 	
-	private int getWorldNameOffset(){
+	public int getWorldNameOffset(){
 		return getPayload()[22] + 1;
 	}
 	
@@ -199,19 +199,14 @@ public class TerrariaPacketWorldInfo extends TerrariaPacket {
 	}
 	
 	public boolean isServerSideCharacters(){
-		return (getEventInfo1() & 64) > 0;
+		return (getEventInfo1() & 64) == 64;
 	}
 	
 	@Override
 	public boolean onReceive(Proxy proxy, Socket client) {
 		
-		if(!isServerSideCharacters()){
-			getPayload()[getWorldNameOffset() + 75] += 64;
-		}
-		
 		if(!proxy.areDimensionsSet()){
 			proxy.setWorldDimensions(getMaxTilesX(), getMaxTilesY());
-			System.out.println("World dimensions set to "+getMaxTilesX()+" "+getMaxTilesY());
 		}
 		
 		return super.onReceive(proxy, client);

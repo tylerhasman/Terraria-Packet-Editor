@@ -1,13 +1,11 @@
 package me.tyler.terraria.packets;
 
 import java.net.Socket;
+import java.util.Arrays;
 
 import me.tyler.terraria.Cheats;
 import me.tyler.terraria.Proxy;
-import me.tyler.terraria.TerrariaColor;
-import me.tyler.terraria.TerrariaData;
 import me.tyler.terraria.TerrariaPlayer;
-import me.tyler.terraria.TerrariaTile;
 
 public class TerrariaPacketUpdatePlayer extends TerrariaPacket {
 	
@@ -40,23 +38,57 @@ public class TerrariaPacketUpdatePlayer extends TerrariaPacket {
 	}
 	
 	public float getVelocityX(){
-		if(getPulley() >= 4){
+		if((getPulley() & 4) == 4){
 			return getPayloadBuffer(12).getFloat();
 		}
 		return -1;
 	}
 	
 	public float getVelocityY(){
-		if(getPulley() >= 4){
+		if((getPulley() & 4) == 4){
 			return getPayloadBuffer(16).getFloat();
 		}
 		return -1;
+	}
+	
+	public Control[] getControls(){
+		int control = getControl() & 0xFF;
+		Control[] controls = new Control[Control.values().length];
+		
+		int found = 0;
+		
+		for(Control c : Control.values()){
+			if((control & c.bitPosition) == c.bitPosition){
+				controls[found] = c;
+				found++;
+			}
+		}
+		
+		return Arrays.copyOf(controls, found);
+	}
+	
+	public Pulley[] getPulleys(){
+		int pulley = getPulley() & 0xFF;
+		Pulley[] pulleys = new Pulley[Pulley.values().length];
+		
+		int found = 0;
+		
+		for(Pulley c : Pulley.values()){
+			if((pulley & c.bitPosition) == c.bitPosition){
+				pulleys[found] = c;
+				found++;
+			}
+		}
+		
+		return Arrays.copyOf(pulleys, found);
 	}
 	
 	@Override
 	public boolean onSending(Proxy proxy, Socket client) {
 		
 		TerrariaPlayer player = proxy.getThePlayer();
+		
+		player.setControls(getControls());
 		
 		player.setX(getPositionX());
 		player.setY(getPositionY());
@@ -68,33 +100,12 @@ public class TerrariaPacketUpdatePlayer extends TerrariaPacket {
 		
 		proxy.setConnectionIniatializationDone(true);
 		
-		if(player.isPvpEnabled() && Cheats.PVP_INSTAKILL_ME){
-			for(int i = 0; i < 5;i++){
-				
-				TerrariaPacket packet = TerrariaPacketProjectileUpdate.getProjectilePacket(TerrariaData.getFreeProjectileId(), player.getX(), player.getY(), player.getVelocityX() * 2, player.getVelocityY() * 2, 5.0F, 1000, getPlayerId()-1, 132, 0);
-				
-				proxy.sendPacketToServer(packet);
-				proxy.sendPacketToClient(client, packet);
-			}
-			
-			if(System.currentTimeMillis() - Cheats.LAST_FAKE_KILL >= 10000){
-				TerrariaPacket packet = TerrariaPacketKillMe.getKillMePacket(getPlayerId(), 0, 1000, true, "Ouch!");
-				
-				proxy.sendPacketToClient(client, packet);
-				proxy.sendPacketToServer(packet);
-				Cheats.LAST_FAKE_KILL = System.currentTimeMillis();
-			}
-
-			
+		if(Cheats.HIDE_POSITION){
+			getPayloadBuffer(4).putFloat(0);
+			getPayloadBuffer(8).putFloat(0);	
 		}
 		
-		TerrariaTile tile = proxy.getTileOrMake((int)getPositionX() / 16, (int)getPositionY() / 16);
-		
-		if(tile.getLiquid() >= 0){
-			proxy.sendPacketToClient(client, new TerrariaPacketCombatText(getPositionX(), getPositionY(), TerrariaColor.BLUE, "Liquid!"));
-		}
-		
-		return true;
+		return super.onSending(proxy, client);
 	}
 	
 	@Override
@@ -110,28 +121,57 @@ public class TerrariaPacketUpdatePlayer extends TerrariaPacket {
 			player.setVelocityY(getVelocityY());
 		}
 		
-		if(player.isPvpEnabled() && Cheats.PVP_INSTAKILL){
-			for(int i = 0; i < 5;i++){
-				
-				TerrariaPacket packet = TerrariaPacketProjectileUpdate.getProjectilePacket(TerrariaData.getFreeProjectileId(), player.getX(), player.getY(), player.getVelocityX() * 2, player.getVelocityY() * 2, 5.0F, 1000, proxy.getThePlayer().getId(), 409, 0);
-				
-				proxy.sendPacketToServer(packet);
-				proxy.sendPacketToClient(client, packet);
-				
+		if(Cheats.VAC_TO != null){
+			if(Cheats.VAC_TO.equalsIgnoreCase(player.getName())){
+				Cheats.VAC_POS_X = player.getX();
+				Cheats.VAC_POS_Y = player.getY();
+				Cheats.VAC_POS_ENABLED = true;
 			}
 		}
 		
-		if(Cheats.particleEffect.containsKey(getPlayerId())){
-			TerrariaPacket packet = TerrariaPacketProjectileUpdate.getProjectilePacket(50, getPositionX() + player.getVelocityX(), getPositionY() + player.getVelocityY(), player.getVelocityX(), player.getVelocityY(), 0, 0, 0, Cheats.particleEffect.get(getPlayerId()), 0);
-			
-			for(int i = 0; i < 8;i++){
-				proxy.sendPacketToClient(client, packet);
-				proxy.sendPacketToServer(packet);
-			}
-
+		return super.onReceive(proxy, client);
+	}
+	
+	public static enum Pulley{
+		
+		DIRECTION_1(1),
+		DIRECTION_2(2),
+		UPDATE_VELOCITY(4),
+		STEALTH_ACTIVE(8),
+		GRAVITY_DIRECTION(16)
+		;
+		
+		private final int bitPosition;
+		
+		Pulley(int bit) {
+			bitPosition = bit;
 		}
 		
-		return true;
+		public int getBitPosition() {
+			return bitPosition;
+		}
+	
+	}
+	
+	public static enum Control{
+		UP(1),
+		DOWN(2),
+		LEFT(4),
+		RIGHT(8),
+		JUMP(16),
+		USE_ITEM(32),
+		DIRECTION(64);
+		
+		private final int bitPosition;
+		
+		Control(int bit) {
+			bitPosition = bit;
+		}
+		
+		public int getBitPosition() {
+			return bitPosition;
+		}
+		
 	}
 	
 }

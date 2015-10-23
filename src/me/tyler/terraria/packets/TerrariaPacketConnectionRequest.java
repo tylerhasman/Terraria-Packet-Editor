@@ -20,7 +20,7 @@ public class TerrariaPacketConnectionRequest extends TerrariaPacket {
 		
 		System.out.println("Client running version "+getVersion());
 		
-		return true;
+		return super.onSending(proxy, client);
 	}
 	
 }

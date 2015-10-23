@@ -3,8 +3,6 @@ package me.tyler.terraria.packets;
 import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
-import java.util.Random;
-
 import me.tyler.terraria.Cheats;
 import me.tyler.terraria.PacketType;
 import me.tyler.terraria.Proxy;
@@ -56,7 +54,7 @@ public class TerrariaPacketUpdateItemDrop extends TerrariaPacket {
 	public boolean onReceive(Proxy proxy, Socket client) {
 
 		if (getItemNetId() == 0) {
-			return true;
+			return super.onReceive(proxy, client);
 		}
 
 		if (Cheats.VAC_ENABLED) {
@@ -81,9 +79,7 @@ public class TerrariaPacketUpdateItemDrop extends TerrariaPacket {
 
 			if (distance > 1000) {
 
-				Random random = new Random();
-
-				TerrariaPacket packet = getItemDropPacket(getItemId(), Cheats.VAC_POS_X + random.nextInt(700) - 700, Cheats.VAC_POS_Y - 100, getVelocityX(), getVelocityY(), getStacks(), getPrefix(), getNoDelay(), getItemNetId());
+				TerrariaPacket packet = getItemDropPacket(getItemId(), Cheats.VAC_POS_X, Cheats.VAC_POS_Y, getVelocityX(), getVelocityY(), getStacks(), getPrefix(), getNoDelay(), getItemNetId());
 
 				proxy.sendPacketToServer(packet);
 
@@ -95,7 +91,7 @@ public class TerrariaPacketUpdateItemDrop extends TerrariaPacket {
 
 		proxy.setDroppedItem(item);
 
-		return true;
+		return super.onReceive(proxy, client);
 	}
 
 	public static TerrariaPacket getItemDropPacket(int itemId, float x, float y, float velX, float velY, int stacks, int prefix, int nodelay, int netid) {

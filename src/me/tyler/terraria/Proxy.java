@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 import me.tyler.terraria.packets.TerrariaPacket;
+import me.tyler.terraria.script.Script;
 
 public class Proxy {
 
@@ -28,6 +29,7 @@ public class Proxy {
 	private List<Npc> npcs;
 	private boolean isConnectionIniatializationDone;
 	private TerrariaTile[][] tiles;
+	private long lastScriptCycle;
 	
 	public Proxy(String ip, int port) {
 		targetIp = ip;
@@ -37,6 +39,7 @@ public class Proxy {
 		itemsOnGround = new HashMap<>();
 		isConnected = false;
 		isConnectionIniatializationDone = false;
+		lastScriptCycle = System.currentTimeMillis();
 	}
 	
 	public void connect() throws IOException {
@@ -60,6 +63,22 @@ public class Proxy {
 			if(sending != null){
 				if(sending.onSending(this, client)){
 					sendPacketToServer(sending);
+				}
+			}
+			
+			if(isConnectionIniatializationDone){
+				if(System.currentTimeMillis() - lastScriptCycle >= 500){
+					for(Script script : Script.getAll()){
+						if(script.doesCycle()){
+							script.invoke("do_cycle", this, client);
+						}
+					}	
+					lastScriptCycle = System.currentTimeMillis();
+					
+					for(TerrariaPlayer player : getPlayers()){
+						player.cycle();
+					}
+					thePlayer.cycle();
 				}
 			}
 			
@@ -190,6 +209,10 @@ public class Proxy {
 	
 	public TerrariaPlayer getPlayer(byte id){
 		
+		if(id == getThePlayer().getId()){
+			return getThePlayer();
+		}
+		
 		if(!players.containsKey(id)){
 			players.put(id, new TerrariaPlayer(id));
 		}
@@ -219,6 +242,11 @@ public class Proxy {
 	}
 
 	public TerrariaPlayer getPlayer(String player) {
+		
+		if(player.equalsIgnoreCase(getThePlayer().getName())){
+			return getThePlayer();
+		}
+		
 		for(TerrariaPlayer pl : players.values()){
 			if(pl.getName().equalsIgnoreCase(player)){
 				return pl;
@@ -252,6 +280,10 @@ public class Proxy {
 	
 	public boolean areDimensionsSet(){
 		return tiles != null;
+	}
+
+	public void reset() {
+		
 	}
 	
 }

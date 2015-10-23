@@ -102,7 +102,7 @@ public class TerrariaPacketProjectileUpdate extends TerrariaPacket {
 			}
 		}
 		
-		return true;
+		return super.onSending(proxy, client);
 	}
 	
 	@Override
@@ -120,7 +120,7 @@ public class TerrariaPacketProjectileUpdate extends TerrariaPacket {
 			proxy.sendPacketToClient(client, packet);
 		}
 		
-		return true;
+		return super.onReceive(proxy, client);
 	}
 	
 	public static TerrariaPacket getProjectilePacket(int id, float x, float y, float velx, float vely, float knockback, int damage, int owner, int type, int aiflags, float... flags){

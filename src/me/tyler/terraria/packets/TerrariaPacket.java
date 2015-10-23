@@ -3,18 +3,22 @@ package me.tyler.terraria.packets;
 import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.util.List;
 
 import me.tyler.terraria.PacketType;
 import me.tyler.terraria.Proxy;
+import me.tyler.terraria.script.Script;
 
 public class TerrariaPacket {
 	
 	private byte type;
 	private byte[] payload;
+	private List<Script> scripts;
 	
 	public TerrariaPacket(byte type, byte[] payload) {
 		this.type = type;
 		this.payload = payload;
+		scripts = Script.getScriptsForPacket(PacketType.getTypeFromId(type));
 	}
 	
 	public byte getType() {
@@ -31,6 +35,10 @@ public class TerrariaPacket {
 	
 	@Override
 	public String toString() {
+		return getClass().getSimpleName();
+	}
+	
+	public String dumpData() {
 		
 		String packetInfo = "";
 		
@@ -53,11 +61,39 @@ public class TerrariaPacket {
 	}
 	
 	public boolean onReceive(Proxy proxy, Socket client){
-		return true;
+		
+		boolean forwardToClient = true;
+		
+		for(Script script : scripts){
+			try {
+				Object obj = script.invoke("recieve", this, proxy, client);
+				
+				if(obj != null){
+					forwardToClient = (boolean) obj;
+				}
+				
+			} catch (NoSuchMethodException e) {
+			}
+		}
+		return forwardToClient;
 	}
 	
 	public boolean onSending(Proxy proxy, Socket client){
-		return true;
+		
+		boolean forwardToServer = true;
+		
+		for(Script script : scripts){
+			try {
+				Object obj = script.invoke("send", this, proxy, client);
+				
+				if(obj != null){
+					forwardToServer = (boolean) obj;
+				}
+				
+			} catch (NoSuchMethodException e) {
+			}
+		}
+		return forwardToServer;
 	}
 	
 	protected void setPayload(byte[] b){

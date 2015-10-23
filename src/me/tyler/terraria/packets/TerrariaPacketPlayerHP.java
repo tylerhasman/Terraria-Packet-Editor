@@ -10,6 +10,8 @@ import me.tyler.terraria.Proxy;
 
 public class TerrariaPacketPlayerHp extends TerrariaPacket {
 
+	public static int id = 100;
+	
 	public TerrariaPacketPlayerHp(byte type, byte[] payload) {
 		super(type, payload);
 	}
@@ -34,7 +36,7 @@ public class TerrariaPacketPlayerHp extends TerrariaPacket {
 				return false;
 			}
 		}
-		return true;
+		return super.onSending(proxy, client);
 	}
 	
 	public static TerrariaPacketPlayerHp getPlayerHpPacket(int playerId, int hp, int maxHp){

@@ -1,0 +1,17 @@
+/*
+
+This script allows you to always have a randomly generated name.
+
+*/
+
+function packet_type(){
+	return PLAYER_INFO;
+}
+
+function send(packet, proxy, client){
+
+	packet.randomizeName();
+
+	print("Name randomized to "+packet.getName());
+	
+}

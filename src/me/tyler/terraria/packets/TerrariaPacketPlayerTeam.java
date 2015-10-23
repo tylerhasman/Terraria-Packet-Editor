@@ -1,9 +1,5 @@
 package me.tyler.terraria.packets;
 
-import java.net.Socket;
-
-import me.tyler.terraria.Proxy;
-
 public class TerrariaPacketPlayerTeam extends TerrariaPacket {
 
 	public TerrariaPacketPlayerTeam(byte type, byte[] payload) {
@@ -18,25 +14,7 @@ public class TerrariaPacketPlayerTeam extends TerrariaPacket {
 		return getPayloadBuffer(1).get();
 	}
 	
-	@Override
-	public boolean onSending(Proxy proxy, Socket client) {
-		
-		System.out.println("Player setting team to "+getTeamName(getTeam()));
-		
-		return true;
-	}
-	
-	@Override
-	public boolean onReceive(Proxy proxy, Socket client) {
-
-		if(proxy.getThePlayer().getId() == getPlayerId()){
-			System.out.println("Server setting team to "+getTeamName(getTeam()));
-		}
-		
-		return true;
-	}
-	
-	private static String getTeamName(byte id){
+	public static String getTeamName(byte id){
 		
 		if(id == 0){
 			return "White";

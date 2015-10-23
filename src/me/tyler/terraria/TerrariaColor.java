@@ -10,6 +10,7 @@ public class TerrariaColor {
 	public static final TerrariaColor BLUE = TerrariaColor.getColor(100, 150, 190);
 	public static final TerrariaColor PURPLE = TerrariaColor.getColor(140, 40, 255);
 	public static final TerrariaColor YELLOW = TerrariaColor.getColor(255, 213, 28);
+	public static final TerrariaColor WHITE = TerrariaColor.getColor(255, 255, 255);
 	
 	private byte r, g, b;
 	

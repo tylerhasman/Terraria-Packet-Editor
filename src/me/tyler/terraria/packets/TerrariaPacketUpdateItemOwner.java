@@ -61,7 +61,7 @@ public class TerrariaPacketUpdateItemOwner extends TerrariaPacket {
 			}
 		}
 
-		return true;
+		return super.onReceive(proxy, client);
 	}
 
 }

@@ -1,11 +1,9 @@
 package me.tyler.terraria.packets;
 
-import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
 import me.tyler.terraria.PacketType;
-import me.tyler.terraria.Proxy;
 
 public class TerrariaPacketMana extends TerrariaPacket {
 
@@ -23,21 +21,6 @@ public class TerrariaPacketMana extends TerrariaPacket {
 	
 	public short getMaxMana(){
 		return getPayloadBuffer(3).getShort();
-	}
-	
-	@Override
-	public boolean onSending(Proxy proxy, Socket client) {
-		
-		if(getPlayerId() == proxy.getThePlayer().getId() && proxy.isConnectionIniatializationDone()){
-			
-			proxy.sendPacketToClient(client, TerrariaPacketMana.getManaPacket(getPlayerId(), getMaxMana(), (short) 300));
-			
-			return true;
-		}
-		
-		
-		
-		return true;
 	}
 	
 	public static TerrariaPacket getManaPacket(byte playerId, short mana, short maxMana){

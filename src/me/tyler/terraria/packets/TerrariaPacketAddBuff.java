@@ -1,12 +1,9 @@
 package me.tyler.terraria.packets;
 
-import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
-import me.tyler.terraria.Cheats;
 import me.tyler.terraria.PacketType;
-import me.tyler.terraria.Proxy;
 
 public class TerrariaPacketAddBuff extends TerrariaPacket {
 	
@@ -28,16 +25,6 @@ public class TerrariaPacketAddBuff extends TerrariaPacket {
 	
 	public short getTime(){
 		return getPayloadBuffer(2).getShort();
-	}
-	
-	@Override
-	public boolean onReceive(Proxy proxy, Socket client) {
-		
-		if(getPlayerId() == proxy.getThePlayer().getId() && Cheats.BLOCK_BUFFS){
-			return false;
-		}
-		
-		return true;
 	}
 
 	private static byte[] getBuffPacket(int playerId, int buff, int time){

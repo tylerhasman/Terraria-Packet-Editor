@@ -9,6 +9,7 @@ import java.util.Scanner;
 import javax.swing.JOptionPane;
 
 import me.tyler.terraria.gui.PacketEditorGUI;
+import me.tyler.terraria.script.Script;
 
 public class Main {
 
@@ -16,6 +17,7 @@ public class Main {
 	
 	public static String forwardIp = "";
 	public static int port = 0;
+	public static boolean reset = false;
 	
 	public static void main(String[] args) throws IOException, InterruptedException {
 		
@@ -38,6 +40,7 @@ public class Main {
 			System.out.println("Loaded "+TerrariaData.PROJECTILES.size()+" projectile types.");
 			System.out.println("Loaded "+TerrariaData.BOSSES.size()+" bosses.");
 			System.out.println("Loaded "+TerrariaData.ITEMS.size()+" items.");
+			System.out.println("Loaded "+Script.loadScripts(new File("scripts/"))+" scripts.");
 
 			inputUserSettings();
 			

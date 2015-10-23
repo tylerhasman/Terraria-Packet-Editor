@@ -31,7 +31,7 @@ public class TerrariaPacketDisconnect extends TerrariaPacket {
 			e.printStackTrace();
 		}
 		
-		return true;
+		return super.onReceive(proxy, client);
 	}
 	
 	public static TerrariaPacket getKickPacket(String message){

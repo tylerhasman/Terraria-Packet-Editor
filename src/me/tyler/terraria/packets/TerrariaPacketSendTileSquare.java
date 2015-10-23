@@ -10,10 +10,6 @@ public class TerrariaPacketSendTileSquare extends TerrariaPacket {
 		return getPayloadBuffer().getShort();
 	}
 	
-	private int getSizeSquared(){
-		return getSize() * getSize();
-	}
-	
 	public int getTileX(){
 		return getPayloadBuffer(2).getInt();
 	}

@@ -1,5 +1,7 @@
 package me.tyler.terraria;
 
+import me.tyler.terraria.packets.TerrariaPacketUpdatePlayer.Control;
+
 public class TerrariaPlayer {
 
 	private byte id;
@@ -7,10 +9,14 @@ public class TerrariaPlayer {
 	private float x, y;
 	private float velocityX, velocityY;
 	private boolean pvpEnabled;
+	private Control[] controls;
+	private boolean facingLeft;
 	
 	public TerrariaPlayer(byte id) {
 		this.id = id;
 		name = "<not set>";
+		controls = new Control[0];
+		facingLeft = false;
 	}
 	
 	public float getX() {
@@ -65,6 +71,10 @@ public class TerrariaPlayer {
 		this.velocityY = velocityY;
 	}
 	
+	public boolean isFacingLeft() {
+		return facingLeft;
+	}
+	
 	public float distance(float x, float y){
 		float x3 = (float) Math.pow(getX() - x, 2);
 		float y3 = (float) Math.pow(getY() - y, 2);
@@ -72,6 +82,23 @@ public class TerrariaPlayer {
 		float distance = (float) Math.sqrt(x3 + y3);
 		
 		return distance;
+	}
+
+	public void setControls(Control[] controls) {
+		this.controls = controls;
+	}
+	
+	public void cycle(){
+		for(Control control : controls){
+			if(control == Control.LEFT){
+				x -= 90;
+				facingLeft = true;
+			}
+			if(control == Control.RIGHT){
+				x += 90;
+				facingLeft = false;
+			}
+		}
 	}
 	
 }

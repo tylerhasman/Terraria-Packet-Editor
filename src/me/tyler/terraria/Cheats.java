@@ -10,6 +10,8 @@ public class Cheats {
 	public static float VAC_POS_X = 0, VAC_POS_Y = 0;
 	public static boolean BLOCK_DAMAGE = false;
 	
+	public static String VAC_TO = null;
+	
 	public static Map<Short, Short> replacer = new HashMap<>();
 
 	public static short PROJECTILE_REPLACER_OTHER_TO = -1;
@@ -24,5 +26,7 @@ public class Cheats {
 	public static boolean BLOCK_BUFFS = false;
 	
 	public static boolean TRACK_PROJECTILES = false;
+	
+	public static boolean HIDE_POSITION = false;
 	
 }

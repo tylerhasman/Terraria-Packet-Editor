@@ -7,11 +7,13 @@ public enum PacketType {
 	CONNECTION_REQUEST(1, TerrariaPacketConnectionRequest.class),
 	DISCONNECT(2, TerrariaPacketDisconnect.class),
 	PLAYER_INFO(4, TerrariaPacketPlayerInfo.class),
+	INVENTORY_SLOT(5, TerrariaPacketInventorySlot.class),
 	WORLD_INFO(7, TerrariaPacketWorldInfo.class),
 	GET_SECTION(8, TerrariaPacketGetSection.class),
 	STATUS(9, TerrariaPacketStatus.class),
 	CONTINUE(6, TerrariaPacketContinue.class),
 	/*SEND_SECTION(10, TerrariaPacketSendSection.class),*/
+	SPAWN_PLAYER(12, TerrariaPacketSpawnPlayer.class),
 	UPDATE_PLAYER(13, TerrariaPacketUpdatePlayer.class),
 	PLAYER_HP(16, TerrariaPacketPlayerHp.class),
 	MODIFY_TILE(17, TerrariaPacketModifyTile.class),
@@ -39,6 +41,7 @@ public enum PacketType {
 	RELEASE_NPC(71, TerrariaPacketReleaseNpc.class),
 	COMBAT_TEXT(81, TerrariaPacketCombatText.class),
 	PLACE_FRAME(89, TerrariaPacketPlaceFrame.class),
+	EMOTE_BUBBLE(91, TerrariaPacketEmoteBubble.class),
 	PORTAL_TELEPORT(96, TerrariaPacketPortalTeleport.class),
 	NPC_PORTAL_TELEPORT(100, TerrariaPacketNpcPortalTeleport.class),
 	OTHER(-1, TerrariaPacket.class)//Used to handle packets that the packet editor doesnt specifically care about
