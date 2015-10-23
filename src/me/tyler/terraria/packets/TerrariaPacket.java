@@ -1,6 +1,5 @@
 package me.tyler.terraria.packets;
 
-import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.List;
@@ -60,13 +59,13 @@ public class TerrariaPacket {
 		return (ByteBuffer) ByteBuffer.wrap(payload, offset, payload.length - offset).order(ByteOrder.LITTLE_ENDIAN);
 	}
 	
-	public boolean onReceive(Proxy proxy, Socket client){
+	public boolean onReceive(Proxy proxy){
 		
 		boolean forwardToClient = true;
 		
 		for(Script script : scripts){
 			try {
-				Object obj = script.invoke("recieve", this, proxy, client);
+				Object obj = script.invoke("recieve", this, proxy);
 				
 				if(obj != null){
 					forwardToClient = (boolean) obj;
@@ -78,13 +77,13 @@ public class TerrariaPacket {
 		return forwardToClient;
 	}
 	
-	public boolean onSending(Proxy proxy, Socket client){
+	public boolean onSending(Proxy proxy){
 		
 		boolean forwardToServer = true;
 		
 		for(Script script : scripts){
 			try {
-				Object obj = script.invoke("send", this, proxy, client);
+				Object obj = script.invoke("send", this, proxy);
 				
 				if(obj != null){
 					forwardToServer = (boolean) obj;

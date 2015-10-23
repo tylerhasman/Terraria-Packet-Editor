@@ -15,27 +15,23 @@ function makeMessage(color, message){
 	return new ChatMessage(color, message);
 }
 
-function recieve(packet, proxy, client){
-
-}
-
-function send(packet, proxy, client){
+function send(packet, proxy){
 	if(enabled){
 		if(packet.getVelocityY() > 5.0){
-			proxy.sendPacketToClient(client, new BuffPacket(proxy.getThePlayer().getId(), featherFallPotionID, 500));
+			proxy.sendPacketToClient(new BuffPacket(proxy.getThePlayer().getId(), featherFallPotionID, 500));
 		}
 	}
 }
 
-function chat_command(proxy, client, command, args){
+function chat_command(proxy, command, args){
 
 	if(command.equalsIgnoreCase("fall")){
 	
 		enabled = !enabled;
 		if(enabled){
-			proxy.sendPacketToClient(client, makeMessage(Color.GREEN, "Fall protection enabled!"));
+			proxy.sendPacketToClient(makeMessage(Color.GREEN, "Fall protection enabled!"));
 		}else{
-			proxy.sendPacketToClient(client, makeMessage(Color.RED, "Full protection disabled!"));
+			proxy.sendPacketToClient(makeMessage(Color.RED, "Full protection disabled!"));
 		}
 		
 		return true;

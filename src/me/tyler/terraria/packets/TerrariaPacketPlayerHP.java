@@ -1,12 +1,12 @@
 package me.tyler.terraria.packets;
 
-import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
 import me.tyler.terraria.Cheats;
 import me.tyler.terraria.PacketType;
 import me.tyler.terraria.Proxy;
+import me.tyler.terraria.TerrariaPlayer;
 
 public class TerrariaPacketPlayerHp extends TerrariaPacket {
 
@@ -14,6 +14,10 @@ public class TerrariaPacketPlayerHp extends TerrariaPacket {
 	
 	public TerrariaPacketPlayerHp(byte type, byte[] payload) {
 		super(type, payload);
+	}
+	
+	public TerrariaPacketPlayerHp(int pid, int hp, int maxHp){
+		super(PacketType.PLAYER_HP.getId(), getPlayerHpPacket(pid, hp, maxHp).array());
 	}
 
 	public byte getPlayerId(){
@@ -29,23 +33,26 @@ public class TerrariaPacketPlayerHp extends TerrariaPacket {
 	}
 	
 	@Override
-	public boolean onSending(Proxy proxy, Socket client) {
-		if(getPlayerId() == proxy.getThePlayer().getId()){
-			if(Cheats.BLOCK_DAMAGE){
-				proxy.sendPacketToClient(client, TerrariaPacketHealOther.getHealthOtherPacket(getPlayerId(), (short) (getMaxLife()-getLife())));
-				return false;
-			}
+	public boolean onReceive(Proxy proxy) {
+		
+		if(getPlayerId() != proxy.getThePlayer().getId()){	
+			TerrariaPlayer player = proxy.getPlayer(getPlayerId());
+			
+			player.setHealth(getLife());
+			player.setMaxHealth(getMaxLife());
+			
 		}
-		return super.onSending(proxy, client);
+		
+		return super.onReceive(proxy);
 	}
 	
-	public static TerrariaPacketPlayerHp getPlayerHpPacket(int playerId, int hp, int maxHp){
+	public static ByteBuffer getPlayerHpPacket(int playerId, int hp, int maxHp){
 		ByteBuffer buf = ByteBuffer.allocate(5).order(ByteOrder.LITTLE_ENDIAN);
 		buf.put((byte) playerId);
 		buf.putShort((short) hp);
 		buf.putShort((short) maxHp);
 		
-		return new TerrariaPacketPlayerHp(PacketType.PLAYER_HP.getId(), buf.array());
+		return buf;
 	}
 	
 	

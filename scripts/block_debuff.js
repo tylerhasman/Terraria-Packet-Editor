@@ -16,26 +16,23 @@ function makeMessage(color, message){
 
 }
 
-function recieve(packet, proxy, client){
+function recieve(packet, proxy){
 	if(enabled){
+		print("Blocked");
 		return false;//Cancel the packet
 	}
 }
 
-function send(packet, proxy, client){
-
-}
-
-function chat_command(proxy, client, command, args){
+function chat_command(proxy, command, args){
 
 	if(command.equalsIgnoreCase("blockbuff")){
 	
 		enabled = !enabled;
 		
 		if(enabled){
-			proxy.sendPacketToClient(client, makeMessage(Color.GREEN, "Buff blocking enabled!"));
+			proxy.sendPacketToClient(makeMessage(Color.GREEN, "Buff blocking enabled!"));
 		}else{
-			proxy.sendPacketToClient(client, makeMessage(Color.RED, "Buff blocking disabled!"));
+			proxy.sendPacketToClient(makeMessage(Color.RED, "Buff blocking disabled!"));
 		}
 		
 		return true;

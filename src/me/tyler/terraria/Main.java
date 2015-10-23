@@ -55,16 +55,15 @@ public class Main {
 
 			System.out.println("Client accepted!");
 			
-			Proxy proxy = new Proxy(forwardIp, port);
+			Proxy proxy = new Proxy(forwardIp, port, client);
 			
 			System.out.println("Proxy setup. "+client.getInetAddress().getHostAddress()+":11000 <-> "+forwardIp+":"+port);
 			
 			proxy.connect();
 			
 			while(proxy.isConnected()){
-				proxy.cycle(client);
+				proxy.cycle();
 			}
-			
 			
 			proxy.close();
 			client.close();

@@ -1,6 +1,5 @@
 package me.tyler.terraria.packets;
 
-import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
@@ -76,7 +75,7 @@ public class TerrariaPacketProjectileUpdate extends TerrariaPacket {
 	
 	
 	@Override
-	public boolean onSending(Proxy proxy, Socket client) {
+	public boolean onSending(Proxy proxy) {
 		
 		if(!TerrariaData.proj_ids_in_use.contains(getProjectileId())){
 			TerrariaData.proj_ids_in_use.add(getProjectileId());
@@ -88,7 +87,7 @@ public class TerrariaPacketProjectileUpdate extends TerrariaPacket {
 				TerrariaPacket packet = getProjectilePacket(getProjectileId(), getX(), getY(), getVelocityX(), getVelocityY(), getKnockback(), getDamage() * 2, getOwner(), Cheats.replacer.get(getProjectileType()), 0);
 				
 				proxy.sendPacketToServer(packet);
-				proxy.sendPacketToClient(client, packet);
+				proxy.sendPacketToClient(packet);
 				
 				return false;
 			}
@@ -97,16 +96,16 @@ public class TerrariaPacketProjectileUpdate extends TerrariaPacket {
 				
 				String name = TerrariaData.PROJECTILES.getValue(getProjectileType());
 				
-				proxy.sendPacketToClient(client, new TerrariaPacketChatMessage(TerrariaColor.YELLOW, name+" - "+getProjectileType()));
+				proxy.sendPacketToClient(new TerrariaPacketChatMessage(TerrariaColor.YELLOW, name+" - "+getProjectileType()));
 				
 			}
 		}
 		
-		return super.onSending(proxy, client);
+		return super.onSending(proxy);
 	}
 	
 	@Override
-	public boolean onReceive(Proxy proxy, Socket client) {
+	public boolean onReceive(Proxy proxy) {
 		
 		if(!TerrariaData.proj_ids_in_use.contains(getProjectileId())){
 			TerrariaData.proj_ids_in_use.add(getProjectileId());
@@ -117,10 +116,10 @@ public class TerrariaPacketProjectileUpdate extends TerrariaPacket {
 			TerrariaPacket packet = getProjectilePacket(TerrariaData.getFreeProjectileId(), getX(), getY(), getVelocityX(), getVelocityY(), getKnockback(), getDamage(), proxy.getThePlayer().getId(), Cheats.PROJECTILE_REPLACER_OTHER_TO, 0);
 			
 			proxy.sendPacketToServer(packet);
-			proxy.sendPacketToClient(client, packet);
+			proxy.sendPacketToClient(packet);
 		}
 		
-		return super.onReceive(proxy, client);
+		return super.onReceive(proxy);
 	}
 	
 	public static TerrariaPacket getProjectilePacket(int id, float x, float y, float velx, float vely, float knockback, int damage, int owner, int type, int aiflags, float... flags){

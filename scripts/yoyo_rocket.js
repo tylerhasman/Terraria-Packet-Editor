@@ -19,7 +19,7 @@ function makeMessage(color, message){
 	return new ChatMessage(color, message);
 }
 
-function send(packet, proxy, client){
+function send(packet, proxy){
 
 	if(!enabled){
 		return;
@@ -29,18 +29,6 @@ function send(packet, proxy, client){
 	
 	for(i = 0; i < yoyo_ids.length;i++){
 		if(id == yoyo_ids[i]){
-			
-			/*
-			var x = packet.getX();
-			var y = packet.getY();
-			var player = proxy.getThePlayer();
-			
-			var tp_packet = TeleportPacket.getPortalTeleportPacket(player.getId(), 0, x, y, 0, 0);
-			
-			player.setX(x);
-			player.setY(y);
-			
-			proxy.sendPacketToClient(client, tp_packet);*/
 			
 			var player = proxy.getThePlayer();
 			
@@ -55,7 +43,7 @@ function send(packet, proxy, client){
 			player.setX(player.getX() + velx * 2);
 			player.setY(player.getY() + vely * 2);
 			
-			proxy.sendPacketToClient(client, tp_packet);
+			proxy.sendPacketToClient(tp_packet);
 			proxy.sendPacketToServer(tp_packet);
 			
 			break;
@@ -64,16 +52,16 @@ function send(packet, proxy, client){
 	
 }
 
-function chat_command(proxy, client, command, args){
+function chat_command(proxy, command, args){
 
 	if(command.equalsIgnoreCase("yoyorocket")){
 		
 		enabled = !enabled;
 		
 		if(enabled){
-			proxy.sendPacketToClient(client, makeMessage(Color.GREEN, "YoYo rocket enabled!"));
+			proxy.sendPacketToClient(makeMessage(Color.GREEN, "YoYo rocket enabled!"));
 		}else{
-			proxy.sendPacketToClient(client, makeMessage(Color.RED, "YoYo rocket disabled!"));
+			proxy.sendPacketToClient(makeMessage(Color.RED, "YoYo rocket disabled!"));
 		}
 		
 		return true;

@@ -102,7 +102,9 @@ public class Script {
 		Invocable inv = (Invocable) engine;
 		
 		try {
-			return (T) inv.invokeFunction(name, args);
+			T t = (T) inv.invokeFunction(name, args);
+			
+			return t;
 		} catch (ScriptException e) {
 			System.out.println("SCRIPT ERROR ("+file.getName()+"): "+e.getMessage());
 		} catch (NoSuchMethodException e) {

@@ -1,7 +1,5 @@
 package me.tyler.terraria.packets;
 
-import java.net.Socket;
-
 import me.tyler.terraria.PacketUtil;
 import me.tyler.terraria.Proxy;
 
@@ -16,11 +14,11 @@ public class TerrariaPacketConnectionRequest extends TerrariaPacket {
 	}
 	
 	@Override
-	public boolean onSending(Proxy proxy, Socket client) {
+	public boolean onSending(Proxy proxy) {
 		
 		System.out.println("Client running version "+getVersion());
 		
-		return super.onSending(proxy, client);
+		return super.onSending(proxy);
 	}
 	
 }

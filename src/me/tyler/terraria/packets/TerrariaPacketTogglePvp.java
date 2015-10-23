@@ -1,6 +1,5 @@
 package me.tyler.terraria.packets;
 
-import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
@@ -26,19 +25,19 @@ public class TerrariaPacketTogglePvp extends TerrariaPacket {
 	}
 	
 	@Override
-	public boolean onReceive(Proxy proxy, Socket client) {
+	public boolean onReceive(Proxy proxy) {
 		
 		proxy.getPlayer(getPlayerId()).setPvpEnabled(isPvpOn());
 		
-		return super.onReceive(proxy, client);
+		return super.onReceive(proxy);
 	}
 	
 	@Override
-	public boolean onSending(Proxy proxy, Socket client) {
+	public boolean onSending(Proxy proxy) {
 		
 		proxy.getThePlayer().setPvpEnabled(isPvpOn());
 		
-		return super.onSending(proxy, client);
+		return super.onSending(proxy);
 	}
 	
 	private static ByteBuffer getPvpPacket(byte playerId, boolean pvp){

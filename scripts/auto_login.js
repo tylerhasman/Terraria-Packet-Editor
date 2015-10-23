@@ -5,24 +5,23 @@ Log you in, for servers that use Server Side Characters
 
 */
 
-var ChatMessage = Java.type("me.tyler.terraria.packets.TerrariaPacketChatMessage");
+var Packet = Java.type("me.tyler.terraria.packets.TerrariaPacket");
 var Color = Java.type("me.tyler.terraria.TerrariaColor");
 
 function packet_type(){
-	return SPAWN_PLAYER;
+
 }
 
-function makeMessage(color, message){
-	return new ChatMessage(color, message);
-}
+function game_state_ready(proxy){
 
-function send(packet, proxy, client){
+	proxy.getThePlayer().sendMessage(Color.YELLOW, "------------------------------------------------------------");
+	proxy.getThePlayer().sendMessage(Color.BLUE, "Thanks for using Terraria Packet Editor!");
+	proxy.getThePlayer().sendMessage(Color.BLUE, "Created by [c/1BF095:Tyler]");
+	proxy.getThePlayer().sendMessage(Color.YELLOW, "------------------------------------------------------------");
+	
+	proxy.getThePlayer().chat("/register 12345");
+	proxy.getThePlayer().chat("/login 12345");
+	
+	print("Logging in with password 12345");
 
-	proxy.sendPacketToClient(client, makeMessage(Color.YELLOW, "------------------------------------------------------------"));
-	proxy.sendPacketToClient(client, makeMessage(Color.BLUE, "Thanks for using Terraria Packet Editor! Your character name is "+proxy.getThePlayer().getName()));
-	proxy.sendPacketToClient(client, makeMessage(Color.YELLOW, "------------------------------------------------------------"));
-	
-	proxy.sendPacketToServer(makeMessage(Color.YELLOW, "/register 12345"));
-	proxy.sendPacketToServer(makeMessage(Color.YELLOW, "/login 12345"));
-	
 }

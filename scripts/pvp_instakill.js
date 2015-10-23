@@ -26,7 +26,7 @@ function make_packet(x, y, vx, vy, knockback, damage, owner, id){
 
 }
 
-function recieve(packet, proxy, client){
+function recieve(packet, proxy){
 	if(!enabled){
 		return;
 	}
@@ -39,32 +39,28 @@ function recieve(packet, proxy, client){
 		var p_packet = make_packet(player.getX(), player.getY(), player.getVelocityX() * 2.5, player.getVelocityY() * 2.5, 0.0, 100, proxy.getThePlayer().getId(), projectileType);
 		
 		proxy.sendPacketToServer(p_packet);
-		proxy.sendPacketToClient(client, p_packet);
+		proxy.sendPacketToClient(p_packet);
 	}
 }
 
-function send(packet, proxy, client){
-
-}
-
-function chat_command(proxy, client, command, args){
+function chat_command(proxy, command, args){
 
 	if(command.equalsIgnoreCase("pvpinstakill")){
 	
 		enabled = !enabled;
 		if(enabled){
-			proxy.sendPacketToClient(client, makeMessage(Color.GREEN, "PvP instakill enabled!"));
+			proxy.sendPacketToClient(makeMessage(Color.GREEN, "PvP instakill enabled!"));
 			var tpvp_packet = new TogglePvp(proxy.getThePlayer().getId(), true);
 			
 			proxy.sendPacketToServer(tpvp_packet);
-			proxy.sendPacketToClient(client, tpvp_packet);
+			proxy.sendPacketToClient(tpvp_packet);
 		}else{
-			proxy.sendPacketToClient(client, makeMessage(Color.RED, "PvP instakill disabled!"));
+			proxy.sendPacketToClient(makeMessage(Color.RED, "PvP instakill disabled!"));
 			
 			var tpvp_packet = new TogglePvp(proxy.getThePlayer().getId(), false);
 			
 			proxy.sendPacketToServer(tpvp_packet);
-			proxy.sendPacketToClient(client, tpvp_packet);
+			proxy.sendPacketToClient(tpvp_packet);
 		}
 		
 		return true;

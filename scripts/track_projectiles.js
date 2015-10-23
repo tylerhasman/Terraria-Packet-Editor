@@ -16,29 +16,25 @@ function makeMessage(color, message){
 
 }
 
-function recieve(packet, proxy, client){
-
-}
-
-function send(packet, proxy, client){
+function send(packet, proxy){
 	if(enabled){
 		var id = packet.getProjectileType();
 		var name = Data.PROJECTILES.getValue(id);
 	
-		proxy.sendPacketToClient(client, makeMessage(Color.YELLOW, name+" - "+id));
+		proxy.sendPacketToClient(makeMessage(Color.YELLOW, name+" - "+id));
 	}
 }
 
-function chat_command(proxy, client, command, args){
+function chat_command(proxy, command, args){
 
 	if(command.equalsIgnoreCase("track")){
 	
 		enabled = !enabled;
 		
 		if(enabled){
-			proxy.sendPacketToClient(client, makeMessage(Color.GREEN, "Projectile tracking enabled!"));
+			proxy.sendPacketToClient(makeMessage(Color.GREEN, "Projectile tracking enabled!"));
 		}else{
-			proxy.sendPacketToClient(client, makeMessage(Color.RED, "Projectile tracking disabled!"));
+			proxy.sendPacketToClient(makeMessage(Color.RED, "Projectile tracking disabled!"));
 		}
 		
 		return true;

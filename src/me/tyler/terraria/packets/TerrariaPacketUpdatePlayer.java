@@ -1,6 +1,5 @@
 package me.tyler.terraria.packets;
 
-import java.net.Socket;
 import java.util.Arrays;
 
 import me.tyler.terraria.Cheats;
@@ -84,7 +83,7 @@ public class TerrariaPacketUpdatePlayer extends TerrariaPacket {
 	}
 	
 	@Override
-	public boolean onSending(Proxy proxy, Socket client) {
+	public boolean onSending(Proxy proxy) {
 		
 		TerrariaPlayer player = proxy.getThePlayer();
 		
@@ -105,11 +104,11 @@ public class TerrariaPacketUpdatePlayer extends TerrariaPacket {
 			getPayloadBuffer(8).putFloat(0);	
 		}
 		
-		return super.onSending(proxy, client);
+		return super.onSending(proxy);
 	}
 	
 	@Override
-	public boolean onReceive(Proxy proxy, Socket client) {
+	public boolean onReceive(Proxy proxy) {
 		
 		TerrariaPlayer player = proxy.getPlayer(getPlayerId());
 		
@@ -129,7 +128,7 @@ public class TerrariaPacketUpdatePlayer extends TerrariaPacket {
 			}
 		}
 		
-		return super.onReceive(proxy, client);
+		return super.onReceive(proxy);
 	}
 	
 	public static enum Pulley{

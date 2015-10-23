@@ -2,7 +2,6 @@ package me.tyler.terraria.packets;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
@@ -21,7 +20,7 @@ public class TerrariaPacketDisconnect extends TerrariaPacket {
 	}
 	
 	@Override
-	public boolean onReceive(Proxy proxy, Socket client) {
+	public boolean onReceive(Proxy proxy) {
 		
 		System.out.println("Disconnected -> "+getReason());
 		
@@ -31,7 +30,7 @@ public class TerrariaPacketDisconnect extends TerrariaPacket {
 			e.printStackTrace();
 		}
 		
-		return super.onReceive(proxy, client);
+		return super.onReceive(proxy);
 	}
 	
 	public static TerrariaPacket getKickPacket(String message){

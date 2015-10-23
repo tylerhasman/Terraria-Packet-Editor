@@ -1,12 +1,13 @@
 package me.tyler.terraria.packets;
 
 import java.io.UnsupportedEncodingException;
-import java.net.Socket;
+
 import org.apache.commons.lang3.RandomStringUtils;
 
 import me.tyler.terraria.PacketUtil;
 import me.tyler.terraria.Proxy;
 import me.tyler.terraria.TerrariaPlayer;
+import me.tyler.terraria.TerrariaPlayerLocal;
 
 public class TerrariaPacketPlayerInfo extends TerrariaPacket {
 	
@@ -47,19 +48,19 @@ public class TerrariaPacketPlayerInfo extends TerrariaPacket {
 	}
 	
 	@Override
-	public boolean onReceive(Proxy proxy, Socket client) {
-		TerrariaPlayer tp = new TerrariaPlayer(getPlayerId());
+	public boolean onReceive(Proxy proxy) {
+		TerrariaPlayer tp = new TerrariaPlayer(getPlayerId(), proxy);
 		tp.setName(getName());
 		proxy.addPlayer(tp);
-		return super.onReceive(proxy, client);
+		return super.onReceive(proxy);
 	}
 	
 	@Override
-	public boolean onSending(Proxy proxy, Socket client) {
+	public boolean onSending(Proxy proxy) {
 		
-		boolean b = super.onSending(proxy, client);
+		boolean b = super.onSending(proxy);
 		
-		proxy.setThePlayer(new TerrariaPlayer(getPlayerId()));
+		proxy.setThePlayer(new TerrariaPlayerLocal(getPlayerId(), proxy));
 		proxy.getThePlayer().setName(getName());
 		
 		return b;

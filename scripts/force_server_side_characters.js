@@ -11,7 +11,7 @@ function packet_type(){
 	return WORLD_INFO;
 }
 
-function recieve(packet, proxy, client){
+function recieve(packet, proxy){
 	if(enabled){
 		return true;
 	}
@@ -20,8 +20,4 @@ function recieve(packet, proxy, client){
 		print("Server side characters force enabled!");
 		enabled = true;
 	}
-}
-
-function send(packet, proxy, client){
-
 }

@@ -1,132 +1,152 @@
 package me.tyler.terraria;
 
-public class Emote {
-	public static int ItemDisplay = -1;
-	public static int Count = 126;
-	public static int RPSWinScissors = 33;
-	public static int RPSWinRock = 34;
-	public static int RPSWinPaper = 35;
-	public static int RPSScissors = 36;
-	public static int RPSRock = 37;
-	public static int RPSPaper = 38;
-	public static int WeatherRain = 4;
-	public static int WeatherLightning = 5;
-	public static int WeatherRainbow = 6;
-	public static int WeatherSunny = 95;
-	public static int WeatherCloudy = 96;
-	public static int WeatherStorming = 97;
-	public static int WeatherSnowstorm = 98;
-	public static int EventBloodmoon = 18;
-	public static int EventEclipse = 19;
-	public static int EventPumpkin = 20;
-	public static int EventSnow = 21;
-	public static int EventMeteor = 99;
-	public static int ItemRing = 7;
-	public static int ItemLifePotion = 73;
-	public static int ItemManaPotion = 74;
-	public static int ItemSoup = 75;
-	public static int ItemCookedFish = 76;
-	public static int ItemAle = 77;
-	public static int ItemSword = 78;
-	public static int ItemFishingRod = 79;
-	public static int ItemBugNet = 80;
-	public static int ItemDynamite = 81;
-	public static int ItemMinishark = 82;
-	public static int ItemCog = 83;
-	public static int ItemTombstone = 84;
-	public static int ItemGoldpile = 85;
-	public static int ItemDiamondRing = 86;
-	public static int ItemPickaxe = 90;
-	public static int DebuffPoison = 8;
-	public static int DebuffBurn = 9;
-	public static int DebuffSilence = 10;
-	public static int DebuffCurse = 11;
-	public static int CritterBee = 12;
-	public static int CritterSlime = 13;
-	public static int CritterZombie = 61;
-	public static int CritterBunny = 62;
-	public static int CritterButterfly = 63;
-	public static int CritterGoblin = 64;
-	public static int CritterPirate = 65;
-	public static int CritterSnowman = 66;
-	public static int CritterSpider = 67;
-	public static int CritterBird = 68;
-	public static int CritterMouse = 69;
-	public static int CritterGoldfish = 70;
-	public static int CritterMartian = 71;
-	public static int CritterSkeleton = 72;
-	public static int BossEoC = 39;
-	public static int BossEoW = 40;
-	public static int BossBoC = 41;
-	public static int BossKingSlime = 51;
-	public static int BossQueenBee = 42;
-	public static int BossSkeletron = 43;
-	public static int BossWoF = 44;
-	public static int BossDestroyer = 45;
-	public static int BossSkeletronPrime = 46;
-	public static int BossTwins = 47;
-	public static int BossPlantera = 48;
-	public static int BossGolem = 49;
-	public static int BossFishron = 50;
-	public static int BossCultist = 52;
-	public static int BossMoonmoon = 53;
-	public static int BossMourningWood = 54;
-	public static int BossPumpking = 55;
-	public static int BossEverscream = 56;
-	public static int BossIceQueen = 57;
-	public static int BossSantank = 58;
-	public static int BossPirateship = 59;
-	public static int BossMartianship = 60;
-	public static int EmotionLove = 0;
-	public static int EmotionAnger = 1;
-	public static int EmotionCry = 2;
-	public static int EmotionAlert = 3;
-	public static int EmoteLaugh = 15;
-	public static int EmoteFear = 16;
-	public static int EmoteNote = 17;
-	public static int EmoteConfused = 87;
-	public static int EmoteKiss = 88;
-	public static int EmoteSleep = 89;
-	public static int EmoteRun = 91;
-	public static int EmoteKick = 92;
-	public static int EmoteFight = 93;
-	public static int EmoteEating = 94;
-	public static int MiscTree = 14;
-	public static int MiscFire = 100;
-	public static int BiomeSky = 22;
-	public static int BiomeOtherworld = 23;
-	public static int BiomeJungle = 24;
-	public static int BiomeCrimson = 25;
-	public static int BiomeCorruption = 26;
-	public static int BiomeHallow = 27;
-	public static int BiomeDesert = 28;
-	public static int BiomeBeach = 29;
-	public static int BiomeRocklayer = 30;
-	public static int BiomeLavalayer = 31;
-	public static int BiomeSnow = 32;
-	public static int TownMerchant = 101;
-	public static int TownNurse = 102;
-	public static int TownArmsDealer = 103;
-	public static int TownDryad = 104;
-	public static int TownGuide = 105;
-	public static int TownOldman = 106;
-	public static int TownDemolitionist = 107;
-	public static int TownClothier = 108;
-	public static int TownGoblinTinkerer = 109;
-	public static int TownWizard = 110;
-	public static int TownMechanic = 111;
-	public static int TownSanta = 112;
-	public static int TownTruffle = 113;
-	public static int TownSteampunker = 114;
-	public static int TownDyeTrader = 115;
-	public static int TownPartyGirl = 116;
-	public static int TownCyborg = 117;
-	public static int TownPainter = 118;
-	public static int TownWitchDoctor = 119;
-	public static int TownPirate = 120;
-	public static int TownStylist = 121;
-	public static int TownTravellingMerchant = 122;
-	public static int TownAngler = 123;
-	public static int TownSkeletonMerchant = 124;
-	public static int TownTaxCollector = 125;
+public enum Emote {
+	ItemDisplay(-1),
+	Count(126),
+	RPSWinScissors(33),
+	RPSWinRock(34),
+	RPSWinPaper(35),
+	RPSScissors(36),
+	RPSRock(37),
+	RPSPaper(38),
+	WeatherRain(4),
+	WeatherLightning(5),
+	WeatherRainbow(6),
+	WeatherSunny(95),
+	WeatherCloudy(96),
+	WeatherStorming(97),
+	WeatherSnowstorm(98),
+	EventBloodmoon(18),
+	EventEclipse(19),
+	EventPumpkin(20),
+	EventSnow(21),
+	EventMeteor(99),
+	ItemRing(7),
+	ItemLifePotion(73),
+	ItemManaPotion(74),
+	ItemSoup(75),
+	ItemCookedFish(76),
+	ItemAle(77),
+	ItemSword(78),
+	ItemFishingRod(79),
+	ItemBugNet(80),
+	ItemDynamite(81),
+	ItemMinishark(82),
+	ItemCog(83),
+	ItemTombstone(84),
+	ItemGoldpile(85),
+	ItemDiamondRing(86),
+	ItemPickaxe(90),
+	DebuffPoison(8),
+	DebuffBurn(9),
+	DebuffSilence(10),
+	DebuffCurse(11),
+	CritterBee(12),
+	CritterSlime(13),
+	CritterZombie(61),
+	CritterBunny(62),
+	CritterButterfly(63),
+	CritterGoblin(64),
+	CritterPirate(65),
+	CritterSnowman(66),
+	CritterSpider(67),
+	CritterBird(68),
+	CritterMouse(69),
+	CritterGoldfish(70),
+	CritterMartian(71),
+	CritterSkeleton(72),
+	BossEoC(39),
+	BossEoW(40),
+	BossBoC(41),
+	BossKingSlime(51),
+	BossQueenBee(42),
+	BossSkeletron(43),
+	BossWoF(44),
+	BossDestroyer(45),
+	BossSkeletronPrime(46),
+	BossTwins(47),
+	BossPlantera(48),
+	BossGolem(49),
+	BossFishron(50),
+	BossCultist(52),
+	BossMoonmoon(53),
+	BossMourningWood(54),
+	BossPumpking(55),
+	BossEverscream(56),
+	BossIceQueen(57),
+	BossSantank(58),
+	BossPirateship(59),
+	BossMartianship(60),
+	EmotionLove(0),
+	EmotionAnger(1),
+	EmotionCry(2),
+	EmotionAlert(3),
+	EmoteLaugh(15),
+	EmoteFear(16),
+	EmoteNote(17),
+	EmoteConfused(87),
+	EmoteKiss(88),
+	EmoteSleep(89),
+	EmoteRun(91),
+	EmoteKick(92),
+	EmoteFight(93),
+	EmoteEating(94),
+	MiscTree(14),
+	MiscFire(100),
+	BiomeSky(22),
+	BiomeOtherworld(23),
+	BiomeJungle(24),
+	BiomeCrimson(25),
+	BiomeCorruption(26),
+	BiomeHallow(27),
+	BiomeDesert(28),
+	BiomeBeach(29),
+	BiomeRocklayer(30),
+	BiomeLavalayer(31),
+	BiomeSnow(32),
+	TownMerchant(101),
+	TownNurse(102),
+	TownArmsDealer(103),
+	TownDryad(104),
+	TownGuide(105),
+	TownOldman(106),
+	TownDemolitionist(107),
+	TownClothier(108),
+	TownGoblinTinkerer(109),
+	TownWizard(110),
+	TownMechanic(111),
+	TownSanta(112),
+	TownTruffle(113),
+	TownSteampunker(114),
+	TownDyeTrader(115),
+	TownPartyGirl(116),
+	TownCyborg(117),
+	TownPainter(118),
+	TownWitchDoctor(119),
+	TownPirate(120),
+	TownStylist(121),
+	TownTravellingMerchant(122),
+	TownAngler(123),
+	TownSkeletonMerchant(124),
+	TownTaxCollector(125);
+	
+	private final int id;
+	
+	Emote(int id) {
+		this.id = id;
+	}
+	
+	public int getId() {
+		return id;
+	}
+	
+	public static Emote getById(int id){
+		for(Emote e : values()){
+			if(e.id == id){
+				return e;
+			}
+		}
+		
+		return null;
+	}
 }

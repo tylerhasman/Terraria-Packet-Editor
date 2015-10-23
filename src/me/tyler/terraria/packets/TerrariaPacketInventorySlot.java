@@ -4,6 +4,7 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
 import me.tyler.terraria.PacketType;
+import me.tyler.terraria.Proxy;
 
 public class TerrariaPacketInventorySlot extends TerrariaPacket {
 
@@ -34,7 +35,7 @@ public class TerrariaPacketInventorySlot extends TerrariaPacket {
 	public short getItemId(){
 		return getPayloadBuffer(5).getShort();
 	}
-	
+
 	private static ByteBuffer getPacket(byte pid, byte slot, short stack, byte prefix, short itemId){
 		ByteBuffer buf = ByteBuffer.allocate(7).order(ByteOrder.LITTLE_ENDIAN);
 		

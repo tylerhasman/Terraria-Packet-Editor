@@ -1,7 +1,6 @@
 package me.tyler.terraria.packets;
 
 import java.io.UnsupportedEncodingException;
-import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.UUID;
@@ -19,7 +18,7 @@ public class TerrariaPacketUUID extends TerrariaPacket {
 	}
 	
 	@Override
-	public boolean onSending(Proxy proxy, Socket client) {
+	public boolean onSending(Proxy proxy) {
 		
 		System.out.println("Client tried to send UUID "+getUUID());
 		

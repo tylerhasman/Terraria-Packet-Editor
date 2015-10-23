@@ -1,7 +1,5 @@
 package me.tyler.terraria.packets;
 
-import java.net.Socket;
-
 import me.tyler.terraria.Npc;
 import me.tyler.terraria.Proxy;
 
@@ -40,7 +38,7 @@ public class TerrariaPacketUpdateNpc extends TerrariaPacket {
 	}
 	
 	@Override
-	public boolean onReceive(Proxy proxy, Socket client) {
+	public boolean onReceive(Proxy proxy) {
 		
 		if(proxy.getNpc(getId()) == null){
 			Npc npc = new Npc(getId());
@@ -53,7 +51,7 @@ public class TerrariaPacketUpdateNpc extends TerrariaPacket {
 			proxy.getNpc(getId()).setY(getPositionY());
 		}
 		
-		return super.onReceive(proxy, client);
+		return false;
 	}
 	
 	

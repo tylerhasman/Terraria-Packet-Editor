@@ -1,6 +1,5 @@
 package me.tyler.terraria.packets;
 
-import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
@@ -178,7 +177,7 @@ public class TerrariaPacketSendSection extends TerrariaPacket {
 	
 
 	@Override
-	public boolean onReceive(Proxy proxy, Socket client) {
+	public boolean onReceive(Proxy proxy) {
 		
 		if(CSharpDecompressor.isEnabled() || !isCompressed()){
 
@@ -188,7 +187,7 @@ public class TerrariaPacketSendSection extends TerrariaPacket {
 		
 		}
 		
-		return super.onReceive(proxy, client);
+		return super.onReceive(proxy);
 	}
 
 }

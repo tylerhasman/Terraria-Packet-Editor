@@ -1,7 +1,5 @@
 package me.tyler.terraria.packets;
 
-import java.net.Socket;
-
 import me.tyler.terraria.Proxy;
 import me.tyler.terraria.TerrariaData;
 
@@ -20,7 +18,7 @@ public class TerrariaPacketDestroyProjectile extends TerrariaPacket {
 	}
 	
 	@Override
-	public boolean onReceive(Proxy proxy, Socket client) {
+	public boolean onReceive(Proxy proxy) {
 		
 		int index = TerrariaData.proj_ids_in_use.indexOf(getProjectileId());
 		
@@ -28,11 +26,11 @@ public class TerrariaPacketDestroyProjectile extends TerrariaPacket {
 			TerrariaData.proj_ids_in_use.remove(index);
 		}
 		
-		return super.onReceive(proxy, client);
+		return super.onReceive(proxy);
 	}
 	
 	@Override
-	public boolean onSending(Proxy proxy, Socket client) {
+	public boolean onSending(Proxy proxy) {
 		
 		int index = TerrariaData.proj_ids_in_use.indexOf(getProjectileId());
 		
@@ -41,7 +39,7 @@ public class TerrariaPacketDestroyProjectile extends TerrariaPacket {
 		}
 		
 		
-		return super.onSending(proxy, client);
+		return super.onSending(proxy);
 	}
 
 }

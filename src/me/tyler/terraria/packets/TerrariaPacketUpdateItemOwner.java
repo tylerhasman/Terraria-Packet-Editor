@@ -1,6 +1,5 @@
 package me.tyler.terraria.packets;
 
-import java.net.Socket;
 import java.util.Random;
 
 import me.tyler.terraria.Cheats;
@@ -22,7 +21,7 @@ public class TerrariaPacketUpdateItemOwner extends TerrariaPacket {
 	}
 
 	@Override
-	public boolean onReceive(Proxy proxy, Socket client) {
+	public boolean onReceive(Proxy proxy) {
 
 		TerrariaItemDrop item = proxy.getDroppedItem(getItemId());
 
@@ -61,7 +60,7 @@ public class TerrariaPacketUpdateItemOwner extends TerrariaPacket {
 			}
 		}
 
-		return super.onReceive(proxy, client);
+		return super.onReceive(proxy);
 	}
 
 }

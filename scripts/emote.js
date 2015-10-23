@@ -16,7 +16,20 @@ function makeMessage(color, message){
 	return new ChatMessage(color, message);
 }
 
-function chat_command(proxy, client, command, args){
+
+function receive(packet, proxy){
+
+	var id = packet.getEmote();
+	var emote = Emotes.getbyId(id);
+	var sender = proxy.getMetadata();
+	
+	var player = proxy.getPlayer(sender);
+	
+	proxy.getThePlayer().sendMessage(sender.getName()+" emotes "+emote.name());
+	
+}
+
+function chat_command(proxy, command, args){
 
 	if(command.equalsIgnoreCase("emote")){
 	
@@ -24,10 +37,10 @@ function chat_command(proxy, client, command, args){
 	
 		for each(player in proxy.getPlayers()){
 			var packet = new EmotePacket(1, player.getId(), 255, rng.nextInt(126));
-			proxy.sendPacketToClient(client, packet);
+			proxy.sendPacketToClient(packet);
 		}
 		
-		proxy.sendPacketToClient(client, makeMessage(Color.GREEN, "Done!"));
+		proxy.sendPacketToClient(makeMessage(Color.GREEN, "Done!"));
 		
 		return true;
 	

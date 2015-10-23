@@ -1,6 +1,5 @@
 package me.tyler.terraria.packets;
 
-import java.net.Socket;
 import me.tyler.terraria.PacketUtil;
 import me.tyler.terraria.Proxy;
 
@@ -203,13 +202,13 @@ public class TerrariaPacketWorldInfo extends TerrariaPacket {
 	}
 	
 	@Override
-	public boolean onReceive(Proxy proxy, Socket client) {
+	public boolean onReceive(Proxy proxy) {
 		
 		if(!proxy.areDimensionsSet()){
 			proxy.setWorldDimensions(getMaxTilesX(), getMaxTilesY());
 		}
 		
-		return super.onReceive(proxy, client);
+		return super.onReceive(proxy);
 	}
 	
 

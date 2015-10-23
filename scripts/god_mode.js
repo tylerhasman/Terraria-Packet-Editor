@@ -16,28 +16,24 @@ function makeMessage(color, message){
 
 }
 
-function recieve(packet, proxy, client){
-
-}
-
-function send(packet, proxy, client){
+function send(packet, proxy){
 	if(enabled){
 		var id = proxy.getThePlayer().getId();
 		var p2 = HpPacket.getHealthOtherPacket(id, packet.getMaxLife()-packet.getLife());
 		
-		proxy.sendPacketToClient(client, p2);
+		proxy.sendPacketToClient(p2);
 	}
 }
 
-function chat_command(proxy, client, command, args){
+function chat_command(proxy, command, args){
 
 	if(command.equalsIgnoreCase("god")){
 	
 		enabled = !enabled;
 		if(enabled){
-			proxy.sendPacketToClient(client, makeMessage(Color.GREEN, "God mode enabled!"));
+			proxy.sendPacketToClient(makeMessage(Color.GREEN, "God mode enabled!"));
 		}else{
-			proxy.sendPacketToClient(client, makeMessage(Color.RED, "God mode disabled!"));
+			proxy.sendPacketToClient(makeMessage(Color.RED, "God mode disabled!"));
 		}
 		
 		return true;

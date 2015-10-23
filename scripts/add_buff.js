@@ -16,7 +16,7 @@ function makeMessage(color, message){
 
 }
 
-function chat_command(proxy, client, command, args){
+function chat_command(proxy, command, args){
 
 	if(command.equalsIgnoreCase("buff")){
 	
@@ -25,11 +25,11 @@ function chat_command(proxy, client, command, args){
 			var id = args[0];
 			var name = Data.BUFFS.getValue(id);
 			buff_packet = new BuffPacket(proxy.getThePlayer().getId(), id, 32767);
-			proxy.sendPacketToClient(client, buff_packet);
-			proxy.sendPacketToClient(client, makeMessage(Color.GREEN, "Added buff "+name));
+			proxy.sendPacketToClient(buff_packet);
+			proxy.sendPacketToClient(makeMessage(Color.GREEN, "Added buff "+name));
 			
 		}else{
-			proxy.sendPacketToClient(client, makeMessage(Color.RED, "-buff [buff id] (Do -lookup to find out ids)"));
+			proxy.sendPacketToClient(makeMessage(Color.RED, "-buff [buff id] (Do -lookup to find out ids)"));
 		}
 		
 		return true;

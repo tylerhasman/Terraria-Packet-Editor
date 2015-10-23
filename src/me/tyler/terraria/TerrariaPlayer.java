@@ -11,12 +11,15 @@ public class TerrariaPlayer {
 	private boolean pvpEnabled;
 	private Control[] controls;
 	private boolean facingLeft;
+	private int hp, maxHp;
+	protected Proxy proxy;
 	
-	public TerrariaPlayer(byte id) {
+	public TerrariaPlayer(byte id, Proxy proxy) {
 		this.id = id;
 		name = "<not set>";
 		controls = new Control[0];
 		facingLeft = false;
+		this.proxy = proxy;
 	}
 	
 	public float getX() {
@@ -33,6 +36,22 @@ public class TerrariaPlayer {
 	
 	public void setY(float y) {
 		this.y = y;
+	}
+	
+	public int getHp() {
+		return hp;
+	}
+	
+	public int getMaxHp() {
+		return maxHp;
+	}
+	
+	public void setHealth(int hp) {
+		this.hp = hp;
+	}
+	
+	public void setMaxHealth(int maxHp) {
+		this.maxHp = maxHp;
 	}
 	
 	public boolean isPvpEnabled() {

@@ -20,14 +20,14 @@ function packet_type(){
 	return UPDATE_PLAYER;
 }
 
-function do_cycle(proxy, client){
+function do_cycle(proxy){
 	for each (player in proxy.getPlayers()){
 		if(particles.containsKey(player.getName())){
-			spawn_particles(player, proxy, client);
+			spawn_particles(player, proxy);
 		}
 	}
 	if(particles.containsKey(proxy.getThePlayer().getName())){
-		spawn_particles(proxy.getThePlayer(), proxy, client);
+		spawn_particles(proxy.getThePlayer(), proxy);
 	}
 }
 
@@ -44,12 +44,12 @@ function make_packet(x, y, vx, vy, knockback, damage, owner, id){
 
 }
 
-function spawn_particles(player, proxy, client){
+function spawn_particles(player, proxy){
 	var id = particles.get(player.getName());
 	var p_packet = make_packet(player.getX(), player.getY(), player.getVelocityX(), player.getVelocityY(), 0, 0, proxy.getThePlayer().getId(), id);
 	
 	if(distance(player, proxy.getThePlayer()) < 3000){
-		proxy.sendPacketToClient(client, p_packet);
+		proxy.sendPacketToClient(p_packet);
 	}
 	
 	proxy.sendPacketToServer(p_packet);
@@ -62,17 +62,17 @@ function makeMessage(color, message){
 
 }
 
-function recieve(packet, proxy, client){
+function recieve(packet, proxy){
 	var player = proxy.getPlayer(packet.getPlayerId());
 	if(particles.containsKey(player.getName())){
-		spawn_particles(player, proxy, client);
+		spawn_particles(player, proxy);
 	}
 }
 
-function send(packet, proxy, client){
+function send(packet, proxy){
 	var player = proxy.getPlayer(packet.getPlayerId());
 	if(particles.containsKey(player.getName())){
-		spawn_particles(player, proxy, client);
+		spawn_particles(player, proxy);
 	}
 }
 
@@ -85,12 +85,12 @@ function remove_particle(player_name){
 	particles.remove(player_name);
 }
 
-function chat_command(proxy, client, command, args){
+function chat_command(proxy, command, args){
 
 	if(command.equalsIgnoreCase("effect")){
 	
 		if(args.length < 2){
-			proxy.sendPacketToClient(client, makeMessage(Color.RED, "-effect [effect id] [player name]"));
+			proxy.sendPacketToClient(makeMessage(Color.RED, "-effect [effect id] [player name]"));
 		}else{
 			var id = args[0];
 			var projectile_name = Data.PROJECTILES.getValue(id);
@@ -107,13 +107,13 @@ function chat_command(proxy, client, command, args){
 			if(player != null){
 				if(id < 0){
 					remove_particle(player.getName());
-					proxy.sendPacketToClient(client, makeMessage(Color.BLUE, "Particle effect cleared for "+player.getName()));
+					proxy.sendPacketToClient(makeMessage(Color.BLUE, "Particle effect cleared for "+player.getName()));
 				}else{
 					add_particle(player.getName(), id);
-					proxy.sendPacketToClient(client, makeMessage(Color.GREEN, projectile_name+" tagged to "+player.getName()));
+					proxy.sendPacketToClient(makeMessage(Color.GREEN, projectile_name+" tagged to "+player.getName()));
 				}
 			}else{
-				proxy.sendPacketToClient(client, makeMessage(Color.RED, "No player found named "+name));
+				proxy.sendPacketToClient(makeMessage(Color.RED, "No player found named "+name));
 			}
 			
 		}

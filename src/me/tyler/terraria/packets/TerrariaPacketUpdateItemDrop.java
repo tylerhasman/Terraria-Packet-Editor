@@ -1,8 +1,8 @@
 package me.tyler.terraria.packets;
 
-import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+
 import me.tyler.terraria.Cheats;
 import me.tyler.terraria.PacketType;
 import me.tyler.terraria.Proxy;
@@ -51,10 +51,10 @@ public class TerrariaPacketUpdateItemDrop extends TerrariaPacket {
 	}
 
 	@Override
-	public boolean onReceive(Proxy proxy, Socket client) {
+	public boolean onReceive(Proxy proxy) {
 
 		if (getItemNetId() == 0) {
-			return super.onReceive(proxy, client);
+			return super.onReceive(proxy);
 		}
 
 		if (Cheats.VAC_ENABLED) {
@@ -91,7 +91,7 @@ public class TerrariaPacketUpdateItemDrop extends TerrariaPacket {
 
 		proxy.setDroppedItem(item);
 
-		return super.onReceive(proxy, client);
+		return super.onReceive(proxy);
 	}
 
 	public static TerrariaPacket getItemDropPacket(int itemId, float x, float y, float velX, float velY, int stacks, int prefix, int nodelay, int netid) {

@@ -33,11 +33,7 @@ function makeMessage(color, message){
 
 }
 
-function recieve(packet, proxy, client){
-
-}
-
-function send(packet, proxy, client){
+function send(packet, proxy){
 	var id = packet.getProjectileType();
 	
 	if(id == magic_missile_id){
@@ -45,7 +41,7 @@ function send(packet, proxy, client){
 			projectile_id = packet.getProjectileId();
 			var proj_packet = make_packet(projectile_id+1, packet.getX(), packet.getY(), packet.getVelocityX(), packet.getVelocityY(), packet.getKnockback(), packet.getDamage(), packet.getOwner(), projectile_type);
 			proxy.sendPacketToServer(proj_packet);
-			proxy.sendPacketToClient(client, proj_packet);
+			proxy.sendPacketToClient(proj_packet);
 
 			return false;
 		}
@@ -53,7 +49,7 @@ function send(packet, proxy, client){
 	
 }
 
-function chat_command(proxy, client, command, args){
+function chat_command(proxy, command, args){
 
 	if(command.equalsIgnoreCase("magicmissile")){
 	
@@ -61,17 +57,17 @@ function chat_command(proxy, client, command, args){
 			var id = args[0];
 			
 			if(id < 0){
-				proxy.sendPacketToClient(client, makeMessage(Color.RED, "Magic Missile disabled!"));
+				proxy.sendPacketToClient(makeMessage(Color.RED, "Magic Missile disabled!"));
 				enabled = false;
 			}else{
 				var name = Data.PROJECTILES.getValue(id);
 				projectile_type = id;
 				enabled = true;
-				proxy.sendPacketToClient(client, makeMessage(Color.GREEN, missile_chat_text+" Magic Missile set to "+name+" "+missile_chat_text));
+				proxy.sendPacketToClient(makeMessage(Color.GREEN, missile_chat_text+" Magic Missile set to "+name+" "+missile_chat_text));
 			}
 			
 		}else{
-			proxy.sendPacketToClient(client, makeMessage(Color.RED, "-magicmissile [projectile id]"));
+			proxy.sendPacketToClient(makeMessage(Color.RED, "-magicmissile [projectile id]"));
 		}
 		
 		return true;

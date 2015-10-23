@@ -23,15 +23,16 @@ public class Proxy {
 	private int targetPort;
 	private Socket socket;
 	private boolean isConnected;
-	private TerrariaPlayer thePlayer;
+	private TerrariaPlayerLocal thePlayer;
 	private Map<Byte, TerrariaPlayer> players;
 	private Map<Short, TerrariaItemDrop> itemsOnGround;
 	private List<Npc> npcs;
 	private boolean isConnectionIniatializationDone;
 	private TerrariaTile[][] tiles;
 	private long lastScriptCycle;
+	private Socket client;
 	
-	public Proxy(String ip, int port) {
+	public Proxy(String ip, int port, Socket client) {
 		targetIp = ip;
 		targetPort = port;
 		players = new HashMap<>();
@@ -40,6 +41,7 @@ public class Proxy {
 		isConnected = false;
 		isConnectionIniatializationDone = false;
 		lastScriptCycle = System.currentTimeMillis();
+		this.client = client;
 	}
 	
 	public void connect() throws IOException {
@@ -47,7 +49,7 @@ public class Proxy {
 		isConnected = true;
 	}
 	
-	public void cycle(Socket client){
+	public void cycle(){
 		
 		try{
 			
@@ -55,13 +57,13 @@ public class Proxy {
 			TerrariaPacket recv = readDataFromSource(socket);
 			
 			if(recv != null){
-				if(recv.onReceive(this, client)){
-					sendPacketToClient(client, recv);
+				if(recv.onReceive(this)){
+					sendPacketToClient(recv);
 				}
 			}
 			
 			if(sending != null){
-				if(sending.onSending(this, client)){
+				if(sending.onSending(this)){
 					sendPacketToServer(sending);
 				}
 			}
@@ -70,7 +72,7 @@ public class Proxy {
 				if(System.currentTimeMillis() - lastScriptCycle >= 500){
 					for(Script script : Script.getAll()){
 						if(script.doesCycle()){
-							script.invoke("do_cycle", this, client);
+							script.invoke("do_cycle", this);
 						}
 					}	
 					lastScriptCycle = System.currentTimeMillis();
@@ -143,6 +145,18 @@ public class Proxy {
 	}
 	
 	public void setConnectionIniatializationDone(boolean flag) {
+		
+		if(!isConnectionIniatializationDone){
+			if(flag){
+				for(Script script : Script.getAll()){
+					try {
+						script.invoke("game_state_ready", this);
+					} catch (NoSuchMethodException e) {
+					}
+				}
+			}
+		}
+		
 		this.isConnectionIniatializationDone = flag;
 	}
 	
@@ -171,7 +185,7 @@ public class Proxy {
 		}
 	}
 	
-	public void sendPacketToClient(Socket client, TerrariaPacket packet){
+	public void sendPacketToClient(TerrariaPacket packet){
 		try {
 			OutputStream os = client.getOutputStream();
 			sendPacketToOutputStream(os, packet);
@@ -199,12 +213,16 @@ public class Proxy {
 		itemsOnGround.put(item.getItemId(), item);
 	}
 	
-	public TerrariaPlayer getThePlayer() {
+	public TerrariaPlayerLocal getThePlayer() {
 		return thePlayer;
 	}
 	
-	public void setThePlayer(TerrariaPlayer thePlayer) {
+	public void setThePlayer(TerrariaPlayerLocal thePlayer) {
 		this.thePlayer = thePlayer;
+	}
+	
+	public Socket getClient() {
+		return client;
 	}
 	
 	public TerrariaPlayer getPlayer(byte id){
@@ -214,7 +232,7 @@ public class Proxy {
 		}
 		
 		if(!players.containsKey(id)){
-			players.put(id, new TerrariaPlayer(id));
+			players.put(id, new TerrariaPlayer(id, this));
 		}
 		
 		return players.get(id);

@@ -1,7 +1,6 @@
 package me.tyler.terraria.packets;
 
 import java.io.UnsupportedEncodingException;
-import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.Arrays;
@@ -52,7 +51,7 @@ public class TerrariaPacketChatMessage extends TerrariaPacket {
 	}
 
 	@Override
-	public boolean onSending(Proxy proxy, Socket client) {
+	public boolean onSending(Proxy proxy) {
 		
 		String msg = getMessage();
 
@@ -65,7 +64,7 @@ public class TerrariaPacketChatMessage extends TerrariaPacket {
 				
 				for(Script script : Script.getAll()){
 					try{
-						Object obj = script.invoke("chat_command", proxy, client, command, Arrays.copyOfRange(splits, 1, splits.length));
+						Object obj = script.invoke("chat_command", proxy, command, Arrays.copyOfRange(splits, 1, splits.length));
 					
 						if(obj == null){
 							continue;
@@ -110,7 +109,7 @@ public class TerrariaPacketChatMessage extends TerrariaPacket {
 							itemId = TerrariaData.ITEMS.getKey(full);
 							
 							if(itemId == Short.MIN_VALUE){
-								proxy.sendPacketToClient(client, new TerrariaPacketChatMessage(TerrariaColor.RED, "No item named "+full+" was found!"));
+								proxy.sendPacketToClient(new TerrariaPacketChatMessage(TerrariaColor.RED, "No item named "+full+" was found!"));
 								return false;
 							}
 							
@@ -136,13 +135,13 @@ public class TerrariaPacketChatMessage extends TerrariaPacket {
 							proxy.sendPacketToServer(packet);
 						}
 
-						proxy.sendPacketToClient(client, new TerrariaPacketChatMessage(TerrariaColor.YELLOW, "Dropped " + amount + " " + TerrariaData.ITEMS.getValue(itemId)));
+						proxy.sendPacketToClient(new TerrariaPacketChatMessage(TerrariaColor.YELLOW, "Dropped " + amount + " " + TerrariaData.ITEMS.getValue(itemId)));
 					}
 
 				} else if(command.equalsIgnoreCase("killme")){
 					TerrariaPacket packet = TerrariaPacketKillMe.getKillMePacket(getPlayerId(), 0, 1000, true, " killed themselves!");
 
-					proxy.sendPacketToClient(client, packet);
+					proxy.sendPacketToClient(packet);
 					proxy.sendPacketToServer(packet);
 				} else if (command.equalsIgnoreCase("replace")) {
 
@@ -175,7 +174,7 @@ public class TerrariaPacketChatMessage extends TerrariaPacket {
 							from = TerrariaData.PROJECTILES.getKey(full);
 							
 							if(from == Short.MIN_VALUE){
-								proxy.sendPacketToClient(client, new TerrariaPacketChatMessage(TerrariaColor.RED, "No projectile named "+full+" was found!"));
+								proxy.sendPacketToClient(new TerrariaPacketChatMessage(TerrariaColor.RED, "No projectile named "+full+" was found!"));
 								return false;
 							}
 							
@@ -204,7 +203,7 @@ public class TerrariaPacketChatMessage extends TerrariaPacket {
 							to = TerrariaData.PROJECTILES.getKey(full);
 							
 							if(to == Short.MIN_VALUE){
-								proxy.sendPacketToClient(client, new TerrariaPacketChatMessage(TerrariaColor.RED, "No projectile named "+full+" was found!"));
+								proxy.sendPacketToClient(new TerrariaPacketChatMessage(TerrariaColor.RED, "No projectile named "+full+" was found!"));
 								return false;
 							}
 						}else{
@@ -217,7 +216,7 @@ public class TerrariaPacketChatMessage extends TerrariaPacket {
 							Cheats.replacer.put((short) from, (short) to);
 						}
 
-						proxy.sendPacketToClient(client, new TerrariaPacketChatMessage(TerrariaColor.BLUE, "Converting " + TerrariaData.PROJECTILES.getValue(from) + " to " + TerrariaData.PROJECTILES.getValue(to)));
+						proxy.sendPacketToClient(new TerrariaPacketChatMessage(TerrariaColor.BLUE, "Converting " + TerrariaData.PROJECTILES.getValue(from) + " to " + TerrariaData.PROJECTILES.getValue(to)));
 					}
 
 				} else if (command.equalsIgnoreCase("replaceother")) {
@@ -246,7 +245,7 @@ public class TerrariaPacketChatMessage extends TerrariaPacket {
 							to = (short) TerrariaData.PROJECTILES.getKey(full);
 							
 							if(to == Short.MIN_VALUE){
-								proxy.sendPacketToClient(client, new TerrariaPacketChatMessage(TerrariaColor.RED, "No projectile named "+full+" was found!"));
+								proxy.sendPacketToClient(new TerrariaPacketChatMessage(TerrariaColor.RED, "No projectile named "+full+" was found!"));
 								return false;
 							}
 							
@@ -256,10 +255,10 @@ public class TerrariaPacketChatMessage extends TerrariaPacket {
 
 						Cheats.PROJECTILE_REPLACER_OTHER_TO = to;
 
-						proxy.sendPacketToClient(client, new TerrariaPacketChatMessage(TerrariaColor.BLUE, "Converting other projectiles to " + TerrariaData.PROJECTILES.getValue(to)));
+						proxy.sendPacketToClient(new TerrariaPacketChatMessage(TerrariaColor.BLUE, "Converting other projectiles to " + TerrariaData.PROJECTILES.getValue(to)));
 					}else{
 						Cheats.PROJECTILE_REPLACER_OTHER_TO = -1;
-						proxy.sendPacketToClient(client, new TerrariaPacketChatMessage(TerrariaColor.RED, "Replacing other, DISABLED!"));
+						proxy.sendPacketToClient(new TerrariaPacketChatMessage(TerrariaColor.RED, "Replacing other, DISABLED!"));
 					}
 					
 				} else if (command.equalsIgnoreCase("track")){
@@ -267,27 +266,27 @@ public class TerrariaPacketChatMessage extends TerrariaPacket {
 					Cheats.TRACK_PROJECTILES = !Cheats.TRACK_PROJECTILES;
 					
 					if (Cheats.TRACK_PROJECTILES) {
-						proxy.sendPacketToClient(client, new TerrariaPacketChatMessage(TerrariaColor.GREEN, "Projectile tracking enabled!"));
+						proxy.sendPacketToClient(new TerrariaPacketChatMessage(TerrariaColor.GREEN, "Projectile tracking enabled!"));
 					} else {
-						proxy.sendPacketToClient(client, new TerrariaPacketChatMessage(TerrariaColor.getColor(150, 25, 25), "Projectile tracking disabled"));
+						proxy.sendPacketToClient(new TerrariaPacketChatMessage(TerrariaColor.getColor(150, 25, 25), "Projectile tracking disabled"));
 					}
 					
 				} else if (command.equalsIgnoreCase("maxhp")) {
 
 					if(splits.length >= 2){
 						short max = Short.parseShort(splits[1]);
-						proxy.sendPacketToClient(client, TerrariaPacketPlayerHp.getPlayerHpPacket(proxy.getThePlayer().getId(), max, max));
+						proxy.sendPacketToClient(new TerrariaPacketPlayerHp(proxy.getThePlayer().getId(), max, max));
 						
-						proxy.sendPacketToClient(client, new TerrariaPacketChatMessage(TerrariaColor.RED, "Max HP set to "+max));
+						proxy.sendPacketToClient(new TerrariaPacketChatMessage(TerrariaColor.RED, "Max HP set to "+max));
 					}
 
 				} else if (command.equalsIgnoreCase("maxmana")) {
 
 					if(splits.length >= 2){
 						short max = Short.parseShort(splits[1]);
-						proxy.sendPacketToClient(client, TerrariaPacketMana.getManaPacket(proxy.getThePlayer().getId(), max, max));
+						proxy.sendPacketToClient(TerrariaPacketMana.getManaPacket(proxy.getThePlayer().getId(), max, max));
 						
-						proxy.sendPacketToClient(client, new TerrariaPacketChatMessage(TerrariaColor.BLUE, "Max Mana set to "+max));
+						proxy.sendPacketToClient(new TerrariaPacketChatMessage(TerrariaColor.BLUE, "Max Mana set to "+max));
 					}
 					
 				} else if (command.equalsIgnoreCase("confetti")) {
@@ -306,25 +305,25 @@ public class TerrariaPacketChatMessage extends TerrariaPacket {
 						
 						TerrariaPacket projectile = TerrariaPacketProjectileUpdate.getProjectilePacket(id, proxy.getThePlayer().getX() + offsetX, proxy.getThePlayer().getY() - offsetY, random.nextFloat(), random.nextFloat(), 0, 0, proxy.getThePlayer().getId(), 178, 0);
 
-						proxy.sendPacketToClient(client, projectile);
+						proxy.sendPacketToClient(projectile);
 						proxy.sendPacketToServer(projectile);
 
 					}
 
-					proxy.sendPacketToClient(client, new TerrariaPacketCombatText(proxy.getThePlayer().getX(), proxy.getThePlayer().getY(), TerrariaColor.getColor(0, 255, 0), "Party!!!!"));
+					proxy.sendPacketToClient(new TerrariaPacketCombatText(proxy.getThePlayer().getX(), proxy.getThePlayer().getY(), TerrariaColor.getColor(0, 255, 0), "Party!!!!"));
 
 				} else if (command.equalsIgnoreCase("kickme")) {
 
-					proxy.sendPacketToClient(client, TerrariaPacketDisconnect.getKickPacket("Okee dokee!"));
+					proxy.sendPacketToClient(TerrariaPacketDisconnect.getKickPacket("Okee dokee!"));
 					proxy.close();
 
 				} else if (command.equalsIgnoreCase("vac")) {
 					Cheats.VAC_ENABLED = !Cheats.VAC_ENABLED;
 
 					if (Cheats.VAC_ENABLED) {
-						proxy.sendPacketToClient(client, new TerrariaPacketChatMessage(TerrariaColor.getColor(25, 150, 50), "Vac Enabled"));
+						proxy.sendPacketToClient(new TerrariaPacketChatMessage(TerrariaColor.getColor(25, 150, 50), "Vac Enabled"));
 					} else {
-						proxy.sendPacketToClient(client, new TerrariaPacketChatMessage(TerrariaColor.getColor(150, 25, 25), "Vac Disabled"));
+						proxy.sendPacketToClient(new TerrariaPacketChatMessage(TerrariaColor.getColor(150, 25, 25), "Vac Disabled"));
 					}
 
 				} else if (command.equalsIgnoreCase("boss")) {
@@ -335,19 +334,19 @@ public class TerrariaPacketChatMessage extends TerrariaPacket {
 						int boss = TerrariaData.BOSSES.getKey(name);
 
 						if (boss == Short.MIN_VALUE) {
-							proxy.sendPacketToClient(client, new TerrariaPacketChatMessage(TerrariaColor.getColor(200, 50, 50), "No boss with name " + name+", do -boss for a list of bosses"));
+							proxy.sendPacketToClient(new TerrariaPacketChatMessage(TerrariaColor.getColor(200, 50, 50), "No boss with name " + name+", do -boss for a list of bosses"));
 						} else {
 
 							TerrariaPacket packet = TerrariaPacketSpawnBoss.getSpawnBossPacket(proxy.getThePlayer().getId(), boss);
 
 							proxy.sendPacketToServer(packet);
 
-							proxy.sendPacketToClient(client, new TerrariaPacketChatMessage(TerrariaColor.getColor(200, 50, 200), "Attempted to spawn " +name));
+							proxy.sendPacketToClient(new TerrariaPacketChatMessage(TerrariaColor.getColor(200, 50, 200), "Attempted to spawn " +name));
 						}
 
 					} else {
 						
-						proxy.sendPacketToClient(client, new TerrariaPacketChatMessage(TerrariaColor.PURPLE, "Bosses:"));
+						proxy.sendPacketToClient(new TerrariaPacketChatMessage(TerrariaColor.PURPLE, "Bosses:"));
 						
 						String bosses = "";
 						
@@ -360,7 +359,7 @@ public class TerrariaPacketChatMessage extends TerrariaPacket {
 						String[] msgs = wrapped.split("\r\n");
 						
 						for(String str : msgs){
-							proxy.sendPacketToClient(client, new TerrariaPacketChatMessage(TerrariaColor.PURPLE, str));
+							proxy.sendPacketToClient(new TerrariaPacketChatMessage(TerrariaColor.PURPLE, str));
 						}
 						
 
@@ -374,9 +373,9 @@ public class TerrariaPacketChatMessage extends TerrariaPacket {
 						TerrariaPlayer pl = proxy.getPlayer(player);
 
 						if (pl == null) {
-							proxy.sendPacketToClient(client, new TerrariaPacketChatMessage(TerrariaColor.RED, "No player was found named " + player));
+							proxy.sendPacketToClient(new TerrariaPacketChatMessage(TerrariaColor.RED, "No player was found named " + player));
 						} else {
-							proxy.sendPacketToClient(client, TerrariaPacketPortalTeleport.getPortalTeleportPacket(proxy.getThePlayer().getId(), (short) 0, pl.getX(), pl.getY(), 0, 0));
+							proxy.sendPacketToClient(TerrariaPacketPortalTeleport.getPortalTeleportPacket(proxy.getThePlayer().getId(), (short) 0, pl.getX(), pl.getY(), 0, 0));
 						}
 						
 					}
@@ -395,7 +394,7 @@ public class TerrariaPacketChatMessage extends TerrariaPacket {
 					float x = proxy.getThePlayer().getX();
 					float y = proxy.getThePlayer().getY();
 
-					proxy.sendPacketToClient(client, new TerrariaPacketChatMessage(TerrariaColor.YELLOW, x + "/" + y));
+					proxy.sendPacketToClient(new TerrariaPacketChatMessage(TerrariaColor.YELLOW, x + "/" + y));
 				} else if (command.equalsIgnoreCase("vachere")) {
 
 					float x = proxy.getThePlayer().getX();
@@ -406,9 +405,9 @@ public class TerrariaPacketChatMessage extends TerrariaPacket {
 					Cheats.VAC_POS_Y = y;
 
 					if (Cheats.VAC_POS_ENABLED) {
-						proxy.sendPacketToClient(client, new TerrariaPacketChatMessage(TerrariaColor.GREEN, "Vac set to " + x + "/" + y));
+						proxy.sendPacketToClient(new TerrariaPacketChatMessage(TerrariaColor.GREEN, "Vac set to " + x + "/" + y));
 					} else {
-						proxy.sendPacketToClient(client, new TerrariaPacketChatMessage(TerrariaColor.RED, "Vac disabled"));
+						proxy.sendPacketToClient(new TerrariaPacketChatMessage(TerrariaColor.RED, "Vac disabled"));
 					}
 				}else if(command.equalsIgnoreCase("vacto")){
 					
@@ -419,21 +418,21 @@ public class TerrariaPacketChatMessage extends TerrariaPacket {
 						String player = splits[1];
 						
 						if(proxy.getPlayer(player) == null){
-							proxy.sendPacketToClient(client, new TerrariaPacketChatMessage(TerrariaColor.RED, "No player named "+player));
+							proxy.sendPacketToClient(new TerrariaPacketChatMessage(TerrariaColor.RED, "No player named "+player));
 						}
 						
 						Cheats.VAC_TO = player;
 						
-						proxy.sendPacketToClient(client, new TerrariaPacketChatMessage(TerrariaColor.GREEN, "Sending all items to "+player));
+						proxy.sendPacketToClient(new TerrariaPacketChatMessage(TerrariaColor.GREEN, "Sending all items to "+player));
 						
 					}
 				} else if(command.equalsIgnoreCase("hideme")){
 					Cheats.HIDE_POSITION = !Cheats.HIDE_POSITION;
 					
 					if (Cheats.HIDE_POSITION) {
-						proxy.sendPacketToClient(client, new TerrariaPacketChatMessage(TerrariaColor.GREEN, "Players will no longer be able to find you by teleporting"));
+						proxy.sendPacketToClient(new TerrariaPacketChatMessage(TerrariaColor.GREEN, "Players will no longer be able to find you by teleporting"));
 					} else {
-						proxy.sendPacketToClient(client, new TerrariaPacketChatMessage(TerrariaColor.RED, "You can now be found by teleportation"));
+						proxy.sendPacketToClient(new TerrariaPacketChatMessage(TerrariaColor.RED, "You can now be found by teleportation"));
 					}
 				} else if (command.equalsIgnoreCase("critter")) {
 
@@ -456,17 +455,17 @@ public class TerrariaPacketChatMessage extends TerrariaPacket {
 						Map<Integer, String> projMatches = TerrariaData.PROJECTILES.getValuesLike(term);
 						Map<Integer, String> itemMatches = TerrariaData.ITEMS.getValuesLike(term);
 						
-						proxy.sendPacketToClient(client, new TerrariaPacketChatMessage(TerrariaColor.GREEN, "Search Results:"));
+						proxy.sendPacketToClient(new TerrariaPacketChatMessage(TerrariaColor.GREEN, "Search Results:"));
 						
 						if(buffMatches.size() > 0){
-							proxy.sendPacketToClient(client, new TerrariaPacketChatMessage(TerrariaColor.GREEN, "Buffs:"));
+							proxy.sendPacketToClient(new TerrariaPacketChatMessage(TerrariaColor.GREEN, "Buffs:"));
 							
 							int i = 0;
 							
 							for(int id : buffMatches.keySet()){
 								i++;
 								
-								proxy.sendPacketToClient(client, new TerrariaPacketChatMessage(TerrariaColor.YELLOW, buffMatches.get(id)+" - "+id));
+								proxy.sendPacketToClient(new TerrariaPacketChatMessage(TerrariaColor.YELLOW, buffMatches.get(id)+" - "+id));
 								
 								if(i > 5){
 									break;
@@ -475,14 +474,14 @@ public class TerrariaPacketChatMessage extends TerrariaPacket {
 						}
 						
 						if(projMatches.size() > 0){
-							proxy.sendPacketToClient(client, new TerrariaPacketChatMessage(TerrariaColor.GREEN, "Projectiles:"));
+							proxy.sendPacketToClient(new TerrariaPacketChatMessage(TerrariaColor.GREEN, "Projectiles:"));
 							
 							int i = 0;
 							
 							for(int id : projMatches.keySet()){
 								i++;
 								
-								proxy.sendPacketToClient(client, new TerrariaPacketChatMessage(TerrariaColor.YELLOW, projMatches.get(id)+" - "+id));
+								proxy.sendPacketToClient(new TerrariaPacketChatMessage(TerrariaColor.YELLOW, projMatches.get(id)+" - "+id));
 								
 								if(i > 5){
 									break;
@@ -491,14 +490,14 @@ public class TerrariaPacketChatMessage extends TerrariaPacket {
 						}
 						
 						if(itemMatches.size() > 0){
-							proxy.sendPacketToClient(client, new TerrariaPacketChatMessage(TerrariaColor.GREEN, "Items:"));
+							proxy.sendPacketToClient(new TerrariaPacketChatMessage(TerrariaColor.GREEN, "Items:"));
 							
 							int i = 0;
 							
 							for(int id : itemMatches.keySet()){
 								i++;
 								
-								proxy.sendPacketToClient(client, new TerrariaPacketChatMessage(TerrariaColor.YELLOW, itemMatches.get(id)+" - "+id));
+								proxy.sendPacketToClient(new TerrariaPacketChatMessage(TerrariaColor.YELLOW, itemMatches.get(id)+" - "+id));
 								
 								if(i > 5){
 									break;
@@ -511,7 +510,7 @@ public class TerrariaPacketChatMessage extends TerrariaPacket {
 					
 					int i = Script.reload();
 					
-					proxy.sendPacketToClient(client, new TerrariaPacketChatMessage(TerrariaColor.GREEN, "Reloaded "+i+" scripts."));
+					proxy.sendPacketToClient(new TerrariaPacketChatMessage(TerrariaColor.GREEN, "Reloaded "+i+" scripts."));
 					
 				} else if (command.equalsIgnoreCase("help")){
 					
@@ -554,30 +553,30 @@ public class TerrariaPacketChatMessage extends TerrariaPacket {
 						index = pageNum * 5;
 					}
 					
-					proxy.sendPacketToClient(client, new TerrariaPacketChatMessage(TerrariaColor.GREEN, "TPE Commands Page: "+((index / 5)+1)+"/"+max+" (/help [page #]): "));
+					proxy.sendPacketToClient(new TerrariaPacketChatMessage(TerrariaColor.GREEN, "TPE Commands Page: "+((index / 5)+1)+"/"+max+" (/help [page #]): "));
 					
 					for(int i = index; i < index+5;i++){
-						proxy.sendPacketToClient(client, new TerrariaPacketChatMessage(TerrariaColor.YELLOW, help[i]));
+						proxy.sendPacketToClient(new TerrariaPacketChatMessage(TerrariaColor.YELLOW, help[i]));
 					}
 					
 				} else {
-					proxy.sendPacketToClient(client, new TerrariaPacketChatMessage(TerrariaColor.getColor(200, 50, 50), "Unknown command '" + command + "'"));
-					proxy.sendPacketToClient(client, new TerrariaPacketCombatText(proxy.getThePlayer().getX(), proxy.getThePlayer().getY(), TerrariaColor.getColor(255, 0, 0), "Unknown command '" + command + "'"));
+					proxy.sendPacketToClient(new TerrariaPacketChatMessage(TerrariaColor.getColor(200, 50, 50), "Unknown command '" + command + "'"));
+					proxy.sendPacketToClient(new TerrariaPacketCombatText(proxy.getThePlayer().getX(), proxy.getThePlayer().getY(), TerrariaColor.getColor(255, 0, 0), "Unknown command '" + command + "'"));
 				}
 			} catch(NumberFormatException e){
-				proxy.sendPacketToClient(client, new TerrariaPacketChatMessage(TerrariaColor.getColor(255, 0, 0), "The command expected you to enter a number but instead you put in letters!"));
-				proxy.sendPacketToClient(client, new TerrariaPacketChatMessage(TerrariaColor.getColor(255, 0, 0), "Some commands support names however they require the name to be put around quotations."));
-				proxy.sendPacketToClient(client, new TerrariaPacketChatMessage(TerrariaColor.getColor(255, 0, 0), "For example: -drop \"Iron Axe\""));
-				proxy.sendPacketToClient(client, new TerrariaPacketCombatText(proxy.getThePlayer().getX(), proxy.getThePlayer().getY(), TerrariaColor.getColor(255, 0, 0), "Error executing command!"));
+				proxy.sendPacketToClient(new TerrariaPacketChatMessage(TerrariaColor.getColor(255, 0, 0), "The command expected you to enter a number but instead you put in letters!"));
+				proxy.sendPacketToClient(new TerrariaPacketChatMessage(TerrariaColor.getColor(255, 0, 0), "Some commands support names however they require the name to be put around quotations."));
+				proxy.sendPacketToClient(new TerrariaPacketChatMessage(TerrariaColor.getColor(255, 0, 0), "For example: -drop \"Iron Axe\""));
+				proxy.sendPacketToClient(new TerrariaPacketCombatText(proxy.getThePlayer().getX(), proxy.getThePlayer().getY(), TerrariaColor.getColor(255, 0, 0), "Error executing command!"));
 			} catch (Exception e) {
 				e.printStackTrace();
-				proxy.sendPacketToClient(client, new TerrariaPacketChatMessage(TerrariaColor.getColor(255, 0, 0), "ERROR >> " + e.getLocalizedMessage()));
-				proxy.sendPacketToClient(client, new TerrariaPacketCombatText(proxy.getThePlayer().getX(), proxy.getThePlayer().getY(), TerrariaColor.getColor(255, 0, 0), "Error executing command!"));
+				proxy.sendPacketToClient(new TerrariaPacketChatMessage(TerrariaColor.getColor(255, 0, 0), "ERROR >> " + e.getLocalizedMessage()));
+				proxy.sendPacketToClient(new TerrariaPacketCombatText(proxy.getThePlayer().getX(), proxy.getThePlayer().getY(), TerrariaColor.getColor(255, 0, 0), "Error executing command!"));
 			}
 			return false;
 		}
 
-		return super.onSending(proxy, client);
+		return super.onSending(proxy);
 	}
 	
 	private String stitchArray(String[] array, int offset){
