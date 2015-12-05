@@ -8,8 +8,6 @@ import me.tyler.terraria.PlayerInfo;
 import me.tyler.terraria.Proxy;
 import me.tyler.terraria.TerrariaColor;
 import me.tyler.terraria.TerrariaPlayer;
-import me.tyler.terraria.TerrariaPlayerLocal;
-
 import org.apache.commons.lang3.RandomStringUtils;
 
 public class TerrariaPacketPlayerInfo extends TerrariaPacket {

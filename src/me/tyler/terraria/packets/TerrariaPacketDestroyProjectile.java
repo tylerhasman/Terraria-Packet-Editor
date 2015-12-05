@@ -5,7 +5,6 @@ import java.nio.ByteOrder;
 
 import me.tyler.terraria.PacketType;
 import me.tyler.terraria.Proxy;
-import me.tyler.terraria.TerrariaData;
 
 public class TerrariaPacketDestroyProjectile extends TerrariaPacket {
 

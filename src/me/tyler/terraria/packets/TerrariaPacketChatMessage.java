@@ -63,7 +63,7 @@ public class TerrariaPacketChatMessage extends TerrariaPacket {
 			try {
 				String command = splits[0].substring(1);
 				
-				for(Script script : Script.getAll()){
+				for(Script script : proxy.getScriptManager().getAllScripts()){
 					try{
 						Object obj = script.invoke("chat_command", proxy, command, Arrays.copyOfRange(splits, 1, splits.length));
 					
@@ -505,30 +505,12 @@ public class TerrariaPacketChatMessage extends TerrariaPacket {
 					}
 				} else if (command.equalsIgnoreCase("help")){
 					
-/*					String[] help = new String[] {
-							"-drop [item id] <amount of stacks to drop> <amount in each stack>",
-							"-particle [particle id] [player name]",
-							"-pvpinstakill",
-							"-blockbuffs",
-							"-killme",
-							"-buff [buff id]",
-							"-replacer [id to replace] [new projectile id]",
-							"-replaceother [new projectile id]",
-							"-track",
-							"-maxhp [new max hp]",
-							"-maxmana [new max mana]",
-							"-confetti",
-							"-kickme",
-							"-vac",
-							"-vachere",
-							"-boss [boss id]",
-							"-teleport [player name]",
-							"-pos",
-							"-critter [critter id]",
-							"-god"
-						};*/
+					List<CommandDescription> commands = proxy.getScriptManager().getCommands();
 					
-					List<CommandDescription> commands = Script.getCommands();
+					if(commands.size() == 0){
+						proxy.getThePlayer().sendMessage("No commands!");
+						return false;
+					}
 					
 					int index = 0;
 					int max = commands.size() / 5;
@@ -547,6 +529,8 @@ public class TerrariaPacketChatMessage extends TerrariaPacket {
 					}
 					
 					proxy.sendPacketToClient(new TerrariaPacketChatMessage(TerrariaColor.GREEN, "TPE Commands Page: "+((index / 5)+1)+"/"+max+" (/help [page #]): "));
+					
+
 					
 					for(int i = index; i < index+5;i++){
 						proxy.sendPacketToClient(new TerrariaPacketChatMessage(TerrariaColor.YELLOW, commands.get(i).toString()));

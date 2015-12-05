@@ -1,16 +1,10 @@
 package me.tyler.terraria;
 
+import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.ConnectException;
 import java.net.InetAddress;
-import java.net.InetSocketAddress;
-import java.net.Socket;
-import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Collection;
@@ -23,7 +17,6 @@ import me.tyler.terraria.hooks.PacketHook;
 import me.tyler.terraria.net.ConnectionFactory;
 import me.tyler.terraria.net.NetworkConnection;
 import me.tyler.terraria.net.SocketConnectionFactory;
-import me.tyler.terraria.net.SocketNetworkConnection;
 import me.tyler.terraria.packets.TerrariaPacket;
 import me.tyler.terraria.packets.TerrariaPacketConnectionRequest;
 import me.tyler.terraria.packets.TerrariaPacketContinue;
@@ -37,6 +30,7 @@ import me.tyler.terraria.packets.TerrariaPacketUpdatePlayer;
 import me.tyler.terraria.packets.TerrariaPacketUpdatePlayerBuff;
 import me.tyler.terraria.packets.TerrariaPacketWorldInfo;
 import me.tyler.terraria.script.Script;
+import me.tyler.terraria.script.ScriptManager;
 
 public class Proxy {
 
@@ -54,8 +48,9 @@ public class Proxy {
 	private WorldInfo worldInfo;
 	private NetworkConnection client, server;
 	private ConnectionFactory connectionFactory;
+	private ScriptManager scriptManager;
 	
-	public Proxy() {
+	public Proxy(String ip, int port, NetworkConnection client) {
 		players = new HashMap<>();
 		npcs = new ArrayList<>();
 		itemsOnGround = new HashMap<>();
@@ -64,15 +59,13 @@ public class Proxy {
 		lastScriptCycle = System.currentTimeMillis();
 		hooks = new ArrayList<>();
 		projectileIdsInUse = new ArrayList<Short>();
-	}
-	
-	public Proxy(String ip, int port, Socket client) {
-		this();
 		targetIp = ip;
 		targetPort = port;
-		
-		this.client = new SocketNetworkConnection(client);
+		thePlayer = new TerrariaPlayerLocal((byte) -1, this);
+		this.client = client;
 		connectionFactory = new SocketConnectionFactory();
+		scriptManager = new ScriptManager(new File("scripts/"));
+		scriptManager.loadScripts();
 	}
 	
 	public void setConnectionFactory(ConnectionFactory connectionFactory) {
@@ -167,7 +160,7 @@ public class Proxy {
 			
 			if(isConnectionIniatializationDone){
 				if(System.currentTimeMillis() - lastScriptCycle >= 500){
-					for(Script script : Script.getAll()){
+					for(Script script : scriptManager.getAllScripts()){
 						if(script.doesCycle()){
 							script.invoke("do_cycle", this);
 						}
@@ -197,7 +190,7 @@ public class Proxy {
 		
 		if(!isConnectionIniatializationDone){
 			if(flag){
-				for(Script script : Script.getAll()){
+				for(Script script : scriptManager.getAllScripts()){
 					try {
 						script.invoke("game_state_ready", this);
 					} catch (NoSuchMethodException e) {
@@ -455,6 +448,10 @@ public class Proxy {
 	
 	public void updateWorldInfo(){
 		sendPacketToClient(worldInfo.getPacket());
+	}
+
+	public ScriptManager getScriptManager() {
+		return scriptManager;
 	}
 
 }

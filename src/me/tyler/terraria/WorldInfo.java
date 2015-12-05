@@ -2,8 +2,6 @@ package me.tyler.terraria;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
-import java.util.BitSet;
-
 import me.tyler.terraria.packets.TerrariaPacketWorldInfo;
 
 public class WorldInfo {
