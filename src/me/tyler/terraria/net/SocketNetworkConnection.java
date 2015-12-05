@@ -65,7 +65,7 @@ public class SocketNetworkConnection implements NetworkConnection {
 	}
 	
 	@Override
-	public InetAddress getInetAddress() {
+	public InetAddress getRemoteAddress() {
 		return socket.getInetAddress();
 	}
 	

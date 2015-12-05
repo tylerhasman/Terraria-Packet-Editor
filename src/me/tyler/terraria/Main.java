@@ -37,8 +37,6 @@ public class Main {
 				System.setOut(gui);
 				System.setErr(gui);
 			}
-			
-			Script.loadScripts(new File("scripts/"));
 
 			inputUserSettings();
 			

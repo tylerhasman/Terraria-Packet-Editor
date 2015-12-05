@@ -17,7 +17,6 @@ public class TerrariaPacket {
 	public TerrariaPacket(byte type, byte[] payload) {
 		this.type = type;
 		this.payload = payload;
-		scripts = Script.getScriptsForPacket(PacketType.getTypeFromId(type));
 	}
 	
 	public byte getType() {
@@ -63,6 +62,10 @@ public class TerrariaPacket {
 		
 		boolean forwardToClient = true;
 		
+		if(scripts == null){
+			scripts = proxy.getScriptManager().getScriptsForPacket(PacketType.getTypeFromId(type));
+		}
+		
 		for(Script script : scripts){
 			try {
 				Object obj = script.invoke("recieve", this, proxy);
@@ -80,6 +83,10 @@ public class TerrariaPacket {
 	public boolean onSending(Proxy proxy){
 		
 		boolean forwardToServer = true;
+		
+		if(scripts == null){
+			scripts = proxy.getScriptManager().getScriptsForPacket(PacketType.getTypeFromId(type));
+		}
 		
 		for(Script script : scripts){
 			try {

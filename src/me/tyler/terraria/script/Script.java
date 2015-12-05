@@ -19,9 +19,6 @@ import me.tyler.terraria.PacketType;
 
 public class Script {
 	
-	private static List<Script> loaded = new ArrayList<>();
-	private static File scriptFolder = null;
-	
 	private File file;
 	private ScriptEngine engine;
 	private byte type;
@@ -36,6 +33,10 @@ public class Script {
 		cycle = false;
 	}
 	
+	public byte getPacketType(){
+		return type;
+	}
+	
 	private BufferedReader getReader(File file) throws FileNotFoundException {
 		BufferedReader reader = new BufferedReader(new FileReader(file));
 		
@@ -44,6 +45,10 @@ public class Script {
 	
 	public boolean doesCycle() {
 		return cycle;
+	}
+	
+	public Object getValue(String name){
+		return engine.get(name);
 	}
 	
 	public void execute(SimpleBindings bindings) {
@@ -125,69 +130,17 @@ public class Script {
 		return null;
 	}
 	
-	public static List<Script> getScriptsForPacket(PacketType type){
-		List<Script> scripts = new ArrayList<>(loaded);
-		
-		scripts.removeIf(script -> script.type != type.getId());
-		
-		return scripts;
-	}
-	
-	public static int loadScripts(File file){
-		
-		scriptFolder = file;
-		
-		for(File child : file.listFiles()){
-			if(child.isDirectory()){
-				loadScripts(child);
-			}else{
-				if(child.getName().endsWith(".js")){
-					Script script = new Script(child);
-					script.execute(null);
-					
-					loaded.add(script);	
-				}
-			}
-		}
-		
-		return loaded.size();
-	}
 
-	public static int reload() {
-		loaded.clear();
-		
-		return loadScripts(scriptFolder);
-	}
-
-	public static List<Script> getAll() {
-		return loaded;
-	}
-	
-	public static List<CommandDescription> getCommands(){
-		List<CommandDescription> commands = new ArrayList<>();
-		
-		for(Script script : getAll()){
-			String name = (String) script.engine.get("command_name");
-			String desc = (String) script.engine.get("command_description");
-			
-			if(name == null){
-				continue;
-			}
-			
-			CommandDescription command = new CommandDescription();
-			command.name = name;
-			command.description = desc;
-			
-			commands.add(command);
-		}
-		
-		return commands;
-	}
 	
 	public static class CommandDescription {
 		
 		private String name;
 		private String description;
+		
+		public CommandDescription(String n, String d) {
+			name = n;
+			description = d;
+		}
 		
 		public String getName() {
 			return name;

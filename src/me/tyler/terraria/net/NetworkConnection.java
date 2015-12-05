@@ -47,6 +47,6 @@ public interface NetworkConnection {
 	 * Get address
 	 * @return the connections remote address
 	 */
-	public InetAddress getInetAddress();
+	public InetAddress getRemoteAddress();
 	
 }
