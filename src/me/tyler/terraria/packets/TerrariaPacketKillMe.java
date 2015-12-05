@@ -1,6 +1,5 @@
 package me.tyler.terraria.packets;
 
-import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
@@ -34,21 +33,13 @@ public class TerrariaPacketKillMe extends TerrariaPacket {
 	}
 	
 	public static TerrariaPacketKillMe getKillMePacket(byte playerId, int hitDirection, int damage, boolean pvp, String text){
-		
-		byte[] strBuf = null;
-		try {
-			strBuf = text.getBytes("UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();//This will never happen
-		}
-		
-		ByteBuffer buf = ByteBuffer.allocate(6 + strBuf.length).order(ByteOrder.LITTLE_ENDIAN);
+
+		ByteBuffer buf = ByteBuffer.allocate(6 + PacketUtil.calculateLength(text)).order(ByteOrder.LITTLE_ENDIAN);
 		buf.put(playerId);
 		buf.put((byte) hitDirection);
 		buf.putShort((short) damage);
 		buf.put((byte) (pvp ? 1 : 0));
-		buf.put((byte) strBuf.length);
-		buf.put(strBuf);
+		PacketUtil.writeString(buf, text);
 		
 		return new TerrariaPacketKillMe(PacketType.KILL_ME.getId(), buf.array());
 		

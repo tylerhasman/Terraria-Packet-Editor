@@ -18,7 +18,6 @@ function makeMessage(color, message){
 
 function recieve(packet, proxy){
 	if(enabled){
-		print("Blocked");
 		return false;//Cancel the packet
 	}
 }

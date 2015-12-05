@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.script.Invocable;
 import javax.script.ScriptContext;
 import javax.script.ScriptEngine;
@@ -84,7 +85,7 @@ public class Script {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (ScriptException e) {
-			System.out.println("SCRIPT ERROR ("+file.getName()+"): "+e.getMessage());
+			System.out.println("SCRIPT ERROR ("+file.getName()+"): "+e.getClass().getName()+" "+e.getMessage());
 		}finally{
 			if(reader != null)
 				try {
@@ -102,13 +103,23 @@ public class Script {
 		Invocable inv = (Invocable) engine;
 		
 		try {
+			
+			long l = System.currentTimeMillis();
+			
 			T t = (T) inv.invokeFunction(name, args);
 			
+			l = System.currentTimeMillis() - l;
+			
+			if(l > 200){
+				System.out.println(file.getName()+" is taking "+l+" milliseconds to execute "+name);
+			}
+			
+			
 			return t;
-		} catch (ScriptException e) {
-			System.out.println("SCRIPT ERROR ("+file.getName()+"): "+e.getMessage());
 		} catch (NoSuchMethodException e) {
 			throw e;
+		} catch (Exception e){
+			System.out.println("SCRIPT ERROR ("+file.getName()+"): "+e.getClass().getName()+" "+e.getMessage());
 		}
 		
 		return null;
@@ -150,6 +161,46 @@ public class Script {
 
 	public static List<Script> getAll() {
 		return loaded;
+	}
+	
+	public static List<CommandDescription> getCommands(){
+		List<CommandDescription> commands = new ArrayList<>();
+		
+		for(Script script : getAll()){
+			String name = (String) script.engine.get("command_name");
+			String desc = (String) script.engine.get("command_description");
+			
+			if(name == null){
+				continue;
+			}
+			
+			CommandDescription command = new CommandDescription();
+			command.name = name;
+			command.description = desc;
+			
+			commands.add(command);
+		}
+		
+		return commands;
+	}
+	
+	public static class CommandDescription {
+		
+		private String name;
+		private String description;
+		
+		public String getName() {
+			return name;
+		}
+		
+		public String getDescription() {
+			return description;
+		}
+		
+		@Override
+		public String toString() {
+			return name+" -> "+description;
+		}
 	}
 	
 }

@@ -1,6 +1,5 @@
 package me.tyler.terraria.packets;
 
-import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
@@ -36,20 +35,12 @@ public class TerrariaPacketCombatText extends TerrariaPacket {
 	
 	private static byte[] getCombatTextPacket(float x, float y, TerrariaColor color, String text){
 		
-		byte[] strBytes = null;
-		try {
-			strBytes = text.getBytes("UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();//this will never happen
-		}
-		
-		ByteBuffer buf = ByteBuffer.allocate(12+strBytes.length).order(ByteOrder.LITTLE_ENDIAN);
+		ByteBuffer buf = ByteBuffer.allocate(12+PacketUtil.calculateLength(text)).order(ByteOrder.LITTLE_ENDIAN);
 		
 		buf.putFloat(x);
 		buf.putFloat(y);
 		buf.put(color.getBytes());
-		buf.put((byte) strBytes.length);
-		buf.put(strBytes);
+		PacketUtil.writeString(buf, text);
 		
 		return buf.array();
 		

@@ -5,6 +5,7 @@ import java.nio.ByteOrder;
 
 import me.tyler.terraria.PacketType;
 import me.tyler.terraria.Proxy;
+import me.tyler.terraria.TerrariaPlayer;
 
 public class TerrariaPacketMana extends TerrariaPacket {
 
@@ -22,6 +23,30 @@ public class TerrariaPacketMana extends TerrariaPacket {
 	
 	public short getMaxMana(){
 		return getPayloadBuffer(3).getShort();
+	}
+	
+	@Override
+	public boolean onReceive(Proxy proxy) {
+		
+		if(getPlayerId() != proxy.getThePlayer().getId()){
+			TerrariaPlayer player = proxy.getPlayer(getPlayerId());
+			
+			player.setMana(getMana());
+			player.setMaxMana(getMaxMana());	
+		}
+		
+		return super.onReceive(proxy);
+	}
+	
+	@Override
+	public boolean onSending(Proxy proxy) {
+		
+		TerrariaPlayer player = proxy.getThePlayer();
+		
+		player.setMana(getMana());
+		player.setMaxMana(getMaxMana());
+		
+		return super.onSending(proxy);
 	}
 	
 	public static TerrariaPacket getManaPacket(byte playerId, short mana, short maxMana){

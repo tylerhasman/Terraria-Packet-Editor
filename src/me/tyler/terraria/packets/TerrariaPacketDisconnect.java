@@ -1,7 +1,6 @@
 package me.tyler.terraria.packets;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
@@ -13,6 +12,10 @@ public class TerrariaPacketDisconnect extends TerrariaPacket {
 
 	public TerrariaPacketDisconnect(byte t, byte[] p) {
 		super(t, p);
+	}
+	
+	public TerrariaPacketDisconnect(String reason) {
+		super(PacketType.DISCONNECT.getId(), getKickPacket(reason));
 	}
 
 	public String getReason(){
@@ -33,25 +36,13 @@ public class TerrariaPacketDisconnect extends TerrariaPacket {
 		return super.onReceive(proxy);
 	}
 	
-	public static TerrariaPacket getKickPacket(String message){
+	private static byte[] getKickPacket(String message){
+
+		ByteBuffer buf = ByteBuffer.allocate(PacketUtil.calculateLength(message) + 1).order(ByteOrder.LITTLE_ENDIAN);
 		
-		byte[] bytes = null;
-		try {
-			bytes = message.getBytes("UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-			//This will never occur
-		}
-				
+		PacketUtil.writeString(buf, message);
 		
-		ByteBuffer buf = ByteBuffer.allocate(bytes.length+1).order(ByteOrder.LITTLE_ENDIAN);
-		
-		buf.put((byte) bytes.length);
-		buf.put(bytes);
-		
-		return new TerrariaPacket(PacketType.DISCONNECT.getId(), buf.array());
-		
-		
+		return buf.array();
 	}
 
 }

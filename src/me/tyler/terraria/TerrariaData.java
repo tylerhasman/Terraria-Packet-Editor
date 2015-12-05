@@ -228,28 +228,7 @@ public class TerrariaData {
 
 	}
 	
-	/**
-	 * A list of all current projectile ids currently in use
-	 */
-	public static List<Short> proj_ids_in_use = new ArrayList<>();
-	
-	public static short getFreeProjectileId(){
-		
-		for(short s = 0; s < Short.MAX_VALUE;s++){
-			
-			if(!proj_ids_in_use.contains(s)){
-				
-				proj_ids_in_use.add(s);
-				
-				return s;
-			}
-			
-		}
-		
-		//This should realistically never happen
-		throw new RuntimeException("No new projectile ids available!");
-		
-	}
+
 	
 	
 	

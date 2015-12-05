@@ -1,0 +1,37 @@
+var command_name = "replace";
+var command_description = "Replace a projectile with another one";
+
+function packet_type(){
+	return EMOTE_BUBBLE;
+}
+
+function receive(packet, proxy){
+
+	var id = packet.getEmote();
+	var emote = Emotes.getbyId(id);
+	var sender = proxy.getMetadata();
+	
+	var player = proxy.getPlayer(sender);
+	
+	proxy.getThePlayer().sendMessage(sender.getName()+" emotes "+emote.name());
+	
+}
+
+function chat_command(proxy, command, args){
+
+	if(command.equalsIgnoreCase("emote")){
+	
+		var rng = new Random();
+	
+		for each(player in proxy.getPlayers()){
+			var packet = new EmotePacket(1, player.getId(), 255, rng.nextInt(126));
+			proxy.sendPacketToClient(packet);
+		}
+		
+		proxy.sendPacketToClient(makeMessage(Color.GREEN, "Done!"));
+		
+		return true;
+	
+	}
+
+}

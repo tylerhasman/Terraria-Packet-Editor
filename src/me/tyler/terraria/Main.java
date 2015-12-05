@@ -36,11 +36,7 @@ public class Main {
 				System.setErr(gui);
 			}
 			
-			System.out.println("Loaded "+TerrariaData.BUFFS.size()+" buffs.");
-			System.out.println("Loaded "+TerrariaData.PROJECTILES.size()+" projectile types.");
-			System.out.println("Loaded "+TerrariaData.BOSSES.size()+" bosses.");
-			System.out.println("Loaded "+TerrariaData.ITEMS.size()+" items.");
-			System.out.println("Loaded "+Script.loadScripts(new File("scripts/"))+" scripts.");
+			Script.loadScripts(new File("scripts/"));
 
 			inputUserSettings();
 			
@@ -90,9 +86,15 @@ public class Main {
 			
 			forwardIp = scanner.nextLine();
 			
-			System.out.println("Enter the desired target port: ");
+			System.out.println("Enter the desired target port: (Press enter for default port)");
 			
-			port = scanner.nextInt();
+			String line = scanner.nextLine();
+			
+			if(line.isEmpty()){
+				port = 7777;
+			}else{
+				port = Integer.parseInt(line);
+			}
 			
 			scanner.close();
 		}

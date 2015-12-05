@@ -1,6 +1,5 @@
 package me.tyler.terraria.packets;
 
-import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.UUID;
@@ -20,8 +19,6 @@ public class TerrariaPacketUUID extends TerrariaPacket {
 	@Override
 	public boolean onSending(Proxy proxy) {
 		
-		System.out.println("Client tried to send UUID "+getUUID());
-		
 		proxy.sendPacketToServer(getFakeUUIDPacket());
 		
 		return false;
@@ -39,18 +36,9 @@ public class TerrariaPacketUUID extends TerrariaPacket {
 
 		String str = fakeId.toString();
 		
-		ByteBuffer buf = ByteBuffer.allocate(str.length() + 1).order(ByteOrder.LITTLE_ENDIAN);
+		ByteBuffer buf = ByteBuffer.allocate(PacketUtil.calculateLength(str) + 1).order(ByteOrder.LITTLE_ENDIAN);
 		
-		buf.put((byte) str.length());
-		
-		try {
-			buf.put(str.getBytes("UTF-8"));
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-			return null;//This will never happen
-		}
-		
-		System.out.println("Fake UUID: "+fakeId.toString());
+		PacketUtil.writeString(buf, str);
 		
 		return new TerrariaPacket(PacketType.CLIENT_UUID.getId(), buf.array());
 		

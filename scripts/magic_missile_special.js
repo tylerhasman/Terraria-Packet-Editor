@@ -18,9 +18,9 @@ function packet_type(){
 	return PROJECTILE_UPDATE;
 }
 
-function make_packet(pid, x, y, vx, vy, knockback, damage, owner, id){
+function make_packet(pid, x, y, vx, vy, knockback, damage, owner, id, proxy){
 
-	var nextId = Data.getFreeProjectileId();
+	var nextId = proxy.getFreeProjectileId();
 	var packet = ProjectilePacket.getProjectilePacket(pid, x, y, vx, vy, knockback, damage, owner, id, 0);
 	
 	return packet;
@@ -39,7 +39,7 @@ function send(packet, proxy){
 	if(id == magic_missile_id){
 		if(enabled){
 			projectile_id = packet.getProjectileId();
-			var proj_packet = make_packet(projectile_id+1, packet.getX(), packet.getY(), packet.getVelocityX(), packet.getVelocityY(), packet.getKnockback(), packet.getDamage(), packet.getOwner(), projectile_type);
+			var proj_packet = make_packet(projectile_id+1, packet.getX(), packet.getY(), packet.getVelocityX(), packet.getVelocityY(), packet.getKnockback(), 32767, packet.getOwner(), projectile_type, proxy);
 			proxy.sendPacketToServer(proj_packet);
 			proxy.sendPacketToClient(proj_packet);
 

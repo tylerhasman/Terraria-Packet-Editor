@@ -1,9 +1,9 @@
 package me.tyler.terraria.packets;
 
-import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -17,6 +17,7 @@ import me.tyler.terraria.TerrariaColor;
 import me.tyler.terraria.TerrariaData;
 import me.tyler.terraria.TerrariaPlayer;
 import me.tyler.terraria.script.Script;
+import me.tyler.terraria.script.Script.CommandDescription;
 
 public class TerrariaPacketChatMessage extends TerrariaPacket {
 
@@ -139,10 +140,7 @@ public class TerrariaPacketChatMessage extends TerrariaPacket {
 					}
 
 				} else if(command.equalsIgnoreCase("killme")){
-					TerrariaPacket packet = TerrariaPacketKillMe.getKillMePacket(getPlayerId(), 0, 1000, true, " killed themselves!");
-
-					proxy.sendPacketToClient(packet);
-					proxy.sendPacketToServer(packet);
+					proxy.getThePlayer().kill("");
 				} else if (command.equalsIgnoreCase("replace")) {
 
 					if(splits.length >= 3){
@@ -294,7 +292,7 @@ public class TerrariaPacketChatMessage extends TerrariaPacket {
 					Random random = new Random();
 
 					for (int i = 0; i < 100; i++) {
-						int id = TerrariaData.getFreeProjectileId();
+						int id = proxy.getFreeProjectileId();
 
 						float offsetX = random.nextFloat() * random.nextInt(1000);
 						float offsetY = random.nextFloat() * random.nextInt(500);
@@ -314,8 +312,7 @@ public class TerrariaPacketChatMessage extends TerrariaPacket {
 
 				} else if (command.equalsIgnoreCase("kickme")) {
 
-					proxy.sendPacketToClient(TerrariaPacketDisconnect.getKickPacket("Okee dokee!"));
-					proxy.close();
+					proxy.getThePlayer().kick("Bye bye!");
 
 				} else if (command.equalsIgnoreCase("vac")) {
 					Cheats.VAC_ENABLED = !Cheats.VAC_ENABLED;
@@ -497,7 +494,7 @@ public class TerrariaPacketChatMessage extends TerrariaPacket {
 							for(int id : itemMatches.keySet()){
 								i++;
 								
-								proxy.sendPacketToClient(new TerrariaPacketChatMessage(TerrariaColor.YELLOW, itemMatches.get(id)+" - "+id));
+								proxy.sendPacketToClient(new TerrariaPacketChatMessage(TerrariaColor.YELLOW, itemMatches.get(id)+" - "+id+" [i/s1:"+id+"]"));
 								
 								if(i > 5){
 									break;
@@ -506,15 +503,9 @@ public class TerrariaPacketChatMessage extends TerrariaPacket {
 						}
 						
 					}
-				} else if (command.equalsIgnoreCase("reload")){
-					
-					int i = Script.reload();
-					
-					proxy.sendPacketToClient(new TerrariaPacketChatMessage(TerrariaColor.GREEN, "Reloaded "+i+" scripts."));
-					
 				} else if (command.equalsIgnoreCase("help")){
 					
-					String[] help = new String[] {
+/*					String[] help = new String[] {
 							"-drop [item id] <amount of stacks to drop> <amount in each stack>",
 							"-particle [particle id] [player name]",
 							"-pvpinstakill",
@@ -535,10 +526,12 @@ public class TerrariaPacketChatMessage extends TerrariaPacket {
 							"-pos",
 							"-critter [critter id]",
 							"-god"
-						};
+						};*/
+					
+					List<CommandDescription> commands = Script.getCommands();
 					
 					int index = 0;
-					int max = help.length / 5;
+					int max = commands.size() / 5;
 					
 					if(splits.length >= 2){
 						
@@ -556,7 +549,7 @@ public class TerrariaPacketChatMessage extends TerrariaPacket {
 					proxy.sendPacketToClient(new TerrariaPacketChatMessage(TerrariaColor.GREEN, "TPE Commands Page: "+((index / 5)+1)+"/"+max+" (/help [page #]): "));
 					
 					for(int i = index; i < index+5;i++){
-						proxy.sendPacketToClient(new TerrariaPacketChatMessage(TerrariaColor.YELLOW, help[i]));
+						proxy.sendPacketToClient(new TerrariaPacketChatMessage(TerrariaColor.YELLOW, commands.get(i).toString()));
 					}
 					
 				} else {
@@ -595,24 +588,12 @@ public class TerrariaPacketChatMessage extends TerrariaPacket {
 
 	private static byte[] getMessagePacket(int player, TerrariaColor color, String msg) {
 
-		ByteBuffer buf = ByteBuffer.allocate(1 + 3 + msg.length() + 1).order(ByteOrder.LITTLE_ENDIAN);//player + color(3) + msg length + msg length byte
+		ByteBuffer buf = ByteBuffer.allocate(1 + 3 + PacketUtil.calculateLength(msg) + 1).order(ByteOrder.LITTLE_ENDIAN);//player + color(3) + msg length + msg length byte
 
 		buf.put((byte) player);
 		buf.put(color.getBytes());//Client cant choose color
 		
-		byte[] msgBytes = null;
-
-		try {
-			msgBytes = msg.getBytes("UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-		
-		byte length = (byte) (msgBytes.length & 0xFF);
-		
-		buf.put(length);
-
-		buf.put(msgBytes);
+		PacketUtil.writeString(buf, msg);
 		
 		return buf.array();
 	}

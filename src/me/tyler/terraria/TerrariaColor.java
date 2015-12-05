@@ -32,10 +32,6 @@ public class TerrariaColor {
 	
 	public static TerrariaColor getColor(byte[] buffer, int offset)
 	{
-		if(buffer.length != 3){
-			throw new RuntimeException("Error, color buffer must be of size 3, size was "+buffer.length);
-		}
-		
 		TerrariaColor color = new TerrariaColor();
 		
 		color.r = buffer[offset];

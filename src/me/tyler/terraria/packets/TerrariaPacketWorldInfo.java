@@ -1,7 +1,9 @@
 package me.tyler.terraria.packets;
 
+import me.tyler.terraria.EventInfo;
 import me.tyler.terraria.PacketUtil;
 import me.tyler.terraria.Proxy;
+import me.tyler.terraria.WorldInfo;
 
 public class TerrariaPacketWorldInfo extends TerrariaPacket {
 
@@ -204,11 +206,16 @@ public class TerrariaPacketWorldInfo extends TerrariaPacket {
 	@Override
 	public boolean onReceive(Proxy proxy) {
 		
-		if(!proxy.areDimensionsSet()){
-			proxy.setWorldDimensions(getMaxTilesX(), getMaxTilesY());
-		}
+		proxy.setWorldInfo(new WorldInfo(this));
 		
-		return super.onReceive(proxy);
+		proxy.getWorldInfo().setName("Terraria Packet Editor");
+		
+		super.onReceive(proxy);
+		
+		proxy.updateWorldInfo();
+		
+		return false;
+		
 	}
 	
 

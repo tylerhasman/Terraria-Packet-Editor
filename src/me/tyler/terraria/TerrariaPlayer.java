@@ -1,5 +1,7 @@
 package me.tyler.terraria;
 
+import me.tyler.terraria.packets.TerrariaPacketInventorySlot;
+import me.tyler.terraria.packets.TerrariaPacketPlayerInfo;
 import me.tyler.terraria.packets.TerrariaPacketUpdatePlayer.Control;
 
 public class TerrariaPlayer {
@@ -12,7 +14,11 @@ public class TerrariaPlayer {
 	private Control[] controls;
 	private boolean facingLeft;
 	private int hp, maxHp;
+	private int mana, maxMana;
 	protected Proxy proxy;
+	private int[] inventory;
+	private PlayerInfo info;
+	private float rotation;
 	
 	public TerrariaPlayer(byte id, Proxy proxy) {
 		this.id = id;
@@ -20,6 +26,16 @@ public class TerrariaPlayer {
 		controls = new Control[0];
 		facingLeft = false;
 		this.proxy = proxy;
+		inventory = new int[180];
+		info = new PlayerInfo();
+	}
+	
+	public PlayerInfo getInfo() {
+		return info;
+	}
+
+	public void setPlayerId(byte playerId) {
+		id = playerId;
 	}
 	
 	public float getX() {
@@ -52,6 +68,52 @@ public class TerrariaPlayer {
 	
 	public void setMaxHealth(int maxHp) {
 		this.maxHp = maxHp;
+	}
+	
+	public void setMana(int mana) {
+		this.mana = mana;
+	}
+	
+	public int getMana() {
+		return mana;
+	}
+	
+	public int getMaxMana() {
+		return maxMana;
+	}
+
+	public void setMaxMana(int maxMana) {
+		this.maxMana = maxMana;
+	}
+	
+	public void setInventoryItem(int index, int id){
+		setInventoryItem(index, id, true);
+	}
+	
+	public void setInventoryItem(int index, int id, boolean update){
+		inventory[index] = id;
+
+		if(update){
+			TerrariaPacketInventorySlot slot = new TerrariaPacketInventorySlot(getId(), index, 1, 0, id);
+			
+			proxy.sendPacketToClient(slot);	
+		}
+	}
+	
+	public int getInventoryItem(int index){
+		return inventory[index];
+	}
+	
+	public int getInventoryItem(InventorySlot slot){
+		return inventory[slot.getSlot()];
+	}
+	
+	public int[] getInventory(){
+		return inventory;
+	}
+	
+	public int getInventorySize(){
+		return inventory.length;
 	}
 	
 	public boolean isPvpEnabled() {
@@ -107,6 +169,16 @@ public class TerrariaPlayer {
 		this.controls = controls;
 	}
 	
+	public boolean isUsingHeldItem(){
+		for(Control ctrl : controls){
+			if(ctrl == Control.USE_ITEM){
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
 	public void cycle(){
 		for(Control control : controls){
 			if(control == Control.LEFT){
@@ -118,6 +190,20 @@ public class TerrariaPlayer {
 				facingLeft = false;
 			}
 		}
+	}
+	
+	public void updateInfo(){
+		TerrariaPacketPlayerInfo packet = new TerrariaPacketPlayerInfo(id, name, info);
+		
+		proxy.sendPacketToClient(packet);
+	}
+
+	public void setRotation(float rotation) {
+		this.rotation = rotation;
+	}
+	
+	public float getRotation() {
+		return rotation;
 	}
 	
 }

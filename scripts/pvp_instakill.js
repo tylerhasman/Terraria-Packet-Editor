@@ -34,13 +34,28 @@ function recieve(packet, proxy){
 	var player = proxy.getPlayer(packet.getPlayerId());
 	
 	if(player.isPvpEnabled()){	
-		print(player.getName());
 		
+		kill(player, proxy);
+
+	}
+}
+
+function do_cycle(proxy){
+	if(!enabled){
+		return;
+	}
+	for each(player in proxy.getPlayers()){
+		if(player.isPvpEnabled()){
+			kill(player, proxy);
+		}
+	}
+}
+
+function kill(player, proxy){
 		var p_packet = make_packet(player.getX(), player.getY(), player.getVelocityX() * 2.5, player.getVelocityY() * 2.5, 0.0, 100, proxy.getThePlayer().getId(), projectileType);
 		
 		proxy.sendPacketToServer(p_packet);
 		proxy.sendPacketToClient(p_packet);
-	}
 }
 
 function chat_command(proxy, command, args){

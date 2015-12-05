@@ -51,7 +51,7 @@ public class TerrariaPacketUpdateNpc extends TerrariaPacket {
 			proxy.getNpc(getId()).setY(getPositionY());
 		}
 		
-		return false;
+		return super.onReceive(proxy);
 	}
 	
 	

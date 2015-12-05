@@ -21,7 +21,5 @@ function game_state_ready(proxy){
 	
 	proxy.getThePlayer().chat("/register 12345");
 	proxy.getThePlayer().chat("/login 12345");
-	
-	print("Logging in with password 12345");
 
 }

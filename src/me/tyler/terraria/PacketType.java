@@ -6,12 +6,13 @@ public enum PacketType {
 
 	CONNECTION_REQUEST(1, TerrariaPacketConnectionRequest.class),
 	DISCONNECT(2, TerrariaPacketDisconnect.class),
+	CONTINUE(3, TerrariaPacketContinue.class),
 	PLAYER_INFO(4, TerrariaPacketPlayerInfo.class),
 	INVENTORY_SLOT(5, TerrariaPacketInventorySlot.class),
 	WORLD_INFO(7, TerrariaPacketWorldInfo.class),
 	GET_SECTION(8, TerrariaPacketGetSection.class),
 	STATUS(9, TerrariaPacketStatus.class),
-	CONTINUE(6, TerrariaPacketContinue.class),
+	CONTINUE2(6, TerrariaPacketContinue.class),
 	/*SEND_SECTION(10, TerrariaPacketSendSection.class),*/
 	SPAWN_PLAYER(12, TerrariaPacketSpawnPlayer.class),
 	UPDATE_PLAYER(13, TerrariaPacketUpdatePlayer.class),
@@ -26,6 +27,7 @@ public enum PacketType {
 	STRIKE_NPC(28, TerrariaPacketStrikeNpc.class),
 	DESTROY_PROJECTILE(29, TerrariaPacketDestroyProjectile.class),
 	TOGGLE_PVP(30, TerrariaPacketTogglePvp.class),
+	ANIMATION(41, TerrariaPacketItemAnimation.class),
 	MANA(42, TerrariaPacketMana.class),
 	MANA_EFFECT(43, TerrariaPacketManaEffect.class),
 	KILL_ME(44, TerrariaPacketKillMe.class),

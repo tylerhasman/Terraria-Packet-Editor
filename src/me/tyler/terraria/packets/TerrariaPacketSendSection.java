@@ -71,7 +71,7 @@ public class TerrariaPacketSendSection extends TerrariaPacket {
 		return getPayloadBuffer(10).getShort();
 	}
 	
-	@SuppressWarnings("unused")
+	/*@SuppressWarnings("unused")
 	public TerrariaTile[][] getTiles(Proxy proxy){
 		
 		TerrariaTile[][] tiles = new TerrariaTile[getWidth()][getHeight()];
@@ -172,7 +172,7 @@ public class TerrariaPacketSendSection extends TerrariaPacket {
 		}
 		
 		return tiles;
-	}
+	}*/
 	
 	
 
@@ -181,7 +181,7 @@ public class TerrariaPacketSendSection extends TerrariaPacket {
 		
 		if(CSharpDecompressor.isEnabled() || !isCompressed()){
 
-			getTiles(proxy);//Gets the tiles and saves them in memory
+			//getTiles(proxy);//Gets the tiles and saves them in memory
 			
 			System.out.println("Downloaded tiles!");
 		

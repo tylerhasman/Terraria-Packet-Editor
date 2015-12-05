@@ -1,8 +1,11 @@
 package me.tyler.terraria.packets;
 
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.util.Arrays;
 
 import me.tyler.terraria.Cheats;
+import me.tyler.terraria.PacketType;
 import me.tyler.terraria.Proxy;
 import me.tyler.terraria.TerrariaPlayer;
 
@@ -10,6 +13,28 @@ public class TerrariaPacketUpdatePlayer extends TerrariaPacket {
 	
 	public TerrariaPacketUpdatePlayer(byte type, byte[] payload) {
 		super(type, payload);
+	}
+	
+	public TerrariaPacketUpdatePlayer(int id, int control, int pulley, int item, float x, float y, float velx, float vely) {
+		super(PacketType.UPDATE_PLAYER.getId(), create((byte) id, (byte) control, (byte) pulley, (byte) item, x, y, velx, vely));
+	}
+	
+	private static byte[] create(byte id, byte control, byte pulley, byte item, float x, float y, float velx, float vely){
+		ByteBuffer buf = ByteBuffer.allocate(12 + (pulley >= 4 ? 8 : 0)).order(ByteOrder.LITTLE_ENDIAN);
+		
+		buf.put(id);
+		buf.put(control);
+		buf.put(pulley);
+		buf.put(item);
+		buf.putFloat(x);
+		buf.putFloat(y);
+		
+		if(pulley >= 4){
+			buf.putFloat(velx);
+			buf.putFloat(vely);
+		}
+		
+		return buf.array();
 	}
 
 	public byte getPlayerId(){

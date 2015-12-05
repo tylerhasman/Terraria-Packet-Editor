@@ -16,18 +16,25 @@ function chat_command(proxy, command, args){
 
 	if(command.equalsIgnoreCase("item")){
 	
-		if(args.length == 1){
+		if(args.length > 0){
 		
 			var id = args[0];
+			var amount = 1;
 			
-			var packet = new ItemPacket(proxy.getThePlayer().getId(), 0, 1, 0, id);
+			if(args.length > 1){
+				amount = args[1];
+			}
+			
+			
+			
+			var packet = new ItemPacket(proxy.getThePlayer().getId(), 0, amount, 0, id);
 			
 			proxy.sendPacketToClient(packet);
 		
 			proxy.sendPacketToClient(makeMessage(Color.GREEN, "Done!]"));
 		
 		}else{
-			proxy.sendPacketToClient(makeMessage(Color.RED, "-item [item id]"));
+			proxy.sendPacketToClient(makeMessage(Color.RED, "-item [item id] [amount]"));
 		}
 		
 		return true;

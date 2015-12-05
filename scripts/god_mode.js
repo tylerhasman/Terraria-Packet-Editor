@@ -36,6 +36,8 @@ function chat_command(proxy, command, args){
 			proxy.sendPacketToClient(makeMessage(Color.RED, "God mode disabled!"));
 		}
 		
+		proxy.getThePlayer().sendStatus("God Mode is "+(enabled ? "enabled" : "disabled"));
+		
 		return true;
 	
 	}

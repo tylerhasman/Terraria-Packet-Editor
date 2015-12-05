@@ -3,7 +3,6 @@ package me.tyler.terraria.packets;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
-import me.tyler.terraria.Cheats;
 import me.tyler.terraria.PacketType;
 import me.tyler.terraria.Proxy;
 import me.tyler.terraria.TerrariaPlayer;
@@ -44,6 +43,17 @@ public class TerrariaPacketPlayerHp extends TerrariaPacket {
 		}
 		
 		return super.onReceive(proxy);
+	}
+	
+	@Override
+	public boolean onSending(Proxy proxy) {
+		
+		TerrariaPlayer player = proxy.getThePlayer();
+		
+		player.setHealth(getLife());
+		player.setMaxHealth(getMaxLife());
+		
+		return super.onSending(proxy);
 	}
 	
 	public static ByteBuffer getPlayerHpPacket(int playerId, int hp, int maxHp){
