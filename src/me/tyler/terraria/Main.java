@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.Scanner;
 
 import javax.swing.JOptionPane;
@@ -66,6 +67,10 @@ public class Main {
 			server.close();
 			
 			System.out.println("Connection closed");
+		}catch(SocketException e){
+			System.out.println(e.getMessage());
+		}catch(NullPointerException e){
+			e.printStackTrace();
 		}finally{
 			System.exit(0);
 		}

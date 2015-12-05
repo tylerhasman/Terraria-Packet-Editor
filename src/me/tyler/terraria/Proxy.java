@@ -20,6 +20,10 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import me.tyler.terraria.hooks.PacketHook;
+import me.tyler.terraria.net.ConnectionFactory;
+import me.tyler.terraria.net.NetworkConnection;
+import me.tyler.terraria.net.SocketConnectionFactory;
+import me.tyler.terraria.net.SocketNetworkConnection;
 import me.tyler.terraria.packets.TerrariaPacket;
 import me.tyler.terraria.packets.TerrariaPacketConnectionRequest;
 import me.tyler.terraria.packets.TerrariaPacketContinue;
@@ -38,7 +42,6 @@ public class Proxy {
 
 	private String targetIp;
 	private int targetPort;
-	private Socket server;
 	private boolean isConnected;
 	private TerrariaPlayerLocal thePlayer;
 	private Map<Byte, TerrariaPlayer> players;
@@ -46,24 +49,35 @@ public class Proxy {
 	private List<Npc> npcs;
 	private boolean isConnectionIniatializationDone;
 	private long lastScriptCycle;
-	private Socket client;
 	private List<PacketHook> hooks;
 	private List<Short> projectileIdsInUse;
 	private WorldInfo worldInfo;
+	private NetworkConnection client, server;
+	private ConnectionFactory connectionFactory;
 	
-	public Proxy(String ip, int port, Socket client) {
-		targetIp = ip;
-		targetPort = port;
+	public Proxy() {
 		players = new HashMap<>();
 		npcs = new ArrayList<>();
 		itemsOnGround = new HashMap<>();
 		isConnected = false;
 		isConnectionIniatializationDone = false;
 		lastScriptCycle = System.currentTimeMillis();
-		this.client = client;
 		hooks = new ArrayList<>();
 		projectileIdsInUse = new ArrayList<Short>();
 	}
+	
+	public Proxy(String ip, int port, Socket client) {
+		this();
+		targetIp = ip;
+		targetPort = port;
+		
+		this.client = new SocketNetworkConnection(client);
+		connectionFactory = new SocketConnectionFactory();
+	}
+	
+	public void setConnectionFactory(ConnectionFactory connectionFactory) {
+		this.connectionFactory = connectionFactory;
+	}	
 	
 	public boolean isProjectileIdFree(short id){
 		return projectileIdsInUse.indexOf(id) < 0;
@@ -108,11 +122,11 @@ public class Proxy {
 	}
 	
 	public void connect() throws IOException {
-		server = new Socket(InetAddress.getByName(targetIp), targetPort);
+		server = connectionFactory.connect(InetAddress.getByName(targetIp), targetPort);
 		isConnected = true;
 	}
 	
-	public Socket getServer() {
+	public NetworkConnection getServer() {
 		return server;
 	}
 	
@@ -120,8 +134,8 @@ public class Proxy {
 		
 		try{
 			
-			TerrariaPacket sending = readDataFromSource(client);
-			TerrariaPacket recv = readDataFromSource(server);
+			TerrariaPacket sending = client.readPacket();
+			TerrariaPacket recv = server.readPacket();
 			
 			if(recv != null){
 				if(recv.onReceive(this)){
@@ -175,55 +189,6 @@ public class Proxy {
 		
 	}
 	
-	private TerrariaPacket readDataFromSource(Socket source) throws IOException{
-		try{
-			InputStream is = source.getInputStream();
-			
-			if(is.available() <= 2){
-				return null;
-			}
-			
-			ByteBuffer buffer = ByteBuffer.allocate(3).order(ByteOrder.LITTLE_ENDIAN);
-			
-			is.read(buffer.array());
-			
-			short length = buffer.getShort();
-			
-			if(length <= 0){
-				return null;
-			}
-			
-			byte type = buffer.get();
-			
-			while(is.available() < length - 3){
-				if(!isConnected){
-					return null;
-				}
-			}
-			
-			buffer = ByteBuffer.allocate(length).order(ByteOrder.LITTLE_ENDIAN);
-			
-			if(length < 3){
-				System.out.println("length is "+length+"! Type "+ type);
-				return null;
-			}
-			
-			buffer.putShort(length);
-			buffer.put(type);
-			
-			is.read(buffer.array(), buffer.position(), length - 3);
-			
-			TerrariaPacket packet = TerrariaPacket.getPacketFromData(buffer.array());
-			
-			return packet;	
-		}catch(SocketTimeoutException e){
-			System.out.println(e.getMessage());
-		}
-		
-		return null;
-
-	}
-	
 	public boolean isConnectionIniatializationDone() {
 		return isConnectionIniatializationDone;
 	}
@@ -266,25 +231,9 @@ public class Proxy {
 		isConnected = false;
 	}
 	
-	private void sendPacketToOutputStream(OutputStream os, TerrariaPacket packet) throws IOException{
-		ByteBuffer buf = ByteBuffer.allocate(packet.getLength()).order(ByteOrder.LITTLE_ENDIAN);		
-		
-		buf.putShort(packet.getLength());
-		buf.put(packet.getType());
-		buf.put(packet.getPayload());
-		
-		try{
-			os.write(buf.array());
-		}catch(Exception e){
-			System.out.println(e.getMessage());
-			close();
-		}
-	}
-	
 	public void sendPacketToClient(TerrariaPacket packet){
 		try {
-			OutputStream os = client.getOutputStream();
-			sendPacketToOutputStream(os, packet);
+			client.sendData(packet);
 		} catch (IOException e) {
 			e.printStackTrace();
 			isConnected = false;
@@ -294,7 +243,7 @@ public class Proxy {
 	public void sendPacketToServer(TerrariaPacket packet) {
 		
 		try {
-			sendPacketToOutputStream(server.getOutputStream(), packet);
+			server.sendData(packet);
 		} catch (IOException e) {
 			e.printStackTrace();
 			isConnected = false;
@@ -317,7 +266,7 @@ public class Proxy {
 		this.thePlayer = thePlayer;
 	}
 	
-	public Socket getClient() {
+	public NetworkConnection getClient() {
 		return client;
 	}
 	
@@ -375,30 +324,29 @@ public class Proxy {
 
 	public int reconnectTo(String ip, int port) {
 		//Forward the player to a new server!
-		Socket socket = null;
+		NetworkConnection con = null;
 		try {
 			
-			socket = new Socket();
-			socket.setSoTimeout(server.getSoTimeout());
-			socket.connect(new InetSocketAddress(ip, port));
+			con = connectionFactory.connect(InetAddress.getByName(ip), port);
+			con.setTimeout(server.getTimeout());
 			
 			TerrariaPacket cc = null;
 			
 			long time = System.currentTimeMillis();
 			
-			sendPacketToOutputStream(socket.getOutputStream(), new TerrariaPacketConnectionRequest());
+			con.sendData(new TerrariaPacketConnectionRequest());
 			
 			List<TerrariaPacket> packetsToSend = new ArrayList<TerrariaPacket>();
 			
-			while((cc = readDataFromSource(socket)) == null && (System.currentTimeMillis() - time) < 5000);
+			while((cc = con.readPacket()) == null && (System.currentTimeMillis() - time) < 5000);
 			
 			if(cc == null){
-				socket.close();
+				con.close();
 				return -1;
 			}
 			
 			if(cc.getType() != 3){
-				socket.close();
+				con.close();
 				return -2;
 			}
 
@@ -415,21 +363,21 @@ public class Proxy {
 			cc.onReceive(this);
 			sendPacketToClient(cc);
 			
-			sendPacketToOutputStream(socket.getOutputStream(), new TerrariaPacketConnectionRequest());
-			sendPacketToOutputStream(socket.getOutputStream(), new TerrariaPacketPlayerInfo(player.getId(), player.getName(), player.getInfo()));
-			sendPacketToOutputStream(socket.getOutputStream(), TerrariaPacketUUID.getFakeUUIDPacket());
-			sendPacketToOutputStream(socket.getOutputStream(), new TerrariaPacketPlayerHp(player.getId(), player.getHp(), player.getMaxHp()));
-			sendPacketToOutputStream(socket.getOutputStream(), TerrariaPacketMana.getManaPacket(player.getId(), (short) player.getHp(), (short) player.getMaxHp()));
-			sendPacketToOutputStream(socket.getOutputStream(), new TerrariaPacketUpdatePlayerBuff(PacketType.UPDATE_BUFF.getId(), new byte[] {}));
+			con.sendData(new TerrariaPacketConnectionRequest());
+			con.sendData(new TerrariaPacketPlayerInfo(player.getId(), player.getName(), player.getInfo()));
+			con.sendData(TerrariaPacketUUID.getFakeUUIDPacket());
+			con.sendData(new TerrariaPacketPlayerHp(player.getId(), player.getHp(), player.getMaxHp()));
+			con.sendData(TerrariaPacketMana.getManaPacket(player.getId(), (short) player.getHp(), (short) player.getMaxHp()));
+			con.sendData(new TerrariaPacketUpdatePlayerBuff(PacketType.UPDATE_BUFF.getId(), new byte[] {}));
 			for(int i = 0; i < player.getInventorySize();i++){
-				sendPacketToOutputStream(socket.getOutputStream(), new TerrariaPacketInventorySlot(player.getId(), i, 1, 0, player.getInventoryItem(i)));
+				con.sendData(new TerrariaPacketInventorySlot(player.getId(), i, 1, 0, player.getInventoryItem(i)));
 			}
-			sendPacketToOutputStream(socket.getOutputStream(), new TerrariaPacketContinue(PacketType.CONTINUE2.getId(), new byte[] {}));
+			con.sendData(new TerrariaPacketContinue(PacketType.CONTINUE2.getId(), new byte[] {}));
 			
 			time = System.currentTimeMillis();
 			
 			while((System.currentTimeMillis() - time) < 5000){
-				cc = readDataFromSource(socket);
+				cc = con.readPacket();
 				if(cc == null){
 					continue;
 				}
@@ -445,11 +393,11 @@ public class Proxy {
 			
 			TerrariaPacketGetSection get = new TerrariaPacketGetSection(-1, -1);
 			
-			sendPacketToOutputStream(socket.getOutputStream(), get);
+			con.sendData(get);
 			
 			time = System.currentTimeMillis();
 			while((System.currentTimeMillis() - time) < 5000){
-				cc = readDataFromSource(socket);
+				cc = con.readPacket();
 				if(cc == null){
 					continue;
 				}
@@ -463,17 +411,17 @@ public class Proxy {
 			
 			TerrariaPacketUpdatePlayer update = new TerrariaPacketUpdatePlayer(player.getId(), 0, 0, 0, info.getSpawnX(), info.getSpawnY(), 0, 0);
 			
-			sendPacketToOutputStream(socket.getOutputStream(), update);
+			con.sendData(update);
 			sendPacketToClient(update);
 			
-			sendPacketToOutputStream(socket.getOutputStream(), get);
+			con.sendData(get);
 			
 			player.setHealth(0);
 			
 			packetsToSend.stream().forEach(p -> sendPacketToClient(p));
 			
 			server.close();
-			server = socket;
+			server = con;
 			
 		} catch (UnknownHostException e) {
 			return -5;
@@ -484,9 +432,9 @@ public class Proxy {
 		}catch(Exception e){
 			return -10;
 		}finally{
-			if(server != socket && socket != null){
+			if(server != con && con != null){
 				try {
-					socket.close();
+					con.close();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
