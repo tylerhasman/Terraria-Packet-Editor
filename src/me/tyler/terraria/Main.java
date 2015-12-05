@@ -10,6 +10,7 @@ import java.util.Scanner;
 import javax.swing.JOptionPane;
 
 import me.tyler.terraria.gui.PacketEditorGUI;
+import me.tyler.terraria.net.SocketNetworkConnection;
 import me.tyler.terraria.script.Script;
 
 public class Main {
@@ -52,7 +53,7 @@ public class Main {
 
 			System.out.println("Client accepted!");
 			
-			Proxy proxy = new Proxy(forwardIp, port, client);
+			Proxy proxy = new Proxy(forwardIp, port, new SocketNetworkConnection(client));
 			
 			System.out.println("Proxy setup. "+client.getInetAddress().getHostAddress()+":11000 <-> "+forwardIp+":"+port);
 			

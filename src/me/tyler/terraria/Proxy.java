@@ -55,7 +55,7 @@ public class Proxy {
 	private NetworkConnection client, server;
 	private ConnectionFactory connectionFactory;
 	
-	public Proxy() {
+	public Proxy(String ip, int port, NetworkConnection client) {
 		players = new HashMap<>();
 		npcs = new ArrayList<>();
 		itemsOnGround = new HashMap<>();
@@ -64,14 +64,10 @@ public class Proxy {
 		lastScriptCycle = System.currentTimeMillis();
 		hooks = new ArrayList<>();
 		projectileIdsInUse = new ArrayList<Short>();
-	}
-	
-	public Proxy(String ip, int port, Socket client) {
-		this();
 		targetIp = ip;
 		targetPort = port;
 		
-		this.client = new SocketNetworkConnection(client);
+		this.client = client;
 		connectionFactory = new SocketConnectionFactory();
 	}
 	
