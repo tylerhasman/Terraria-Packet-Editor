@@ -1,9 +1,6 @@
 package me.tyler.terraria;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
 import me.tyler.terraria.tools.KeyValueFile;
 
 public class TerrariaData {

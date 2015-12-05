@@ -4,7 +4,6 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
 import me.tyler.terraria.Proxy;
-import me.tyler.terraria.TerrariaTile;
 import me.tyler.terraria.tools.CSharpDecompressor;
 
 public class TerrariaPacketSendSection extends TerrariaPacket {

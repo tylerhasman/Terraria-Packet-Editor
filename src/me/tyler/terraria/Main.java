@@ -11,7 +11,6 @@ import javax.swing.JOptionPane;
 
 import me.tyler.terraria.gui.PacketEditorGUI;
 import me.tyler.terraria.net.SocketNetworkConnection;
-import me.tyler.terraria.script.Script;
 
 public class Main {
 
