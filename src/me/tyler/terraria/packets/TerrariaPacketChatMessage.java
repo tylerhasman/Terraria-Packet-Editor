@@ -311,18 +311,7 @@ public class TerrariaPacketChatMessage extends TerrariaPacket {
 					proxy.sendPacketToClient(new TerrariaPacketCombatText(proxy.getThePlayer().getX(), proxy.getThePlayer().getY(), TerrariaColor.getColor(0, 255, 0), "Party!!!!"));
 
 				} else if (command.equalsIgnoreCase("kickme")) {
-
 					proxy.getThePlayer().kick("Bye bye!");
-
-				} else if (command.equalsIgnoreCase("vac")) {
-					Cheats.VAC_ENABLED = !Cheats.VAC_ENABLED;
-
-					if (Cheats.VAC_ENABLED) {
-						proxy.sendPacketToClient(new TerrariaPacketChatMessage(TerrariaColor.getColor(25, 150, 50), "Vac Enabled"));
-					} else {
-						proxy.sendPacketToClient(new TerrariaPacketChatMessage(TerrariaColor.getColor(150, 25, 25), "Vac Disabled"));
-					}
-
 				} else if (command.equalsIgnoreCase("boss")) {
 
 					if (splits.length == 2) {
