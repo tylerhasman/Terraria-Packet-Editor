@@ -9,6 +9,10 @@ function packet_type(){
 
 function do_cycle(proxy){
 	
+	if(!enabled){
+		return;	
+	}
+	
 	items = proxy.getDroppedItems();
 	iterator = items.iterator();
 	
