@@ -217,7 +217,7 @@ public class TerrariaPacketChatMessage extends TerrariaPacket {
 						proxy.sendPacketToClient(new TerrariaPacketChatMessage(TerrariaColor.BLUE, "Converting " + TerrariaData.PROJECTILES.getValue(from) + " to " + TerrariaData.PROJECTILES.getValue(to)));
 					}
 
-				} else if (command.equalsIgnoreCase("replaceother")) {
+/*				} else if (command.equalsIgnoreCase("replaceother")) {
 
 					if(splits.length >= 2){
 						short to = 0;
@@ -258,17 +258,7 @@ public class TerrariaPacketChatMessage extends TerrariaPacket {
 						Cheats.PROJECTILE_REPLACER_OTHER_TO = -1;
 						proxy.sendPacketToClient(new TerrariaPacketChatMessage(TerrariaColor.RED, "Replacing other, DISABLED!"));
 					}
-					
-				} else if (command.equalsIgnoreCase("track")){
-					
-					Cheats.TRACK_PROJECTILES = !Cheats.TRACK_PROJECTILES;
-					
-					if (Cheats.TRACK_PROJECTILES) {
-						proxy.sendPacketToClient(new TerrariaPacketChatMessage(TerrariaColor.GREEN, "Projectile tracking enabled!"));
-					} else {
-						proxy.sendPacketToClient(new TerrariaPacketChatMessage(TerrariaColor.getColor(150, 25, 25), "Projectile tracking disabled"));
-					}
-					
+				*/
 				} else if (command.equalsIgnoreCase("maxhp")) {
 
 					if(splits.length >= 2){
@@ -422,14 +412,6 @@ public class TerrariaPacketChatMessage extends TerrariaPacket {
 						
 						proxy.sendPacketToClient(new TerrariaPacketChatMessage(TerrariaColor.GREEN, "Sending all items to "+player));
 						
-					}
-				} else if(command.equalsIgnoreCase("hideme")){
-					Cheats.HIDE_POSITION = !Cheats.HIDE_POSITION;
-					
-					if (Cheats.HIDE_POSITION) {
-						proxy.sendPacketToClient(new TerrariaPacketChatMessage(TerrariaColor.GREEN, "Players will no longer be able to find you by teleporting"));
-					} else {
-						proxy.sendPacketToClient(new TerrariaPacketChatMessage(TerrariaColor.RED, "You can now be found by teleportation"));
 					}
 				} else if (command.equalsIgnoreCase("critter")) {
 

@@ -124,11 +124,6 @@ public class TerrariaPacketUpdatePlayer extends TerrariaPacket {
 		
 		proxy.setConnectionIniatializationDone(true);
 		
-		if(Cheats.HIDE_POSITION){
-			getPayloadBuffer(4).putFloat(0);
-			getPayloadBuffer(8).putFloat(0);	
-		}
-		
 		return super.onSending(proxy);
 	}
 	

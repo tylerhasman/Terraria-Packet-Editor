@@ -86,14 +86,6 @@ public class TerrariaPacketProjectileUpdate extends TerrariaPacket {
 			return false;
 		}
 		
-		if(Cheats.TRACK_PROJECTILES){
-			
-			String name = TerrariaData.PROJECTILES.getValue(getProjectileType());
-			
-			proxy.sendPacketToClient(new TerrariaPacketChatMessage(TerrariaColor.YELLOW, name+" - "+getProjectileType()));
-			
-		}
-		
 		if(isNew(proxy)){
 			proxy.addProjectileId(getProjectileId());
 		}
@@ -103,14 +95,6 @@ public class TerrariaPacketProjectileUpdate extends TerrariaPacket {
 	
 	@Override
 	public boolean onReceive(Proxy proxy) {
-
-		if(Cheats.PROJECTILE_REPLACER_OTHER_TO >= 0 && isNew(proxy)){
-			
-			TerrariaPacket packet = getProjectilePacket(proxy.getFreeProjectileId(), getX(), getY(), getVelocityX(), getVelocityY(), getKnockback(), getDamage(), proxy.getThePlayer().getId(), Cheats.PROJECTILE_REPLACER_OTHER_TO, 0);
-			
-			proxy.sendPacketToServer(packet);
-			proxy.sendPacketToClient(packet);
-		}
 		
 		if(isNew(proxy)){
 			proxy.addProjectileId(getProjectileId());
