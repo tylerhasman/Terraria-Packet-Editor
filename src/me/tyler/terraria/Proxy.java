@@ -127,6 +127,11 @@ public class Proxy {
 		
 		try{
 			
+			if(client.isClosed() || server.isClosed()){
+				close();
+				return;
+			}
+			
 			TerrariaPacket sending = client.readPacket();
 			TerrariaPacket recv = server.readPacket();
 			
@@ -217,9 +222,12 @@ public class Proxy {
 	public boolean isConnected() {
 		return isConnected;
 	}
-
 	
 	public void close() throws IOException{
+		if(!isConnected){
+			return;
+		}
+		client.close();
 		server.close();
 		isConnected = false;
 	}
@@ -401,6 +409,12 @@ public class Proxy {
 					break;
 				}
 			}	
+			
+			for(TerrariaPacket packet : packetsToSend){
+				if(packet.getType() == PacketType.DISCONNECT.getId()){
+					return -6;
+				}
+			}
 			
 			TerrariaPacketUpdatePlayer update = new TerrariaPacketUpdatePlayer(player.getId(), 0, 0, 0, info.getSpawnX(), info.getSpawnY(), 0, 0);
 			
