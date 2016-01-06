@@ -46,6 +46,7 @@ public enum PacketType {
 	EMOTE_BUBBLE(91, TerrariaPacketEmoteBubble.class),
 	PORTAL_TELEPORT(96, TerrariaPacketPortalTeleport.class),
 	NPC_PORTAL_TELEPORT(100, TerrariaPacketNpcPortalTeleport.class),
+	NPC_SHOP_ITEM(104, TerrariaPacketNpcShopItem.class),
 	OTHER(-1, TerrariaPacket.class)//Used to handle packets that the packet editor doesnt specifically care about
 	;
 	
