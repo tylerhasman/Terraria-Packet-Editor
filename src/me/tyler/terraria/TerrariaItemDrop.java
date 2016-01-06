@@ -1,5 +1,7 @@
 package me.tyler.terraria;
 
+import me.tyler.terraria.packets.TerrariaPacketUpdateItemDrop;
+
 public class TerrariaItemDrop {
 
 	private short itemId;
@@ -9,9 +11,9 @@ public class TerrariaItemDrop {
 	private short amount;
 	private byte prefix;
 	private byte delay;
+	private Proxy proxy;
 	
-	
-	public TerrariaItemDrop(short itemId, short itemType, float x, float y, float velX, float velY, short amount, byte prefix, byte delay) {
+	public TerrariaItemDrop(Proxy proxy, short itemId, short itemType, float x, float y, float velX, float velY, short amount, byte prefix, byte delay) {
 		this.itemId = itemId;
 		this.itemType = itemType;
 		this.x = x;
@@ -21,6 +23,14 @@ public class TerrariaItemDrop {
 		this.amount = amount;
 		this.prefix = prefix;
 		this.delay = delay;
+		this.proxy = proxy;
+	}
+	
+	public void teleport(int x, int y){
+		TerrariaPacketUpdateItemDrop packet = TerrariaPacketUpdateItemDrop.getItemDropPacket(itemId, x, y, 0, 0, amount, prefix, delay, itemType);
+	
+		proxy.sendPacketToServer(packet);
+		proxy.sendPacketToClient(packet);
 	}
 
 	public short getItemId() {

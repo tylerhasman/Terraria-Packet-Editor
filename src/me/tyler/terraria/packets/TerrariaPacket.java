@@ -121,8 +121,7 @@ public class TerrariaPacket {
 		TerrariaPacket packet;
 		
 		if(pType == PacketType.OTHER){
-			packet = pType.getPacket(type, payload);
-
+			packet = new TerrariaPacket(type, payload);
 		}else{
 			packet = pType.getPacket(payload);
 		}

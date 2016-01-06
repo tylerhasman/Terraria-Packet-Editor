@@ -57,20 +57,7 @@ public class TerrariaPacketUpdateItemDrop extends TerrariaPacket {
 			return super.onReceive(proxy);
 		}
 
-		if (Cheats.VAC_ENABLED) {
-
-			float x3 = (float) Math.pow(proxy.getThePlayer().getX() - getPositionX(), 2);
-			float y3 = (float) Math.pow(proxy.getThePlayer().getY() - getPositionY(), 2);
-
-			float distance = (float) Math.sqrt(x3 + y3);
-
-			if (distance > 200) {
-				TerrariaPacket packet = getItemDropPacket(getItemId(), proxy.getThePlayer().getX(), proxy.getThePlayer().getY() - 100, getVelocityX(), getVelocityY(), getStacks(), getPrefix(), getNoDelay(), getItemNetId());
-
-				proxy.sendPacketToServer(packet);
-
-			}
-		} else if (Cheats.VAC_POS_ENABLED) {
+		if (Cheats.VAC_POS_ENABLED) {
 
 			float x3 = (float) Math.pow(Cheats.VAC_POS_X - getPositionX(), 2);
 			float y3 = (float) Math.pow(Cheats.VAC_POS_Y - getPositionY(), 2);
@@ -87,14 +74,14 @@ public class TerrariaPacketUpdateItemDrop extends TerrariaPacket {
 
 		}
 
-		TerrariaItemDrop item = new TerrariaItemDrop(getItemId(), getItemNetId(), getPositionX(), getPositionY(), getVelocityX(), getVelocityY(), getStacks(), getPrefix(), getNoDelay());
+		TerrariaItemDrop item = new TerrariaItemDrop(proxy, getItemId(), getItemNetId(), getPositionX(), getPositionY(), getVelocityX(), getVelocityY(), getStacks(), getPrefix(), getNoDelay());
 
 		proxy.setDroppedItem(item);
 
 		return super.onReceive(proxy);
 	}
 
-	public static TerrariaPacket getItemDropPacket(int itemId, float x, float y, float velX, float velY, int stacks, int prefix, int nodelay, int netid) {
+	public static TerrariaPacketUpdateItemDrop getItemDropPacket(int itemId, float x, float y, float velX, float velY, int stacks, int prefix, int nodelay, int netid) {
 
 		ByteBuffer buf = ByteBuffer.allocate(24).order(ByteOrder.LITTLE_ENDIAN);
 
@@ -108,7 +95,7 @@ public class TerrariaPacketUpdateItemDrop extends TerrariaPacket {
 		buf.put((byte) nodelay);
 		buf.putShort((short) netid);
 
-		TerrariaPacket packet = new TerrariaPacket(PacketType.UPDATE_ITEM_DROP.getId(), buf.array());
+		TerrariaPacketUpdateItemDrop packet = new TerrariaPacketUpdateItemDrop(PacketType.UPDATE_ITEM_DROP.getId(), buf.array());
 
 		return packet;
 

@@ -259,6 +259,10 @@ public class Proxy {
 		itemsOnGround.put(item.getItemId(), item);
 	}
 	
+	public Collection<TerrariaItemDrop> getDroppedItems(){
+		return itemsOnGround.values();
+	}
+	
 	public TerrariaPlayerLocal getThePlayer() {
 		return thePlayer;
 	}
