@@ -1,6 +1,5 @@
 package me.tyler.terraria.packets;
 
-import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
@@ -24,14 +23,7 @@ public class TerrariaPacketDisconnect extends TerrariaPacket {
 	
 	@Override
 	public boolean onReceive(Proxy proxy) {
-		
 		System.out.println("Disconnected -> "+getReason());
-		
-		try {
-			proxy.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 		
 		return super.onReceive(proxy);
 	}
