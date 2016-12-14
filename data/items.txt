@@ -3048,3 +3048,279 @@
 3599,Loki's Dye
 3600,Shadowflame Hades Dye
 3601,Celestial Sigil
+3602,Logic Gate Lamp (Off)
+3603,Logic Gate (AND).png Logic Gate (AND)
+3604,Logic Gate (OR).png Logic Gate (OR)
+3605,Logic Gate (NAND).png Logic Gate (NAND)
+3606,Logic Gate (NOR).png Logic Gate (NOR)
+3607,Logic Gate (XOR).png Logic Gate (XOR)
+3608,Logic Gate (XNOR).png Logic Gate (XNOR)
+3609,Conveyor Belt (Clockwise).png Conveyor Belt (Clockwise)
+3610,Conveyor Belt (Counter Clockwise).png Conveyor Belt (Counter Clockwise)
+3611,The Grand Design.png The Grand Design
+3612,Yellow Wrench.png Yellow Wrench
+3613,Logic Sensor (Day).png Logic Sensor (Day)
+3614,Logic Sensor (Night).png Logic Sensor (Night)
+3615,Logic Sensor (Player Above).png Logic Sensor (Player Above)
+3616,Junction Box.png Junction Box
+3617,Announcement Box.png Announcement Box
+3618,Logic Gate Lamp (On).png Logic Gate Lamp (On)
+3619,Mechanical Lens.png Mechanical Lens
+3620,Actuation Rod.png Actuation Rod
+3621,Red Team Block.png Red Team Block
+3622,Red Team Platform.png Red Team Platform
+3623,Static Hook.png Static Hook
+3624,Presserator.png Presserator
+3625,Multicolor Wrench.png Multicolor Wrench
+3626,Pink Weighted Pressure Plate.png Pink Weighted Pressure Plate
+3627,Engineering Helmet.png Engineering Helmet
+3628,Companion Cube.png Companion Cube
+3629,Wire Bulb.png Wire Bulb
+3630,Orange Weighted Pressure Plate.png Orange Weighted Pressure Plate
+3631,Purple Weighted Pressure Plate.png Purple Weighted Pressure Plate
+3632,Cyan Weighted Pressure Plate.png Cyan Weighted Pressure Plate
+3633,Green Team Block.png Green Team Block
+3634,Blue Team Block.png Blue Team Block
+3635,Yellow Team Block.png Yellow Team Block
+3636,Pink Team Block.png Pink Team Block
+3637,White Team Block.png White Team Block
+3638,Green Team Platform.png Green Team Platform
+3639,Blue Team Platform.png Blue Team Platform
+3640,Yellow Team Platform.png Yellow Team Platform
+3641,Pink Team Platform.png Pink Team Platform
+3642,White Team Platform.png White Team Platform
+3643,Large Amber.png Large Amber
+3644,Ruby Gem Lock.png Ruby Gem Lock
+3645,Sapphire Gem Lock.png Sapphire Gem Lock
+3646,Emerald Gem Lock.png Emerald Gem Lock
+3647,Topaz Gem Lock.png Topaz Gem Lock
+3648,Amethyst Gem Lock.png Amethyst Gem Lock
+3649,Diamond Gem Lock.png Diamond Gem Lock
+3650,Amber Gem Lock.png Amber Gem Lock
+3651,Squirrel Statue.png Squirrel Statue
+3652,Butterfly Statue.png Butterfly Statue
+3653,Worm Statue.png Worm Statue
+3654,Firefly Statue.png Firefly Statue
+3655,Scorpion Statue.png Scorpion Statue
+3656,Snail Statue.png Snail Statue
+3657,Grasshopper Statue.png Grasshopper Statue
+3658,Mouse Statue.png Mouse Statue
+3659,Duck Statue.png Duck Statue
+3660,Penguin Statue.png Penguin Statue
+3661,Frog Statue.png Frog Statue
+3662,Buggy Statue.png Buggy Statue
+3663,Logic Gate Lamp (Faulty).png Logic Gate Lamp (Faulty)
+3664,Portal Gun Station.png Portal Gun Station
+3665,Chest.png Trapped Chest
+3666,Gold Chest.png Trapped Gold Chest
+3667,Shadow Chest.png Trapped Shadow Chest
+3668,Ebonwood Chest.png Trapped Ebonwood Chest
+3669,Rich Mahogany Chest.png Trapped Rich Mahogany Chest
+3670,Pearlwood Chest.png Trapped Pearlwood Chest
+3671,Ivy Chest.png Trapped Ivy Chest
+3672,Ice Chest.png Trapped Ice Chest
+3673,Living Wood Chest.png Trapped Living Wood Chest
+3674,Skyware Chest.png Trapped Skyware Chest
+3675,Shadewood Chest.png Trapped Shadewood Chest
+3676,Web Covered Chest.png Trapped Web Covered Chest
+3677,Lihzahrd Chest.png Trapped Lihzahrd Chest
+3678,Water Chest.png Trapped Water Chest
+3679,Jungle Chest.png Trapped Jungle Chest
+3680,Corruption Chest.png Trapped Corruption Chest
+3681,Crimson Chest.png Trapped Crimson Chest
+3682,Hallowed Chest.png Trapped Hallowed Chest
+3683,Frozen Chest.png Trapped Frozen Chest
+3684,Dynasty Chest.png Trapped Dynasty Chest
+3685,Honey Chest.png Trapped Honey Chest
+3686,Steampunk Chest.png Trapped Steampunk Chest
+3687,Palm Wood Chest.png Trapped Palm Wood Chest
+3688,Mushroom Chest.png Trapped Mushroom Chest
+3689,Boreal Wood Chest.png Trapped Boreal Wood Chest
+3690,Slime Chest.png Trapped Slime Chest
+3691,Green Dungeon Chest.png Trapped Green Dungeon Chest
+3692,Pink Dungeon Chest.png Trapped Pink Dungeon Chest
+3693,Blue Dungeon Chest.png Trapped Blue Dungeon Chest
+3694,Bone Chest.png Trapped Bone Chest
+3695,Cactus Chest.png Trapped Cactus Chest
+3696,Flesh Chest.png Trapped Flesh Chest
+3697,Obsidian Chest.png Trapped Obsidian Chest
+3698,Pumpkin Chest.png Trapped Pumpkin Chest
+3699,Spooky Chest.png Trapped Spooky Chest
+3700,Glass Chest.png Trapped Glass Chest
+3701,Martian Chest.png Trapped Martian Chest
+3702,Meteorite Chest.png Trapped Meteorite Chest
+3703,Granite Chest.png Trapped Granite Chest
+3704,Marble Chest.png Trapped Marble Chest
+3705,Trapped Golden Chest.png Trapped Golden Chest (⚠ currently unobtainable)
+3706,Trapped Crystal Chest.png Trapped Crystal Chest (⚠ currently unobtainable)
+3707,Teal Pressure Pad.png Teal Pressure Pad
+3708,Wall Creeper Statue.png Wall Creeper Statue
+3709,Unicorn Statue.png Unicorn Statue
+3710,Drippler Statue.png Drippler Statue
+3711,Wraith Statue.png Wraith Statue
+3712,Bone Skeleton Statue.png Bone Skeleton Statue
+3713,Undead Viking Statue.png Undead Viking Statue
+3714,Medusa Statue.png Medusa Statue
+3715,Harpy Statue.png Harpy Statue
+3716,Pigron Statue.png Pigron Statue
+3717,Hoplite Statue.png Hoplite Statue
+3718,Granite Golem Statue.png Granite Golem Statue
+3719,Armed Zombie Statue.png Armed Zombie Statue
+3720,Blood Zombie Statue.png Blood Zombie Statue
+3721,Angler Tackle Bag.png Angler Tackle Bag
+3722,Geyser.png Geyser
+3723,Ultra Bright Campfire.png Ultra Bright Campfire
+3724,Bone Campfire.png Bone Campfire
+3725,Pixel Box.png Pixel Box
+3726,Liquid Sensor (Water).png Liquid Sensor (Water)
+3727,Liquid Sensor (Lava).png Liquid Sensor (Lava)
+3728,Liquid Sensor (Honey).png Liquid Sensor (Honey)
+3729,Liquid Sensor (Any).png Liquid Sensor (Any)
+3730,Bundled Party Balloons.png Bundled Party Balloons
+3731,Balloon Animal.png Balloon Animal
+3732,Party Hat.png Party Hat
+3733,Silly Sunflower Petals.png Silly Sunflower Petals
+3734,Silly Sunflower Tops.png Silly Sunflower Tops
+3735,Silly Sunflower Bottoms.png Silly Sunflower Bottoms
+3736,Silly Pink Balloon.png Silly Pink Balloon
+3737,Silly Purple Balloon.png Silly Purple Balloon
+3738,Silly Green Balloon.png Silly Green Balloon
+3739,Blue Streamer.png Blue Streamer
+3740,Green Streamer.png Green Streamer
+3741,Pink Streamer.png Pink Streamer
+3742,Silly Balloon Machine.png Silly Balloon Machine
+3743,Silly Tied Balloon (Pink).png Silly Tied Balloon (Pink)
+3744,Silly Tied Balloon (Purple).png Silly Tied Balloon (Purple)
+3745,Silly Tied Balloon (Green).png Silly Tied Balloon (Green)
+3746,Pigronata.png Pigronata
+3747,Party Center.png Party Center
+3748,Silly Tied Bundle of Balloons.png Silly Tied Bundle of Balloons
+3749,Party Present.png Party Present
+3750,Slice of Cake.png Slice of Cake
+3751,Cog Wall.png Cog Wall
+3752,Sandfall Wall.png Sandfall Wall
+3753,Snowfall Wall.png Snowfall Wall
+3754,Sandfall Block.png Sandfall Block
+3755,Snowfall Block.png Snowfall Block
+3756,Snow Cloud.png Snow Cloud
+3757,Pedguin's Hood.png Pedguin's Hood
+3758,Pedguin's Jacket.png Pedguin's Jacket
+3759,Pedguin's Trousers.png Pedguin's Trousers
+3760,Silly Pink Balloon Wall.png Silly Pink Balloon Wall
+3761,Silly Purple Balloon Wall.png Silly Purple Balloon Wall
+3762,Silly Green Balloon Wall.png Silly Green Balloon Wall
+3763,0x33's Aviators.png 0x33's Aviators
+3764,Blue Phasesaber.png Blue Phasesaber
+3765,Red Phasesaber.png Red Phasesaber
+3766,Green Phasesaber.png Green Phasesaber
+3767,Purple Phasesaber.png Purple Phasesaber
+3768,White Phasesaber.png White Phasesaber
+3769,Yellow Phasesaber.png Yellow Phasesaber
+3770,Djinn's Curse.png Djinn's Curse
+3771,Ancient Horn.png Ancient Horn
+3772,Mandible Blade.png Mandible Blade
+3773,Ancient Headdress.png Ancient Headdress
+3774,Ancient Garments.png Ancient Garments
+3775,Ancient Slacks.png Ancient Slacks
+3776,Forbidden Mask.png Forbidden Mask
+3777,Forbidden Robes.png Forbidden Robes
+3778,Forbidden Treads.png Forbidden Treads
+3779,Spirit Flame.png Spirit Flame
+3780,Sand Elemental Banner.png Sand Elemental Banner
+3781,Pocket Mirror.png Pocket Mirror
+3782,Magic Sand Dropper.png Magic Sand Dropper
+3783,Forbidden Fragment.png Forbidden Fragment
+3784,Lamia Tail.png Lamia Tail
+3785,Lamia Wraps.png Lamia Wraps
+3786,Lamia Mask.png Lamia Mask
+3787,Sky Fracture.png Sky Fracture
+3788,Onyx Blaster.png Onyx Blaster
+3789,Sand Shark Banner.png Sand Shark Banner
+3790,Bone Biter Banner.png Bone Biter Banner
+3791,Flesh Reaver Banner.png Flesh Reaver Banner
+3792,Crystal Thresher Banner.png Crystal Thresher Banner
+3793,Angry Tumbler Banner.png Angry Tumbler Banner
+3794,Ancient Cloth.png Ancient Cloth
+3795,Desert Spirit Lamp.png Desert Spirit Lamp
+3796,Music Box (Sandstorm).png Music Box (Sandstorm)
+3797,Apprentice's Hat.png Apprentice's Hat
+3798,Apprentice's Robe.png Apprentice's Robe
+3799,Apprentice's Trousers.png Apprentice's Trousers
+3800,Squire's Great Helm.png Squire's Great Helm
+3801,Squire's Plating.png Squire's Plating
+3802,Squire's Greaves.png Squire's Greaves
+3803,Huntress's Wig.png Huntress's Wig
+3804,Huntress's Jerkin.png Huntress's Jerkin
+3805,Huntress's Pants.png Huntress's Pants
+3806,Monk's Bushy Brow Bald Cap.png Monk's Bushy Brow Bald Cap
+3807,Monk's Shirt.png Monk's Shirt
+3808,Monk's Pants.png Monk's Pants
+3809,Apprentice's Scarf.png Apprentice's Scarf
+3810,Squire's Shield.png Squire's Shield
+3811,Huntress's Buckler.png Huntress's Buckler
+3812,Monk's Belt.png Monk's Belt
+3813,Defender's Forge.png Defender's Forge
+3814,War Table.png War Table
+3815,War Table Banner.png War Table Banner
+3816,Eternia Crystal Stand.png Eternia Crystal Stand
+3817,Defender Medal.png Defender Medal
+3818,Flameburst Rod.png Flameburst Rod
+3819,Flameburst Cane.png Flameburst Cane
+3820,Flameburst Staff.png Flameburst Staff
+3821,Ale Tosser.png Ale Tosser
+3822,Etherian Mana.png Etherian Mana
+3823,Brand of the Inferno.png Brand of the Inferno
+3824,Ballista Rod.png Ballista Rod
+3825,Ballista Cane.png Ballista Cane
+3826,Ballista Staff.png Ballista Staff
+3827,Flying Dragon.png Flying Dragon
+3828,Eternia Crystal.png Eternia Crystal
+3829,Lightning Aura Rod.png Lightning Aura Rod
+3830,Lightning Aura Cane.png Lightning Aura Cane
+3831,Lightning Aura Staff.png Lightning Aura Staff
+3832,Explosive Trap Rod.png Explosive Trap Rod
+3833,Explosive Trap Cane.png Explosive Trap Cane
+3834,Explosive Trap Staff.png Explosive Trap Staff
+3835,Sleepy Octopod.png Sleepy Octopod
+3836,Ghastly Glaive.png Ghastly Glaive
+3837,Etherian Goblin Bomber Banner.png Etherian Goblin Bomber Banner
+3838,Etherian Goblin Banner.png Etherian Goblin Banner
+3839,Old One's Skeleton Banner.png Old One's Skeleton Banner
+3840,Drakin Banner.png Drakin Banner
+3841,Kobold Glider Banner.png Kobold Glider Banner
+3842,Kobold Banner.png Kobold Banner
+3843,Wither Beast Banner.png Wither Beast Banner
+3844,Etherian Wyvern Banner.png Etherian Wyvern Banner
+3845,Etherian Javelin Thrower Banner.png Etherian Javelin Thrower Banner
+3846,Etherian Lightning Bug Banner.png Etherian Lightning Bug Banner
+3852,Tome of Infinite Wisdom.png Tome of Infinite Wisdom
+3854,Phantom Phoenix.png Phantom Phoenix
+3855,Gato Egg.png Gato Egg
+3856,Creeper Egg.png Creeper Egg
+3857,Dragon Egg.png Dragon Egg
+3858,Sky Dragon's Fury.png Sky Dragon's Fury
+3859,Aerial Bane.png Aerial Bane
+3860,Treasure Bag (Betsy).png Treasure Bag (Betsy)
+3861,Treasure Bag (Dark Mage).png Treasure Bag (Dark Mage)
+3862,Treasure Bag (Ogre).png Treasure Bag (Ogre)
+3863,Betsy Mask.png Betsy Mask
+3864,Dark Mage Mask.png Dark Mage Mask
+3865,Ogre Mask.png Ogre Mask
+3866,Betsy Trophy.png Betsy Trophy
+3867,Dark Mage Trophy.png Dark Mage Trophy
+3868,Ogre Trophy.png Ogre Trophy
+3869,Music Box (Old One's Army).png Music Box (Old One's Army)
+3870,Betsy's Wrath.png Betsy's Wrath
+3871,Valhalla Knight's Helm.png Valhalla Knight's Helm
+3872,Valhalla Knight's Breastplate.png Valhalla Knight's Breastplate
+3873,Valhalla Knight's Greaves.png Valhalla Knight's Greaves
+3874,Dark Artist's Hat.png Dark Artist's Hat
+3875,Dark Artist's Robes.png Dark Artist's Robes
+3876,Dark Artist's Leggings.png Dark Artist's Leggings
+3877,Red Riding Hood.png Red Riding Hood
+3878,Red Riding Dress.png Red Riding Dress
+3879,Red Riding Leggings.png Red Riding Leggings
+3880,Shinobi Infiltrator's Helmet.png Shinobi Infiltrator's Helmet
+3881,Shinobi Infiltrator's Torso.png Shinobi Infiltrator's Torso
+3882,Shinobi Infiltrator's Pants.png Shinobi Infiltrator's Pants
+3883,Betsy's Wings.png Betsy's Wings
