@@ -1,10 +1,13 @@
 package me.tyler.terraria;
 
+import javax.annotation.Generated;
+
 public class Npc {
 
 	private float x, y;
 	private short netId;
 	private short id;
+	private int life;
 	
 	public Npc(int id) {
 		this.id = (short) id;
@@ -33,4 +36,17 @@ public class Npc {
 	public void setY(float y) {
 		this.y = y;
 	}
+	
+	public int getLife() {
+		return life;
+	}
+	
+	public void setLife(int life) {
+		this.life = life;
+	}
+	
+	public void setNetId(short netId) {
+		this.netId = netId;
+	}
+	
 }

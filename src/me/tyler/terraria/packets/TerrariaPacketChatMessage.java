@@ -50,6 +50,11 @@ public class TerrariaPacketChatMessage extends TerrariaPacket {
 	public String getMessage() {
 		return PacketUtil.readString(getPayload(), 4);
 	}
+	
+	@Override
+	public String toString() {
+		return getMessage();
+	}
 
 	@Override
 	public boolean onSending(Proxy proxy) {
@@ -74,6 +79,7 @@ public class TerrariaPacketChatMessage extends TerrariaPacket {
 						boolean b = (boolean) obj;
 						
 						if(b){
+							System.out.println("Command executed "+command);
 							return false;
 						}
 					}catch(NoSuchMethodException e){

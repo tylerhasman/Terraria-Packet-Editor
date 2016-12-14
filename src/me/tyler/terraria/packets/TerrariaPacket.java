@@ -99,6 +99,7 @@ public class TerrariaPacket {
 			} catch (NoSuchMethodException e) {
 			}
 		}
+		
 		return forwardToServer;
 	}
 	

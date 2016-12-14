@@ -210,6 +210,7 @@ public class TerrariaPacketWorldInfo extends TerrariaPacket {
 		
 		proxy.getWorldInfo().setName("Terraria Packet Editor");
 		proxy.getWorldInfo().setEventInfoState(EventInfo.SERVER_SIDE_CHARACTER, true);
+		//proxy.getWorldInfo().setTime(0);
 		
 		super.onReceive(proxy);
 		

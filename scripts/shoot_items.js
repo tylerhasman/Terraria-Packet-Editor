@@ -1,7 +1,6 @@
 var ItemPacket = Java.type("me.tyler.terraria.packets.TerrariaPacketUpdateItemDrop");
 var DestroyProjectile = Java.type("me.tyler.terraria.packets.TerrariaPacketDestroyProjectile");
 var Random  = Java.type("java.util.Random");
-var nextId = 200;
 
 var enabled = false;
 var Color = Java.type("me.tyler.terraria.TerrariaColor");
@@ -18,16 +17,11 @@ function packet_type(){
 function send(packet, proxy){
 	if(enabled){
 		
-		if(packet.isNew()){
+		var destroy_packet = new DestroyProjectile(packet.getProjectileId(), packet.getOwner());
+		var item_packet = ItemPacket.getItemDropPacket(400, packet.getX() + packet.getVelocityX() * 3, packet.getY() + packet.getVelocityY() * 3, packet.getVelocityX() , packet.getVelocityY(), 1, 0, 0, rng.nextInt(1000));
 			
-			var destroy_packet = new DestroyProjectile(packet.getProjectileId(), packet.getOwner());
-			var item_packet = ItemPacket.getItemDropPacket(nextId++, packet.getX() + packet.getVelocityX(), packet.getY() + packet.getVelocityY(), packet.getVelocityX(), packet.getVelocityY(), 1, 0, 0, rng.nextInt(1000));
-			
-			proxy.sendPacketToClient(destroy_packet);
-			proxy.sendPacketToServer(item_packet);
-			//proxy.sendPacketToClient(item_packet);
-			
-		}
+		proxy.sendPacketToClient(destroy_packet);
+		proxy.sendPacketToServer(item_packet);
 		
 		return false;
 	}

@@ -14,12 +14,10 @@ var command_description = "Add or remove an projectile effect for a player";
 
 var particles = new HashMap();
 
-var cycle = true;
-
 function packet_type(){
 	return UPDATE_PLAYER;
 }
-
+/*
 function do_cycle(proxy){
 	for each (player in proxy.getPlayers()){
 		if(particles.containsKey(player.getName())){
@@ -27,26 +25,29 @@ function do_cycle(proxy){
 		}
 	}
 	if(particles.containsKey(proxy.getThePlayer().getName())){
+	
+		for(i = 0; i < 4;i++){
+			
+		}
+	
 		spawn_particles(proxy.getThePlayer(), proxy);
 	}
-}
+}*/
 
 function distance(p1, p2){
 	return p1.distance(p2.getX(), p2.getY());
 }
 
-function make_packet(x, y, vx, vy, knockback, damage, owner, id){
-
-	var nextId = Data.getFreeProjectileId();
+function make_packet(proxy, x, y, vx, vy, knockback, damage, owner, id){
+	var nextId = proxy.getFreeProjectileId();
 	var packet = ProjectilePacket.getProjectilePacket(nextId, x, y, vx, vy, knockback, damage, owner, id, 0);
 	
 	return packet;
-
 }
 
 function spawn_particles(player, proxy){
 	var id = particles.get(player.getName());
-	var p_packet = make_packet(player.getX(), player.getY(), player.getVelocityX(), player.getVelocityY(), 0, 0, proxy.getThePlayer().getId(), id);
+	var p_packet = make_packet(proxy, player.getX(), player.getY(), player.getVelocityX(), player.getVelocityY(), 0, 0, proxy.getThePlayer().getId(), id);
 	
 	if(distance(player, proxy.getThePlayer()) < 3000){
 		proxy.sendPacketToClient(p_packet);

@@ -11,6 +11,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 import me.tyler.terraria.hooks.PacketHook;
@@ -20,17 +21,21 @@ import me.tyler.terraria.net.SocketConnectionFactory;
 import me.tyler.terraria.packets.TerrariaPacket;
 import me.tyler.terraria.packets.TerrariaPacketConnectionRequest;
 import me.tyler.terraria.packets.TerrariaPacketContinue;
+import me.tyler.terraria.packets.TerrariaPacketDisconnect;
 import me.tyler.terraria.packets.TerrariaPacketGetSection;
 import me.tyler.terraria.packets.TerrariaPacketInventorySlot;
 import me.tyler.terraria.packets.TerrariaPacketMana;
 import me.tyler.terraria.packets.TerrariaPacketPlayerHp;
 import me.tyler.terraria.packets.TerrariaPacketPlayerInfo;
+import me.tyler.terraria.packets.TerrariaPacketProjectileUpdate;
 import me.tyler.terraria.packets.TerrariaPacketUUID;
+import me.tyler.terraria.packets.TerrariaPacketUpdateItemDrop;
 import me.tyler.terraria.packets.TerrariaPacketUpdatePlayer;
 import me.tyler.terraria.packets.TerrariaPacketUpdatePlayerBuff;
 import me.tyler.terraria.packets.TerrariaPacketWorldInfo;
 import me.tyler.terraria.script.Script;
 import me.tyler.terraria.script.ScriptManager;
+import me.tyler.terraria.tools.MathUtil;
 
 public class Proxy {
 
@@ -49,6 +54,8 @@ public class Proxy {
 	private NetworkConnection client, server;
 	private ConnectionFactory connectionFactory;
 	private ScriptManager scriptManager;
+	private boolean closing;
+	private int nextDroppedItemId = 400;
 	
 	public Proxy(String ip, int port, NetworkConnection client) {
 		players = new HashMap<>();
@@ -66,6 +73,7 @@ public class Proxy {
 		connectionFactory = new SocketConnectionFactory();
 		scriptManager = new ScriptManager(new File("scripts/"));
 		scriptManager.loadScripts();
+		closing = false;
 	}
 	
 	public void setConnectionFactory(ConnectionFactory connectionFactory) {
@@ -126,6 +134,11 @@ public class Proxy {
 	public void cycle(){
 		
 		try{
+			
+			if(closing){
+				close();
+				return;
+			}
 			
 			if(client.isClosed() || server.isClosed()){
 				close();
@@ -251,8 +264,19 @@ public class Proxy {
 		}
 	}
 	
+	public boolean removeDroppedItem(short id){
+		if(!itemsOnGround.containsKey(id)){
+			return false;
+		}
+		
+		itemsOnGround.remove(id);
+		
+		return true;
+		
+	}
+	
 	public TerrariaItemDrop getDroppedItem(int id){
-		return itemsOnGround.get(id);
+		return itemsOnGround.get((short) id);
 	}
 
 	public void setDroppedItem(TerrariaItemDrop item){
@@ -322,12 +346,51 @@ public class Proxy {
 		}
 		return null;
 	}
+	
+	public List<TerrariaItemDrop> getNearbyItems(float x, float y, float radius){
+		List<TerrariaItemDrop> drops = getDroppedItems().stream().filter(
+				item -> MathUtil.distance(x, y, item.getX(), item.getY()) <= radius).collect(Collectors.toList());
+		
+		return drops;
+	}
+	
+	public void spawnProjectile(float x, float y, float vx, float vy, int type, int damage, float knockback){
+		TerrariaPacketProjectileUpdate packet = TerrariaPacketProjectileUpdate.getProjectilePacket(400, x, y, vx, vy, knockback, damage, getThePlayer().getId(), type, 0);
+		
+		sendPacketToServer(packet);
+		sendPacketToClient(packet);
+	}
+	
+	public void dropItem(float x, float y, float vx, float vy, int amount, Prefix prefix, int type){
+		if(getDroppedItem(nextDroppedItemId) == null){
+			TerrariaPacketUpdateItemDrop packet = TerrariaPacketUpdateItemDrop.getItemDropPacket(nextDroppedItemId, x, y, vx, vy, 1, prefix.getId(), 0, type);
+			
+			sendPacketToServer(packet);	
+		}
+		if(nextDroppedItemId > 0){
+			nextDroppedItemId--;
+		}else{
+			nextDroppedItemId = 400;
+		}
+	}
+	
+	public void dropItem(float x, float y, float speed, int type){
+		Random r = new Random();
+		
+		dropItem(x, y, (r.nextFloat() - r.nextFloat()) * speed, (r.nextFloat() - r.nextFloat()) * speed, 1, Prefix.None, type);
+	}
+	
+	public void dropItem(float x, float y, int type){
+		Random r = new Random();
+		
+		dropItem(x, y, (r.nextFloat() - r.nextFloat()) * 2, (r.nextFloat() - r.nextFloat()) * 2, 1, Prefix.None, type);
+	}
 
 	public List<Npc> getNpcs() {
 		return npcs;
 	}
 
-	public int reconnectTo(String ip, int port) {
+	public int reconnectTo(String ip, int port) throws ReconnectException {
 		//Forward the player to a new server!
 		NetworkConnection con = null;
 		try {
@@ -347,26 +410,17 @@ public class Proxy {
 			
 			if(cc == null){
 				con.close();
-				return -1;
+				throw new ReconnectException(-1, "Failed to connect, connection timed out!");
 			}
 			
 			if(cc.getType() != 3){
 				con.close();
-				return -2;
+				throw new ReconnectException(-2, "Failed to connect, server sent incorrect data!");
 			}
-
-			setConnectionIniatializationDone(false);
 			
 			TerrariaPlayerLocal player = getThePlayer();
 			
-			player.addBuff(156, 10);
-			player.addBuff(149, 10);
-			player.addBuff(47, 10);
-			
-			player.setHealth(0);
-			
-			cc.onReceive(this);
-			sendPacketToClient(cc);
+			packetsToSend.add(cc);
 			
 			con.sendData(new TerrariaPacketConnectionRequest());
 			con.sendData(new TerrariaPacketPlayerInfo(player.getId(), player.getName(), player.getInfo()));
@@ -377,24 +431,30 @@ public class Proxy {
 			for(int i = 0; i < player.getInventorySize();i++){
 				con.sendData(new TerrariaPacketInventorySlot(player.getId(), i, 1, 0, player.getInventoryItem(i)));
 			}
-			con.sendData(new TerrariaPacketContinue(PacketType.CONTINUE2.getId(), new byte[] {}));
-			
+			con.sendData(new TerrariaPacketContinue());
+
 			time = System.currentTimeMillis();
+
+			packetsToSend.add(cc);
 			
 			while((System.currentTimeMillis() - time) < 5000){
 				cc = con.readPacket();
 				if(cc == null){
 					continue;
 				}
+				if(cc.getType() == PacketType.DISCONNECT.getId()){
+					throw new ReconnectException(-6, "Kicked from server! "+((TerrariaPacketDisconnect) cc).getReason());
+				}
 				cc.onReceive(this);
 				packetsToSend.add(cc);
 				time = System.currentTimeMillis();
-				if(cc.getType() == 7){
-					break;
-				}
 			}
 			
 			TerrariaPacketWorldInfo info = (TerrariaPacketWorldInfo) cc;
+			
+			if(info == null){
+				throw new ReconnectException(-100, "WorldInfo packet null!");
+			}
 			
 			TerrariaPacketGetSection get = new TerrariaPacketGetSection(-1, -1);
 			
@@ -406,18 +466,12 @@ public class Proxy {
 				if(cc == null){
 					continue;
 				}
+				if(cc.getType() == PacketType.DISCONNECT.getId()){
+					throw new ReconnectException(-6, "Kicked from server! "+((TerrariaPacketDisconnect) cc).getReason());
+				}
 				cc.onReceive(this);
 				packetsToSend.add(cc);
 				time = System.currentTimeMillis();
-				if(cc.getType() == 7){
-					break;
-				}
-			}	
-			
-			for(TerrariaPacket packet : packetsToSend){
-				if(packet.getType() == PacketType.DISCONNECT.getId()){
-					return -6;
-				}
 			}
 			
 			TerrariaPacketUpdatePlayer update = new TerrariaPacketUpdatePlayer(player.getId(), 0, 0, 0, info.getSpawnX(), info.getSpawnY(), 0, 0);
@@ -427,21 +481,31 @@ public class Proxy {
 			
 			con.sendData(get);
 			
+			packetsToSend.stream().forEach(p -> sendPacketToClient(p));
+			
+			player.addBuff(156, 10);
+			player.addBuff(149, 10);
+			player.addBuff(47, 10);
+			
 			player.setHealth(0);
 			
-			packetsToSend.stream().forEach(p -> sendPacketToClient(p));
+			setConnectionIniatializationDone(false);
+			
+			System.out.println("Reconnected to "+con.getRemoteAddress());
 			
 			server.close();
 			server = con;
 			
 		} catch (UnknownHostException e) {
-			return -5;
+			throw new ReconnectException(-5, "Unknown host! No server with ip "+ip);
 		} catch(ConnectException e){
-			return -3;
+			throw new ReconnectException(-3, "Failed to connect, no resposne from server");
 		} catch (IOException e) {
-			return -4;
+			throw new ReconnectException(-4, "Unknown IO error");
+		}catch (ReconnectException e){
+			throw e;
 		}catch(Exception e){
-			return -10;
+			throw new ReconnectException(-10, "Unknown error!");
 		}finally{
 			if(server != con && con != null){
 				try {
@@ -470,6 +534,10 @@ public class Proxy {
 
 	public ScriptManager getScriptManager() {
 		return scriptManager;
+	}
+
+	public void closeNextCycle() {
+		closing = true;
 	}
 
 }

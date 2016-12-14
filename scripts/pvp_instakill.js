@@ -17,9 +17,9 @@ function makeMessage(color, message){
 	return new ChatMessage(color, message);
 }
 
-function make_packet(x, y, vx, vy, knockback, damage, owner, id){
+function make_packet(proxy, x, y, vx, vy, knockback, damage, owner, id){
 
-	var nextId = Data.getFreeProjectileId();
+	var nextId = proxy.getFreeProjectileId();
 	var packet = ProjectilePacket.getProjectilePacket(nextId, x, y, vx, vy, knockback, damage, owner, id, 0);
 	
 	return packet;
@@ -52,7 +52,7 @@ function do_cycle(proxy){
 }
 
 function kill(player, proxy){
-		var p_packet = make_packet(player.getX(), player.getY(), player.getVelocityX() * 2.5, player.getVelocityY() * 2.5, 0.0, 100, proxy.getThePlayer().getId(), projectileType);
+		var p_packet = make_packet(proxy, player.getX(), player.getY(), player.getVelocityX() * 2.5, player.getVelocityY() * 2.5, 0.0, 100, proxy.getThePlayer().getId(), projectileType);
 		
 		proxy.sendPacketToServer(p_packet);
 		proxy.sendPacketToClient(p_packet);

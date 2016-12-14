@@ -12,7 +12,7 @@ function chat_command(proxy, command, args){
 
 	if(command.equalsIgnoreCase("reload")){
 		
-		var i = Script.reload();
+		var i = proxy.getScriptManager().reload();
 		
 		proxy.getThePlayer().sendMessage(Color.GREEN, "Reloaded "+i+" scripts");
 		

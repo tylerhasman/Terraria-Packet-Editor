@@ -66,7 +66,7 @@ public class Script {
 			
 			engine.eval(reader);
 			
-			Object obj = engine.get("cycle");
+			Object obj = engine.get("do_cycle");
 			
 			if(obj != null){
 				this.cycle = true;

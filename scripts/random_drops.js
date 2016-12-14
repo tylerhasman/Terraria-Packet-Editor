@@ -1,6 +1,6 @@
 var ItemPacket = Java.type("me.tyler.terraria.packets.TerrariaPacketUpdateItemDrop");
 var Random  = Java.type("java.util.Random");
-var nextId = 200;
+var Data = Java.type("me.tyler.terraria.TerrariaData");
 
 var Color = Java.type("me.tyler.terraria.TerrariaColor");
 
@@ -10,7 +10,6 @@ var command_name = "randomitems";
 var command_description = "spawn a ton of random items";
 
 function packet_type(){
-	return PROJECTILE_UPDATE;
 }
 
 function chat_command(proxy, command, args){
@@ -27,14 +26,10 @@ function chat_command(proxy, command, args){
 		var amount = args[0];
 	
 		for(var i = 0; i < amount;i++){
-			var item_packet = ItemPacket.getItemDropPacket(nextId++, player.getX(), player.getY(), rng.nextFloat() * 3, rng.nextFloat() * 3, 1, 0, 0, rng.nextInt(1000));
-		
-			proxy.sendPacketToServer(item_packet);
+			proxy.dropItem(player.getX(), player.getY(), Data.ITEMS.getRandomKey());
 		}
 		
 		player.sendMessage(Color.GREEN, "Dropped "+amount+" items");
-		
-		nextId = 200;
 		
 		return true;
 	

@@ -8,8 +8,8 @@ public class PlayerInfo {
 	private byte hair;
 	private byte hairDye;
 	private byte hideVisuals, hideVisuals2, hideMisc;
-	private TerrariaColor hairColor, skinColor, eyeColor, shirtColor, underShirtColor, pantsColor, shoeColor;
-	private Difficulty difficulty;
+	private TerrariaColor hairColor = TerrariaColor.WHITE, skinColor = TerrariaColor.WHITE, eyeColor = TerrariaColor.WHITE, shirtColor = TerrariaColor.WHITE, underShirtColor = TerrariaColor.WHITE, pantsColor = TerrariaColor.WHITE, shoeColor = TerrariaColor.WHITE;
+	private Difficulty difficulty = Difficulty.SOFTCORE;
 	
 	public Difficulty getDifficulty() {
 		return difficulty;

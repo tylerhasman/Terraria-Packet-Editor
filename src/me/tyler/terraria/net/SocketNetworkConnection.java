@@ -9,20 +9,84 @@ import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.locks.ReentrantLock;
 
 import me.tyler.terraria.packets.TerrariaPacket;
 
-public class SocketNetworkConnection implements NetworkConnection {
+public class SocketNetworkConnection implements NetworkConnection, Runnable {
 
 	private Socket socket;
+	private List<TerrariaPacket> toSend;
+	private ReentrantLock toSendLock;
+	private List<TerrariaPacket> toRecieve;
+	private ReentrantLock toRecieveLock;
+	private Thread thread;
+	private boolean threaded;
 	
 	public SocketNetworkConnection(Socket socket) {
+		this(socket, true);
+	}
+	
+	public SocketNetworkConnection(Socket socket, boolean threaded) {
 		this.socket = socket;
+		this.threaded = threaded;
+		if(threaded){
+			toSend = new ArrayList<TerrariaPacket>();
+			toRecieve = new ArrayList<>();
+			toSendLock = new ReentrantLock(true);
+			toRecieveLock = new ReentrantLock(true);
+			thread = new Thread(this, "Socket-Thread");
+			thread.start();	
+		}
+	}
+	
+	public void run() {
+		while(!isClosed()){
+			try{
+				try{
+					toSendLock.lock();
+					if(toSend.size() > 0){
+						sendPacketToOutputStream(socket.getOutputStream(), toSend.remove(0));
+					}
+				}finally{
+					toSendLock.unlock();
+				}
+				
+				try{
+					toRecieveLock.lock();
+					TerrariaPacket packet = readDataFromSource(socket);
+					
+					if(packet != null){
+						toRecieve.add(packet);
+					}
+					
+				}finally{
+					toRecieveLock.unlock();
+				}
+
+			} catch (IOException e) {
+				System.out.println("Error "+ e.getMessage());
+			}
+		}
 	}
 	
 	@Override
 	public void sendData(TerrariaPacket packet) throws IOException {
-		sendPacketToOutputStream(socket.getOutputStream(), packet);
+		if(isClosed()){
+			return;
+		}
+		if(threaded){
+			try{
+				toSendLock.lock();
+				toSend.add(packet);
+			}finally{
+				toSendLock.unlock();
+			}	
+		}else{
+			sendPacketToOutputStream(socket.getOutputStream(), packet);
+		}
 	}
 
 	@Override
@@ -30,7 +94,14 @@ public class SocketNetworkConnection implements NetworkConnection {
 		if(isClosed()){
 			return null;
 		}
-		return readDataFromSource(socket);
+		if(threaded){
+			if(toRecieve.size() > 0)
+				return toRecieve.remove(0);
+			else
+				return null;
+		}else{
+			return readDataFromSource(socket);	
+		}
 	}
 	
 	@Override
@@ -42,6 +113,8 @@ public class SocketNetworkConnection implements NetworkConnection {
 	public void close() throws IOException {
 		if(!socket.isClosed())
 			socket.close();
+		if(threaded)
+			thread.interrupt();
 	}
 	
 	@Override
@@ -112,6 +185,7 @@ public class SocketNetworkConnection implements NetworkConnection {
 			return packet;	
 		}catch(SocketTimeoutException e){
 			System.out.println(e.getMessage());
+			socket.close();
 		}
 		
 		return null;

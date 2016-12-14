@@ -25,7 +25,12 @@ public class TerrariaPacketDisconnect extends TerrariaPacket {
 	public boolean onReceive(Proxy proxy) {
 		System.out.println("Disconnected -> "+getReason());
 		
-		return super.onReceive(proxy);
+		proxy.sendPacketToClient(this);
+		
+		proxy.closeNextCycle();
+		super.onReceive(proxy);
+		
+		return false;
 	}
 	
 	private static byte[] getKickPacket(String message){

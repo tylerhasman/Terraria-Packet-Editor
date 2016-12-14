@@ -7,22 +7,21 @@ var command_name = "god";
 var command_description = "toggle on/off invincibility";
 
 function packet_type(){
-	return PLAYER_HP;
 }
 
-function makeMessage(color, message){
+function do_cycle(proxy){
 
-	return new ChatMessage(color, message);
-
-}
-
-function send(packet, proxy){
-	if(enabled){
-		var id = proxy.getThePlayer().getId();
-		var p2 = HpPacket.getHealthOtherPacket(id, packet.getMaxLife()-packet.getLife());
-		
-		proxy.sendPacketToClient(p2);
+	if(!enabled){
+		return;
 	}
+
+	player = proxy.getThePlayer();
+
+	if(player.getHp() < player.getMaxHp()){
+		player.setHealth(player.getMaxHp());
+		player.addBuff(175);
+	}
+	
 }
 
 function chat_command(proxy, command, args){
@@ -31,9 +30,9 @@ function chat_command(proxy, command, args){
 	
 		enabled = !enabled;
 		if(enabled){
-			proxy.sendPacketToClient(makeMessage(Color.GREEN, "God mode enabled!"));
+			proxy.getThePlayer().sendMessage(Color.GREEN, "God mode enabled!");
 		}else{
-			proxy.sendPacketToClient(makeMessage(Color.RED, "God mode disabled!"));
+			proxy.getThePlayer().sendMessage(Color.RED, "God mode disabled!");
 		}
 		
 		proxy.getThePlayer().sendStatus("God Mode is "+(enabled ? "enabled" : "disabled"));

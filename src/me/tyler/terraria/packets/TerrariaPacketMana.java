@@ -49,13 +49,13 @@ public class TerrariaPacketMana extends TerrariaPacket {
 		return super.onSending(proxy);
 	}
 	
-	public static TerrariaPacket getManaPacket(byte playerId, short mana, short maxMana){
+	public static TerrariaPacket getManaPacket(int playerId, int mana, int maxMana){
 		
 		ByteBuffer buf = ByteBuffer.allocate(5).order(ByteOrder.LITTLE_ENDIAN);
 		
-		buf.put(playerId);
-		buf.putShort(mana);
-		buf.putShort(maxMana);
+		buf.put((byte) playerId);
+		buf.putShort((short) mana);
+		buf.putShort((short) maxMana);
 		
 		return new TerrariaPacket(PacketType.MANA.getId(), buf.array());
 		

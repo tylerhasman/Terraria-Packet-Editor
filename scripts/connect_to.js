@@ -23,22 +23,20 @@ function chat_command(proxy, command, args){
 			
 			proxy.getThePlayer().sendMessage(Color.YELLOW, "Connecting you to "+ip+":"+port+", things might get weird");
 			
-			var result = proxy.reconnectTo(ip, port);
+			var result = 0;
+			var error = null;
+			
+			try{
+				result = proxy.reconnectTo(ip, port);
+			}catch(e){
+				error = e;
+				result = -1;
+			}
 			
 			if(result == 1){
 				proxy.getThePlayer().sendMessage(Color.GREEN, "Success!");
 			}else if(result == -1){
-				proxy.getThePlayer().sendMessage(Color.RED, "Failed to connect, connection timed out!");
-			}else if(result == -2){
-				proxy.getThePlayer().sendMessage(Color.RED, "Failed to connect, server sent strange info.");
-			}else if(result == -3){
-				proxy.getThePlayer().sendMessage(Color.RED, "Failed to connect, no response from server.");
-			}else if(result == -4){
-				proxy.getThePlayer().sendMessage(Color.RED, "Failed to connect, io error.");
-			}else if(result == -5){
-				proxy.getThePlayer().sendMessage(Color.RED, "No server could be found with the ip: "+ip);
-			}else{
-				proxy.getThePlayer().sendMessage(Color.RED, "Failed to connect. Unknown error code "+result);
+				proxy.getThePlayer().sendMessage(Color.RED, "Error Code "+error.getId()+". "+error.getMessage());
 			}
 			
 		}catch(e){

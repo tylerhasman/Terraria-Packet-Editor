@@ -84,7 +84,8 @@ public enum Prefix {
 	Violent(80),
 	Legendary(81),
 	Unreal(82),
-	Mythical(83);
+	Mythical(83),
+	None(0);
 	
 	private final int id;
 	
@@ -94,5 +95,14 @@ public enum Prefix {
 	
 	public int getId() {
 		return id;
+	}
+	
+	public static Prefix getPrefix(int id){
+		for(Prefix p : values()){
+			if(p.id == id){
+				return p;
+			}
+		}
+		return None;
 	}
 }

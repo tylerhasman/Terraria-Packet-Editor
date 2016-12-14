@@ -31,6 +31,7 @@ public class Main {
 			if(gui){
 				PacketEditorGUI gui = new PacketEditorGUI(new File("log.txt"));
 				
+				
 				gui.setVisible(true);
 				
 				System.setOut(gui);
@@ -70,7 +71,8 @@ public class Main {
 		}catch(NullPointerException e){
 			e.printStackTrace();
 		}finally{
-			System.exit(0);
+			if(!gui)
+				System.exit(0);
 		}
 		
 	}

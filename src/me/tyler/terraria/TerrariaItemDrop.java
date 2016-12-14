@@ -30,7 +30,21 @@ public class TerrariaItemDrop {
 		TerrariaPacketUpdateItemDrop packet = TerrariaPacketUpdateItemDrop.getItemDropPacket(itemId, x, y, 0, 0, amount, prefix, delay, itemType);
 	
 		proxy.sendPacketToServer(packet);
-		proxy.sendPacketToClient(packet);
+		this.x = x;
+		this.y = y;
+	}
+	
+	//Servers block us setting item types
+/*	public void setItemType(short type){
+		TerrariaPacketUpdateItemDrop packet = TerrariaPacketUpdateItemDrop.getItemDropPacket(itemId, x, y, 0, 0, amount, prefix, delay, type);
+		
+		proxy.sendPacketToServer(packet);
+		itemType = type;
+	}*/
+	
+	@Override
+	public String toString() {
+		return "["+Prefix.getPrefix(prefix)+"] "+TerrariaData.ITEMS.getValue(itemType)+" x "+amount;
 	}
 
 	public short getItemId() {

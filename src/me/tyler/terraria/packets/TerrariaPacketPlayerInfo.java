@@ -138,7 +138,11 @@ public class TerrariaPacketPlayerInfo extends TerrariaPacket {
 		proxy.getThePlayer().setName(getName());
 		proxy.getThePlayer().getInfo().load(this);
 		
-		return b;
+		if(b){
+			proxy.sendPacketToServer(new TerrariaPacketPlayerInfo(getPlayerId(), proxy.getThePlayer().getName(), proxy.getThePlayer().getInfo()));
+		}
+		
+		return false;
 	}
 	
 }

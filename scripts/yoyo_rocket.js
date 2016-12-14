@@ -8,7 +8,7 @@ var Math = Java.type("java.lang.Math");
 var command_name = "yoyorocket";
 var command_description = "shoot around the map using a yoyo";
 
-var yoyo_ids = [534, 541, 542, 543, 544, 545, 546, 547, 548, 549, 550, 551, 552, 553, 554, 555, 562, 563, 564];
+var yoyo_ids = [534, 541, 542, 543, 544, 545, 546, 547, 548, 549, 550, 551, 552, 553, 554, 555, 562, 563, 564, 603];
 var enabled = false;
 
 function packet_type(){

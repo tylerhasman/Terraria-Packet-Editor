@@ -37,7 +37,7 @@ public class TerrariaPacketPortalTeleport extends TerrariaPacket {
 	
 	public static TerrariaPacketPortalTeleport getPortalTeleportPacket(int playerId, int portalIndex, float x, float y, float velx, float vely)
 	{
-		ByteBuffer buf = ByteBuffer.allocate(20).order(ByteOrder.LITTLE_ENDIAN);
+		ByteBuffer buf = ByteBuffer.allocate(19).order(ByteOrder.LITTLE_ENDIAN);
 		
 		buf.put((byte) playerId);
 		buf.putShort((short) portalIndex);

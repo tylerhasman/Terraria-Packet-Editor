@@ -1,14 +1,16 @@
 package me.tyler.terraria.tools;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class KeyValueFile {
@@ -26,6 +28,14 @@ public class KeyValueFile {
 		}
 	}
 	
+	public int getRandomKey(){
+		List<Integer> keys = new ArrayList<>(map.keySet());
+		
+		Collections.shuffle(keys);
+		
+		return keys.get(0);
+	}
+	
 	private void load(String seperator) throws IOException{
 		BufferedReader reader = new BufferedReader(new FileReader(file));
 		
@@ -37,15 +47,23 @@ public class KeyValueFile {
 
 			int key = Integer.parseInt(parts[0]);
 			String value = parts[1];
-			map.put(key, value);
-			
-			
+			map.put(key, value);	
 		}
+		
+		Set<Integer> sortedKeys = map.keySet().stream().sorted().collect(Collectors.toSet());
+		
+		HashMap<Integer, String> map2 = new HashMap<>();
+		
+		for(int key : sortedKeys){
+			map2.put(key, map.get(key));
+		}
+		
+		map = map2;
 		
 		reader.close();
 	}
 	
-	public static void main(String[] args) throws IOException {
+	/*public static void main(String[] args) throws IOException {
 		
 		File file = new File("moreitems.txt");
 		
@@ -99,7 +117,7 @@ public class KeyValueFile {
 		
 		writer.close();
 		
-	}
+	}*/
 	
 	public String getValue(int key){
 		return map.get(key);

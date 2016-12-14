@@ -6,8 +6,6 @@ import java.nio.ByteOrder;
 import me.tyler.terraria.Cheats;
 import me.tyler.terraria.PacketType;
 import me.tyler.terraria.Proxy;
-import me.tyler.terraria.TerrariaColor;
-import me.tyler.terraria.TerrariaData;
 
 public class TerrariaPacketProjectileUpdate extends TerrariaPacket {
 
@@ -103,7 +101,7 @@ public class TerrariaPacketProjectileUpdate extends TerrariaPacket {
 		return super.onReceive(proxy);
 	}
 	
-	public static TerrariaPacket getProjectilePacket(int id, float x, float y, float velx, float vely, float knockback, int damage, int owner, int type, int aiflags, float... flags){
+	public static TerrariaPacketProjectileUpdate getProjectilePacket(int id, float x, float y, float velx, float vely, float knockback, int damage, int owner, int type, int aiflags, float... flags){
 		
 		ByteBuffer buf = ByteBuffer.allocate(28+(flags.length * 4)).order(ByteOrder.LITTLE_ENDIAN);
 		
@@ -126,8 +124,7 @@ public class TerrariaPacketProjectileUpdate extends TerrariaPacket {
 			}
 		}
 
-		
-		return new TerrariaPacket(PacketType.PROJECTILE_UPDATE.getId(), buf.array());
+		return new TerrariaPacketProjectileUpdate(PacketType.PROJECTILE_UPDATE.getId(), buf.array());
 	}
 	
 }

@@ -5,7 +5,9 @@ import java.nio.ByteOrder;
 
 import me.tyler.terraria.Cheats;
 import me.tyler.terraria.PacketType;
+import me.tyler.terraria.Prefix;
 import me.tyler.terraria.Proxy;
+import me.tyler.terraria.TerrariaData;
 import me.tyler.terraria.TerrariaItemDrop;
 
 public class TerrariaPacketUpdateItemDrop extends TerrariaPacket {
@@ -54,33 +56,30 @@ public class TerrariaPacketUpdateItemDrop extends TerrariaPacket {
 	public boolean onReceive(Proxy proxy) {
 
 		if (getItemNetId() == 0) {
+			proxy.removeDroppedItem(getItemId());
 			return super.onReceive(proxy);
-		}
-
-		if (Cheats.VAC_POS_ENABLED) {
-
-			float x3 = (float) Math.pow(Cheats.VAC_POS_X - getPositionX(), 2);
-			float y3 = (float) Math.pow(Cheats.VAC_POS_Y - getPositionY(), 2);
-
-			float distance = (float) Math.sqrt(x3 + y3);
-
-			if (distance > 1000) {
-
-				TerrariaPacket packet = getItemDropPacket(getItemId(), Cheats.VAC_POS_X, Cheats.VAC_POS_Y, getVelocityX(), getVelocityY(), getStacks(), getPrefix(), getNoDelay(), getItemNetId());
-
-				proxy.sendPacketToServer(packet);
-
-			}
-
 		}
 
 		TerrariaItemDrop item = new TerrariaItemDrop(proxy, getItemId(), getItemNetId(), getPositionX(), getPositionY(), getVelocityX(), getVelocityY(), getStacks(), getPrefix(), getNoDelay());
 
 		proxy.setDroppedItem(item);
-
+		
 		return super.onReceive(proxy);
 	}
-
+	
+	@Override
+	public boolean onSending(Proxy proxy) {
+		
+		if(getItemNetId() == 0){
+			proxy.removeDroppedItem(getItemId());
+			
+			return super.onSending(proxy);
+		}
+		
+		
+		return super.onSending(proxy);
+	}
+	
 	public static TerrariaPacketUpdateItemDrop getItemDropPacket(int itemId, float x, float y, float velX, float velY, int stacks, int prefix, int nodelay, int netid) {
 
 		ByteBuffer buf = ByteBuffer.allocate(24).order(ByteOrder.LITTLE_ENDIAN);
