@@ -3,6 +3,7 @@ package me.tyler.terraria;
 import me.tyler.terraria.packets.TerrariaPacketInventorySlot;
 import me.tyler.terraria.packets.TerrariaPacketPlayerInfo;
 import me.tyler.terraria.packets.TerrariaPacketUpdatePlayer.Control;
+import me.tyler.terraria.tools.MathUtil;
 
 public class TerrariaPlayer {
 
@@ -161,12 +162,7 @@ public class TerrariaPlayer {
 	}
 	
 	public float distance(float x, float y){
-		float x3 = (float) Math.pow(getX() - x, 2);
-		float y3 = (float) Math.pow(getY() - y, 2);
-
-		float distance = (float) Math.sqrt(x3 + y3);
-		
-		return distance;
+		return MathUtil.distance(getX(), getY(), x, y);
 	}
 
 	public void setControls(Control[] controls) {
