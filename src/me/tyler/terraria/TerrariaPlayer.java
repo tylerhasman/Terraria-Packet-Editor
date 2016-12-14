@@ -26,7 +26,7 @@ public class TerrariaPlayer {
 		controls = new Control[0];
 		facingLeft = false;
 		this.proxy = proxy;
-		inventory = new int[180];
+		inventory = new int[220];
 		info = new PlayerInfo();
 	}
 	
@@ -91,6 +91,10 @@ public class TerrariaPlayer {
 	}
 	
 	public void setInventoryItem(int index, int id, boolean update){
+		if(index >= inventory.length){
+			System.out.println("Warning: tried to set inventory slot "+index+" "+id);
+			return;
+		}
 		inventory[index] = id;
 
 		if(update){
