@@ -203,6 +203,10 @@ public class TerrariaPacketWorldInfo extends TerrariaPacket {
 		return getPayloadBuffer(getWorldNameOffset() + 81).getLong();
 	}
 	
+	public byte getSandstormSeverity(){
+		return getPayloadBuffer(getWorldNameOffset() + 89).get();
+	}
+	
 	public boolean isServerSideCharacters(){
 		return (getEventInfo1() & 64) == 64;
 	}

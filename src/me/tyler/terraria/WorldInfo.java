@@ -27,6 +27,7 @@ public class WorldInfo {
 	private byte event1, event2, event3, event4, event5;
 	private byte invasionType;
 	private long lobby;
+	private byte sandstormSeverity;
 	
 	public WorldInfo(TerrariaPacketWorldInfo packet) {
 		load(packet);
@@ -82,6 +83,7 @@ public class WorldInfo {
 		buf.put(event5);
 		buf.put(invasionType);
 		buf.putLong(lobby);
+		buf.put(sandstormSeverity);
 		
 		return new TerrariaPacketWorldInfo(PacketType.WORLD_INFO.getId(), buf.array());
 	}
@@ -134,6 +136,7 @@ public class WorldInfo {
 		event5 = info.getEventInfo5();
 		invasionType = info.getInvasionType();
 		lobby = info.getLobby();
+		sandstormSeverity = info.getSandstormSeverity();
 	}
 
 	public int getTime() {
@@ -323,6 +326,10 @@ public class WorldInfo {
 	public long getLobby() {
 		return lobby;
 	}
+	
+	public byte getSandstormSeverity() {
+		return sandstormSeverity;
+	}
 
 	public void setTime(int time) {
 		this.time = time;
@@ -510,6 +517,10 @@ public class WorldInfo {
 
 	public void setLobby(long lobby) {
 		this.lobby = lobby;
+	}
+	
+	public void setSandstormSeverity(byte sandstormSeverity) {
+		this.sandstormSeverity = sandstormSeverity;
 	}
 	
 	private byte getEventInfo(int type){
