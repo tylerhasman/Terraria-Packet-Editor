@@ -24,7 +24,7 @@ public class WorldInfo {
 	private int caveBack1, caveBack2, caveBack3;
 	private byte caveBackStyle1, caveBackStyle2, caveBackStyle3, caveBackStyle4;
 	private float rain;
-	private byte event1, event2, event3, event4;
+	private byte event1, event2, event3, event4, event5;
 	private byte invasionType;
 	private long lobby;
 	
@@ -79,6 +79,7 @@ public class WorldInfo {
 		buf.put(event2);
 		buf.put(event3);
 		buf.put(event4);
+		buf.put(event5);
 		buf.put(invasionType);
 		buf.putLong(lobby);
 		
@@ -130,6 +131,7 @@ public class WorldInfo {
 		event2 = info.getEventInfo2();
 		event3 = info.getEventInfo3();
 		event4 = info.getEventInfo4();
+		event5 = info.getEventInfo5();
 		invasionType = info.getInvasionType();
 		lobby = info.getLobby();
 	}
@@ -308,6 +310,10 @@ public class WorldInfo {
 
 	public byte getEvent4() {
 		return event4;
+	}
+	
+	public byte getEvent5() {
+		return event5;
 	}
 
 	public byte getInvasionType() {
@@ -494,6 +500,10 @@ public class WorldInfo {
 		this.event4 = event4;
 	}
 
+	public void setEvent5(byte event5) {
+		this.event5 = event5;
+	}
+	
 	public void setInvasionType(byte invasionType) {
 		this.invasionType = invasionType;
 	}
@@ -512,8 +522,10 @@ public class WorldInfo {
 			return event3;
 		case 4:
 			return event4;
+		case 5:
+			return event5;
 			default:
-				throw new IllegalArgumentException("type must be between 1 and 4, inclusively");
+				throw new IllegalArgumentException("type must be between 1 and 5, inclusively");
 		}
 	}
 	
@@ -541,6 +553,8 @@ public class WorldInfo {
 			event3 += amount;
 		}else if(type.getId() == 4){
 			event4 += amount;
+		}else if(type.getId() == 5){
+			event5 += amount;
 		}else{
 			throw new IllegalArgumentException("No event info number "+type.getId());
 		}

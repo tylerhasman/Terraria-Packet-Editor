@@ -191,12 +191,16 @@ public class TerrariaPacketWorldInfo extends TerrariaPacket {
 		return getPayloadBuffer(getWorldNameOffset() + 78).get();
 	}
 	
-	public byte getInvasionType(){
+	public byte getEventInfo5(){
 		return getPayloadBuffer(getWorldNameOffset() + 79).get();
 	}
 	
+	public byte getInvasionType(){
+		return getPayloadBuffer(getWorldNameOffset() + 80).get();
+	}
+	
 	public long getLobby(){
-		return getPayloadBuffer(getWorldNameOffset() + 80).getLong();
+		return getPayloadBuffer(getWorldNameOffset() + 81).getLong();
 	}
 	
 	public boolean isServerSideCharacters(){
@@ -216,7 +220,7 @@ public class TerrariaPacketWorldInfo extends TerrariaPacket {
 		
 		proxy.updateWorldInfo();
 		
-		return false;
+		return true;
 		
 	}
 	
