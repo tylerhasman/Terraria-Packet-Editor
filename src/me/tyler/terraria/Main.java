@@ -89,11 +89,11 @@ public class Main {
 			
 			System.out.println("Enter the desired target ip: ");
 			
-			forwardIp = scanner.nextLine();
+			forwardIp = scanner.nextLine().trim();
 			
 			System.out.println("Enter the desired target port: (Press enter for default port)");
 			
-			String line = scanner.nextLine();
+			String line = scanner.nextLine().trim();
 			
 			if(line.isEmpty()){
 				port = 7777;
