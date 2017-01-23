@@ -34,7 +34,7 @@ public class WorldInfo {
 	}
 	
 	public TerrariaPacketWorldInfo getPacket(){
-		ByteBuffer buf = ByteBuffer.allocate(89 + PacketUtil.calculateLength(name)).order(ByteOrder.LITTLE_ENDIAN);
+		ByteBuffer buf = ByteBuffer.allocate(91 + PacketUtil.calculateLength(name)).order(ByteOrder.LITTLE_ENDIAN);
 		
 		buf.putInt(time);
 		buf.put(dayMoonInfo);
